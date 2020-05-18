@@ -18,7 +18,7 @@ export const getUserInfo = (token) => {
     token:token,
   }
   return axios.request({
-    url: 'index/getInfo',
+    url: 'index/user',
     data:Qs.stringify(data),
     method: 'post'
   })
