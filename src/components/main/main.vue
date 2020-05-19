@@ -123,10 +123,6 @@ export default {
         params = route.params
         query = route.query
       }
-      if (name.indexOf('isTurnByHref_') > -1) {
-        window.open(name.split('_')[1])
-        return
-      }
       this.$router.push({
         name,
         params,
@@ -168,8 +164,11 @@ export default {
     /**
      * @description 初始化设置面包屑导航和标签导航
      */
+    console.log(1)
     this.setTagNavList()
+    console.log(2)
     this.setHomeRoute(routers)
+    console.log(3)
     const { name, params, query, meta } = this.$route
     this.addTag({
       route: { name, params, query, meta }
@@ -184,7 +183,7 @@ export default {
       })
     }
     // 获取未读消息条数
-    this.getUnreadMessageCount()
+    // this.getUnreadMessageCount()
   }
 }
 </script>

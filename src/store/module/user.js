@@ -84,6 +84,7 @@ export default {
           console.log(res)
           const data = res.data
           commit('setToken', data.token)
+          commit('setAccess', ['super_admin'])
           console.log(data.token)
           resolve()
         }).catch(err => {
@@ -116,7 +117,7 @@ export default {
             commit('setAvatar', data.avatar)
             commit('setUserName', data.name)
             commit('setUserId', data.user_id)
-            commit('setAccess', data.access)
+            commit('setAccess', ['super_admin', 'admin'])
             commit('setHasGetInfo', true)
             resolve(data)
           }).catch(err => {
