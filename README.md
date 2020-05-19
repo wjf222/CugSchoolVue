@@ -70,7 +70,7 @@ iView Admin is a front-end management background integration solution. It based 
 ## Getting started
 ```bush
 # clone the project
-git clone https://github.com/iview/iview-admin.git
+git clone https://github.com/wjf222/CugSchoolVue.git
 
 // install dependencies
 npm install
