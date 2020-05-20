@@ -5,7 +5,7 @@
 </p>
 
 <h1>
-iView Admin
+CugView
     <h3>Vue.js 2.0 admin management system template based on iView.</h3>
 </h1>
 
@@ -70,7 +70,7 @@ iView Admin is a front-end management background integration solution. It based 
 ## Getting started
 ```bush
 # clone the project
-git clone https://github.com/iview/iview-admin.git
+git clone https://github.com/wjf222/CugSchoolVue.git
 
 // install dependencies
 npm install
