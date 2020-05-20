@@ -13,6 +13,7 @@
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
           <user :message-unread-count="unreadCount" :user-avatar="userAvatar"/>
+          
           <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
@@ -161,11 +162,6 @@ export default {
     /**
      * @description 初始化设置面包屑导航和标签导航
      */
-    console.log(1)
-    this.setTagNavList()
-    console.log(2)
-    this.setHomeRoute(routers)
-    console.log(3)
     const { name, params, query, meta } = this.$route
     this.addTag({
       route: { name, params, query, meta }
