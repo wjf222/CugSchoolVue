@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import iView from 'iview'
+import mavonEditor from 'mavon-editor'
 import i18n from '@/locale'
 import config from '@/config'
 import importDirective from '@/directive'
@@ -24,6 +25,7 @@ Vue.use(iView, {
 })
 Vue.use(TreeTable)
 Vue.use(VOrgTree)
+Vue.use(mavonEditor)
 /**
  * @description 注册admin内置插件
  */

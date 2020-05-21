@@ -353,12 +353,12 @@ export default [
     children: [
       {
         path: 'error_store_page',
-        name: 'error_store_page',
+        name: '发布文章',
         meta: {
           icon: 'ios-bug',
-          title: '错误收集'
+          title: '发布文章'
         },
-        component: () => import('@/view/error-store/error-store.vue')
+        component: () => import('@/view/article/article.vue')
       }
     ]
   },
