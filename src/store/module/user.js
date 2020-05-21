@@ -114,7 +114,7 @@ export default {
         try {
           getUserInfo(state.token).then(res => {
             const data = res.data
-            commit('setAvatar', data.avatar)
+            commit('setAvatar', "http://39.99.203.80:8081/images/1.jpg")
             commit('setUserName', data.name)
             commit('setUserId', data.user_id)
             commit('setAccess', ['super_admin', 'admin'])
