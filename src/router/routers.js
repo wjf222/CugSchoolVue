@@ -344,21 +344,50 @@ export default [
     ]
   },
   {
-    path: '/error_store',
-    name: 'error_store',
+    path: '/article',
+    name: 'article',
     meta: {
       hideInBread: true
     },
     component: Main,
     children: [
       {
-        path: 'error_store_page',
+        path: 'article_page',
         name: '发布文章',
         meta: {
           icon: 'ios-bug',
           title: '发布文章'
         },
         component: () => import('@/view/article/article.vue')
+      }
+    ]
+  },
+  {
+    path: '/search',
+    name: '搜索',
+    meta: {
+      icon: 'ios-stats',
+      title: '搜索'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'search_page',
+        name: '搜索',
+        meta: {
+          icon: 'ios-bug',
+          title: '搜索'
+        },
+        component: () => import('@/view/search/search.vue')
+      },
+      {
+        path: 'search_ans/:searchText',
+        name: '搜索结果',
+        meta: {
+          icon: 'ios-bug',
+          title: '搜索结果'
+        },
+        component: () => import('@/view/search/search-ans.vue')
       }
     ]
   },
