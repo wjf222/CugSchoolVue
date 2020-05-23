@@ -79,6 +79,24 @@ export default [
     ]
   },
   {
+    path: '/search_page',
+    name: 'search_page',
+    meta: {
+      icon: 'ios-bug',
+      title: '搜索'
+    },
+    component: () => import('@/view/search/search.vue')
+  },
+  {
+    path: '/search_ans/:searchText',
+    name: '搜索结果',
+      meta: {
+        icon: 'ios-bug',
+        title: '搜索结果'
+      },
+    component: () => import('@/view/search/search-ans.vue')
+  },
+  {
     path: '/message',
     name: 'message',
     component: Main,
@@ -359,35 +377,6 @@ export default [
           title: '发布文章'
         },
         component: () => import('@/view/article/article.vue')
-      }
-    ]
-  },
-  {
-    path: '/search',
-    name: '搜索',
-    meta: {
-      icon: 'ios-stats',
-      title: '搜索'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'search_page',
-        name: '搜索',
-        meta: {
-          icon: 'ios-bug',
-          title: '搜索'
-        },
-        component: () => import('@/view/search/search.vue')
-      },
-      {
-        path: 'search_ans/:searchText',
-        name: '搜索结果',
-        meta: {
-          icon: 'ios-bug',
-          title: '搜索结果'
-        },
-        component: () => import('@/view/search/search-ans.vue')
       }
     ]
   },

@@ -15,7 +15,7 @@ export default {
     },
     methods:{
         goHome(){
-            this.$router.push("/search/search_page")
+            this.$router.push("/search_page")
         }
     }
 }
