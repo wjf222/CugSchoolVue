@@ -63,7 +63,7 @@ export const getContentByMsgId = msg_id => {
 export const hasRead = msg_id => {
   return axios.request({
     url: 'message/has_read',
-    method: 'post',
+    method: 'get',
     data: {
       msg_id
     }
