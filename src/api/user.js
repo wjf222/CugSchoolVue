@@ -4,12 +4,15 @@ const axios = new HttpRequest('')
 export const login = ({ userName, password }) => {
   const data = {
     userName:userName,
-    password:password
+    userPassword:password
   }
   return axios.request({
     url: 'index/login',
-    data:Qs.stringify(data),
-    method: 'post'
+    params: {
+      userName,
+      userPassword:password
+    },
+    method: 'get'
   })
 }
 
@@ -19,8 +22,10 @@ export const getUserInfo = (token) => {
   }
   return axios.request({
     url: 'index/user',
-    data:Qs.stringify(data),
-    method: 'post'
+    params: {
+      token
+    },
+    method: 'get'
   })
 }
 

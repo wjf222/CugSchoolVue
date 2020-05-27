@@ -28,6 +28,15 @@ export default [
     component: () => import('@/view/login/login.vue')
   },
   {
+    path: '/sign',
+    name: 'sign',
+    meta: {
+      title: 'sign - 注册',
+      hideInMenu: true
+    },
+    component: () => import('@/view/sign/sign.vue')
+  },
+  {
     path: '/',
     name: '_home',
     redirect: '/home',

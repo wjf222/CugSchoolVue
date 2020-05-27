@@ -3,16 +3,25 @@
 </style>
 
 <template>
-  <div class="login">
-    <div class="login-con">
-      <Card icon="log-in" title="欢迎登录" :bordered="false">
-        <div class="form-con">
-          <login-form @on-success-valid="handleSubmit"></login-form>
-          <p class="login-tip">输入任意用户名和密码即可</p>
-        </div>
-      </Card>
+    <div class="login">
+      <div class="login-con">
+        <Card icon="log-in" title="欢迎登录" :bordered="false">
+          <div class="form-con">
+            <login-form @on-success-valid="handleSubmit"></login-form>
+            <div class="text-center p-t-136">
+					    <a class="txt2" @click="doSign" target="_blank" style="text-decoration:underline;">
+							  还没有账号？立即注册
+					    </a>
+				    </div>
+          </div>
+        </Card>
+      </div>
+          <div class="text-center p-t-136">
+				<a class="txt2" href="http://www.beian.miit.gov.cn/" target="_blank" style="text-decoration:underline;">
+				  鄂ICP备20004325号
+				</a>
+		</div>
     </div>
-  </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -30,11 +39,16 @@ export default {
     handleSubmit ({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
         this.getUserInfo().then(res => {
-          console.log(this.$config.homeName);
           this.$router.push({
             name: this.$config.homeName
           })
         })
+      })
+    },
+    doSign(){
+      console.log('sign');
+      this.$router.push({
+            name: 'sign'
       })
     }
   }
