@@ -34,7 +34,7 @@ export default [
       title: 'sign - 注册',
       hideInMenu: true
     },
-    component: () => import('@/view/sign/sign.vue')
+    component: () => import('@/view/login/login.vue')
   },
   {
     path: '/',

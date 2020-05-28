@@ -1,5 +1,6 @@
 import {
   login,
+  sign,
   logout,
   getUserInfo,
   getMessage,
@@ -92,6 +93,15 @@ export default {
         })
       })
     },
+    //注册
+    handleSign ({ commit }, { userName, password }) {
+      userName = userName.trim()
+      console.log("进入注册");
+      return sign({
+        userName,
+        password
+      })
+    },
     // 退出登录
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
@@ -114,7 +124,7 @@ export default {
         try {
           getUserInfo(state.token).then(res => {
             const data = res.data
-            commit('setAvatar', "http://39.99.203.80:8081/images/1.jpg")
+            commit('setAvatar', "http://39.99.203.80:8080/images/1.jpg")
             commit('setUserName', data.name)
             commit('setUserId', data.user_id)
             commit('setAccess', ['super_admin', 'admin'])

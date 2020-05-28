@@ -1,60 +1,95 @@
 <style lang="less">
-  @import './login.less';
+@import "./login.less";
 </style>
 
 <template>
-    <div class="login">
-      <div class="login-con">
-        <Card icon="log-in" title="欢迎登录" :bordered="false">
-          <div class="form-con">
-            <login-form @on-success-valid="handleSubmit"></login-form>
-            <div class="text-center p-t-136">
-					    <a class="txt2" @click="doSign" target="_blank" style="text-decoration:underline;">
-							  还没有账号？立即注册
-					    </a>
-				    </div>
-          </div>
-        </Card>
-      </div>
+  <div class="login">
+    <div class="login-con">
+      <Card icon="log-in" title="欢迎登录" :bordered="false" v-if="isLogin">
+        <div class="form-con">
+          <login-form @on-success-valid="handleSubmit"></login-form>
           <div class="text-center p-t-136">
-				<a class="txt2" href="http://www.beian.miit.gov.cn/" target="_blank" style="text-decoration:underline;">
-				  鄂ICP备20004325号
-				</a>
-		</div>
+            <a
+              class="txt2"
+              @click="doSign"
+              target="_blank"
+              style="text-decoration:underline;"
+            >还没有账号？立即注册</a>
+          </div>
+        </div>
+      </Card>
+      <Card icon="log-in" title="欢迎注册" :bordered="false" v-if="!isLogin">
+        <div class="form-con">
+          <login-form @on-success-valid="handleSignSubmit"></login-form>
+          <div class="text-center p-t-136">
+            <a
+              class="txt2"
+              @click="doSign"
+              target="_blank"
+              style="text-decoration:underline;"
+            >已有帐号？立刻登录</a>
+          </div>
+        </div>
+      </Card>
     </div>
+    <div class="text-center p-t-136">
+      <a
+        class="txt2"
+        href="http://www.beian.miit.gov.cn/"
+        target="_blank"
+        style="text-decoration:underline;"
+      >鄂ICP备20004325号</a>
+    </div>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
-import LoginForm from '_c/login-form'
-import { mapActions } from 'vuex'
+import LoginForm from "_c/login-form";
+// import VuejsDialog from "vuejs-dialog"
+import { mapActions } from "vuex";
+// Vue.use(VuejsDialog)
 export default {
   components: {
     LoginForm
   },
+  data() {
+    return {
+      isLogin: true
+    };
+  },
   methods: {
-    ...mapActions([
-      'handleLogin',
-      'getUserInfo'
-    ]),
-    handleSubmit ({ userName, password }) {
+    ...mapActions(["handleLogin", "getUserInfo", "handleSign"]),
+    handleSubmit({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
         this.getUserInfo().then(res => {
           this.$router.push({
             name: this.$config.homeName
-          })
-        })
-      })
+          });
+        });
+      });
     },
-    doSign(){
-      console.log('sign');
-      this.$router.push({
-            name: 'sign'
-      })
+    handleSignSubmit({ userName, password }) {
+      console.log("开始注册");
+      this.handleSign({ userName, password }).then(res => {
+        if (res.data == true) {
+          console.log(true);
+          this.isLogin = !this.isLogin;
+        } else {
+          alert("注册成功");
+          // this.$dialog.alert("Please confirm to continue").then(function() {
+          //   // 点击确定执行
+          //   console.log("Clicked on proceed");
+          // });
+          // console.log(false);
+        }
+      });
+    },
+    doSign() {
+      this.isLogin = !this.isLogin;
     }
   }
-}
+};
 </script>
 
 <style>
-
 </style>

@@ -42,7 +42,7 @@ module.exports = {
   devServer: {
     proxy : {
       '/index' : {
-          target : 'http://39.101.192.126:8080',
+          target : 'http://39.99.203.80:8080',
           // ws : true,
           changeOrigin : true,
           pathRewrite : {

@@ -13,6 +13,7 @@ const router = new Router({
   mode: 'history'
 })
 const LOGIN_PAGE_NAME = 'login'
+const SIGN_PAGE_NAME = 'sign'
 const SEARCH_PAGE_NAME = 'search'
 
 const turnTo = (to, access, next) => {

@@ -2,12 +2,20 @@ import HttpRequest from '@/libs/axios'
 import Qs from 'qs'
 const axios = new HttpRequest('')
 export const login = ({ userName, password }) => {
-  const data = {
-    userName:userName,
-    userPassword:password
-  }
   return axios.request({
     url: 'index/login',
+    params: {
+      userName,
+      userPassword:password
+    },
+    method: 'get'
+  })
+}
+
+export const sign = ({ userName, password }) => {
+  console.log("注册开始");
+  return axios.request({
+    url: 'index/register',
     params: {
       userName,
       userPassword:password
