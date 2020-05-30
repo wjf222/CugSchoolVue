@@ -165,6 +165,44 @@ export default [
     ]
   },
   {
+    path: '/blog',
+    name: 'blog',
+    meta: {
+      hideInBread: true
+    },
+    component: Main,
+    children: [
+      {
+        path: 'blog_page',
+        name: '博客',
+        meta: {
+          icon: 'ios-bug',
+          title: '博客'
+        },
+        component: () => import('@/view/blog/blog.vue')
+      }
+    ]
+  },
+  {
+    path: '/md',
+    name: 'md',
+    meta: {
+      hideInBread: true
+    },
+    component: Main,
+    children: [
+      {
+        path: 'blog_page',
+        name: 'md文档',
+        meta: {
+          icon: 'ios-bug',
+          title: 'md文档'
+        },
+        component: () => import('@/view/mdShow/mdown.vue')
+      }
+    ]
+  },
+  {
     path: '/argu',
     name: 'argu',
     meta: {

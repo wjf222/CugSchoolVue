@@ -19,6 +19,7 @@ const BASE_URL = process.env.NODE_ENV === 'production'
   : '/'
 
 module.exports = {
+  parallel: false,
   // Project deployment base
   // By default we assume your app will be deployed at the root of a domain,
   // e.g. https://www.my-app.com/
@@ -35,20 +36,31 @@ module.exports = {
     config.resolve.alias
       .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
       .set('_c', resolve('src/components'))
+      config.module.rule('md')
+      .test(/\.md/)
+      .use('vue-loader')
+      .loader('vue-loader')
+      .end()
+      .use('vue-markdown-loader')
+      .loader('vue-markdown-loader/lib/markdown-compiler')
+      .options({
+        raw: true
+      })
   },
   // 设为false打包时不生成.map文件
   productionSourceMap: false,
   // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
   devServer: {
-    proxy : {
-      '/index' : {
-          target : 'http://39.99.203.80:8080',
-          // ws : true,
-          changeOrigin : true,
-          pathRewrite : {
-              '^/index' : ''
-          }
+    proxy: {
+      '/index': {
+        target: 'http://39.99.203.80:8080',
+        // ws : true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/index': ''
+        }
       }
     }
-  }
+  },
+
 }
