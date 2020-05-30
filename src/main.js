@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import iView from 'iview'
 import mavonEditor from 'mavon-editor'
+import ElementUI from 'element-ui'
 import i18n from '@/locale'
 import config from '@/config'
 import importDirective from '@/directive'
@@ -16,6 +17,8 @@ import '@/assets/icons/iconfont.css'
 import TreeTable from 'tree-table-vue'
 import VOrgTree from 'v-org-tree'
 import 'v-org-tree/dist/v-org-tree.css'
+import '@/assets/css/theme/index.css'
+import '@/assets/css/icon/iconfont.css'
 // 实际打包时应该不引入mock
 /* eslint-disable */
 // if (process.env.NODE_ENV !== 'production') require('@/mock')
@@ -26,6 +29,7 @@ Vue.use(iView, {
 Vue.use(TreeTable)
 Vue.use(VOrgTree)
 Vue.use(mavonEditor)
+Vue.use(ElementUI)
 /**
  * @description 注册admin内置插件
  */

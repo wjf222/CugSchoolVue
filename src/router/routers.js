@@ -55,7 +55,19 @@ export default [
           notCache: true,
           icon: 'md-home'
         },
-        component: () => import('@/view/single-page/home')
+        component: () => import('@/view/single-page/home'),
+        children: [
+          {
+            path: '/',
+            name: 'home',
+            meta: {
+              hideInMenu: true,
+              title: '首页',
+              notCache: true,
+              icon: 'md-home'
+            },
+            component: () => import('@/view/single-page/home/index.vue'),
+          }],
       }
     ]
   },
@@ -81,10 +93,10 @@ export default [
   {
     path: '/search_ans/:searchText',
     name: '搜索结果',
-      meta: {
-        icon: 'ios-bug',
-        title: '搜索结果'
-      },
+    meta: {
+      icon: 'ios-bug',
+      title: '搜索结果'
+    },
     component: () => import('@/view/search/search-ans.vue')
   },
   {
