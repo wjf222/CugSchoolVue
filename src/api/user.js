@@ -1,12 +1,14 @@
 import HttpRequest from '@/libs/axios'
 import Qs from 'qs'
 const axios = new HttpRequest('')
-export const login = ({ userName, password }) => {
+export const login = ({ userName, password, Captcha, uuid }) => {
   return axios.request({
     url: 'index/login',
     params: {
       userName,
-      userPassword:password
+      userPassword:password,
+      captcha:Captcha,
+      uuid
     },
     method: 'get'
   })

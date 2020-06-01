@@ -7,7 +7,7 @@
     <div class="login-con">
       <Card icon="log-in" title="欢迎登录" :bordered="false" v-if="isLogin">
         <div class="form-con">
-          <login-form @on-success-valid="handleSubmit"></login-form>
+          <login-form @on-success-valid="handleSubmit" v-bind:meType="loginName"></login-form>
           <div class="text-center p-t-136">
             <a
               class="txt2"
@@ -20,7 +20,7 @@
       </Card>
       <Card icon="log-in" title="欢迎注册" :bordered="false" v-if="!isLogin">
         <div class="form-con">
-          <login-form @on-success-valid="handleSignSubmit"></login-form>
+          <login-form @on-success-valid="handleSignSubmit" v-bind:meType="signNanme"></login-form>
           <div class="text-center p-t-136">
             <a
               class="txt2"
@@ -54,13 +54,15 @@ export default {
   },
   data() {
     return {
-      isLogin: true
+      isLogin: true,
+      loginName: "登录",
+      signNanme: "注册"
     };
   },
   methods: {
     ...mapActions(["handleLogin", "getUserInfo", "handleSign"]),
-    handleSubmit({ userName, password }) {
-      this.handleLogin({ userName, password }).then(res => {
+    handleSubmit({ userName, password, Captcha, uuid }) {
+      this.handleLogin({  userName, password, Captcha, uuid }).then(res => {
         this.getUserInfo().then(res => {
           this.$router.push({
             name: this.$config.homeName
