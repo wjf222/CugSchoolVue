@@ -13,14 +13,7 @@
       </Button>
     </div>
     <div id="editor">
-      <mavon-editor
-        ref="md"
-        @save="$save"
-        @htmlCode="$htmlCode"
-        @imgAdd="$imgAdd"
-        @imgDel="$imgDel"
-        style="height: 100%"
-      ></mavon-editor>
+        <markdown-pro></markdown-pro>
     </div>
   </div>
 </template>
@@ -28,12 +21,14 @@
 <script>
 import VueSimplemde from "vue-simplemde";
 import { mavonEditor } from "mavon-editor";
+import { MarkdownPro } from 'vue-meditor'
 import "mavon-editor/dist/css/index.css";
 export default {
   name: "article_page",
   components: {
     VueSimplemde,
-    mavonEditor
+    mavonEditor,
+    MarkdownPro
   },
   methods: {
     $save(value, render) {
