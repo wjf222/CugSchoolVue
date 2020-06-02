@@ -1,9 +1,9 @@
 <template>
 <div class="search-result-item">
-    <a class="search-result-link" :href="info.url">
-        <div class="title">{{info.title}}</div>
-        <div class="url">{{info.url}}</div>
-        <div class="desc">{{info.date}} - {{info.desc}}</div>
+    <a class="search-result-link" :href="info.savePath">
+        <div class="title">{{info.essayTitle}}</div>
+        <div class="url">{{info.savePath}}</div>
+        <div class="desc">{{info.essayPublishTime}} - {{info.essayAbstract}}</div>
     </a>
 </div>
 </template>

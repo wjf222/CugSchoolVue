@@ -26,8 +26,6 @@ export const sign = ({ userName, password }) => {
   })
 }
 export const setPersonInfo = (token,{userName,userSex,userTelephone,userEmail}) => {
-  console.log(token);
-  console.log(userName);
   return axios.request({
     url: 'user/update',
     params: {
@@ -41,6 +39,16 @@ export const setPersonInfo = (token,{userName,userSex,userTelephone,userEmail}) 
   })
 }
 
+export const searchArticle= (searchText) =>{
+  return axios.request({
+    url: 'search',
+    params: {
+      keyword:searchText,
+      currentPage:0
+    },
+    method: 'get'
+  })
+}
 export const getUserInfo = (token) => {
   return axios.request({
     url: 'user',
