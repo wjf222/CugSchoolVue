@@ -11,7 +11,6 @@
 import SearchResultToolBar from "./components/SearchResultToolBar.vue";
 import SearchResultItem from "./components/SearchResultItem.vue";
 import { mapActions } from "vuex";
-const DB = require("./data/search.json");
 export default {
   components: {
     SearchResultToolBar,
@@ -42,8 +41,6 @@ export default {
         const data = res.data
         this.searchResultList = data.searchList
       });
-      // this.searchResultList = DB["searchList"];
-      // console.log(this.searchResultList);
     }
   }
 };

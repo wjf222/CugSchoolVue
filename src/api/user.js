@@ -39,6 +39,16 @@ export const setPersonInfo = (token,{userName,userSex,userTelephone,userEmail}) 
   })
 }
 
+export const getEssaies = (page) =>{
+  console.log(page);
+  return axios.request({
+    url: 'getEssaies',
+    params: {
+      author:"zhouning"
+    },
+    method: 'get'
+  })
+}
 export const searchArticle= (searchText) =>{
   return axios.request({
     url: 'search',

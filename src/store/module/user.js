@@ -10,7 +10,8 @@ import {
   restoreTrash,
   getUnreadCount,
   setPersonInfo,
-  searchArticle
+  searchArticle,
+  getEssaies
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -125,10 +126,7 @@ export default {
       return getUserInfo(state.token)
     },
     setPersonInfo({ state },{userName,userSex,userTelephone,userEmail}) {
-      console.log("修改userStroe");
-      console.log(state.token);
       const token = state.token
-      console.log(userName);
       return setPersonInfo(token,{userName,userSex,userTelephone,userEmail})
     },
     // 获取用户相关信息
@@ -154,6 +152,10 @@ export default {
       })
     },
 
+    getEssaies({ state, commit },{page}){
+      console.log(page);
+      return getEssaies(page)
+    },
     searchArticle({ state, commit },{searchText}){
       return searchArticle(searchText)
     },
