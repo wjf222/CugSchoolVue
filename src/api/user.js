@@ -1,9 +1,9 @@
 import HttpRequest from '@/libs/axios'
 import Qs from 'qs'
-const axios = new HttpRequest('')
+const axios = new HttpRequest('http://39.99.203.80:8080')
 export const login = ({ userName, password, Captcha, uuid }) => {
   return axios.request({
-    url: 'index/login',
+    url: 'login',
     params: {
       userName,
       userPassword:password,
@@ -25,23 +25,37 @@ export const sign = ({ userName, password }) => {
     method: 'get'
   })
 }
-
-export const getUserInfo = (token) => {
-  const data = {
-    token:token,
-  }
+export const setPersonInfo = (token,{userName,userSex,userTelephone,userEmail}) => {
+  console.log(token);
+  console.log(userName);
   return axios.request({
-    url: 'index/user',
+    url: 'user/update',
     params: {
-      token
+      token:token,
+      userName,
+      sex:userSex,
+      telephone:userTelephone,
+      email:userEmail
     },
     method: 'get'
   })
 }
 
+export const getUserInfo = (token) => {
+  return axios.request({
+    url: 'user',
+    params: {
+      token:token
+    },
+    method: 'get'
+  })
+}
 export const logout = (token) => {
   return axios.request({
-    url: 'index/logout',
+    url: 'logout',
+    params: {
+      token
+    },
     method: 'get'
   })
 }

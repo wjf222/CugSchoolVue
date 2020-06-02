@@ -45,9 +45,7 @@
 
 <script type="text/ecmascript-6">
 import LoginForm from "_c/login-form";
-// import VuejsDialog from "vuejs-dialog"
 import { mapActions } from "vuex";
-// Vue.use(VuejsDialog)
 export default {
   components: {
     LoginForm
@@ -62,7 +60,7 @@ export default {
   methods: {
     ...mapActions(["handleLogin", "getUserInfo", "handleSign"]),
     handleSubmit({ userName, password, Captcha, uuid }) {
-      this.handleLogin({  userName, password, Captcha, uuid }).then(res => {
+      this.handleLogin({ userName, password, Captcha, uuid }).then(res => {
         this.getUserInfo().then(res => {
           this.$router.push({
             name: this.$config.homeName

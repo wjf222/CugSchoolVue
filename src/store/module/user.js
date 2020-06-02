@@ -8,7 +8,8 @@ import {
   hasRead,
   removeReaded,
   restoreTrash,
-  getUnreadCount
+  getUnreadCount,
+  setPersonInfo
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -119,21 +120,33 @@ export default {
         // resolve()
       })
     },
+    getPersonInfo({ state, commit }) {
+      return getUserInfo(state.token)
+    },
+    setPersonInfo({ state },{userName,userSex,userTelephone,userEmail}) {
+      console.log("修改userStroe");
+      console.log(state.token);
+      const token = state.token
+      console.log(userName);
+      return setPersonInfo(token,{userName,userSex,userTelephone,userEmail})
+    },
     // 获取用户相关信息
     getUserInfo({ state, commit }) {
       return new Promise((resolve, reject) => {
         try {
-          getUserInfo(state.token).then(res => {
-            const data = res.data
-            commit('setAvatar', "http://39.99.203.80:8080/images/1.jpg")
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
-            commit('setAccess', ['super_admin', 'admin'])
-            commit('setHasGetInfo', true)
-            resolve(data)
-          }).catch(err => {
-            reject(err)
-          })
+          getUserInfo(state.token)
+            .then(res => {
+              const data = res.data
+              console.log(data);
+              commit('setAvatar', "http://39.99.203.80:8080/images/1.jpg")
+              commit('setUserName', data.name)
+              commit('setUserId', data.user_id)
+              commit('setAccess', ['super_admin', 'admin'])
+              commit('setHasGetInfo', true)
+              resolve(data)
+            }).catch(err => {
+              reject(err)
+            })
         } catch (error) {
           reject(error)
         }
