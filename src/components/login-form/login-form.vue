@@ -58,6 +58,9 @@ export default {
       uuid:"130"
     };
   },
+  created(){
+    this.refresh();
+  },
   computed: {
     rules() {
       return {
@@ -81,6 +84,7 @@ export default {
           });
         }
       });
+      this.refresh();
     },
     refresh() {
       const t = Math.floor(Math.random()*1000+1)
