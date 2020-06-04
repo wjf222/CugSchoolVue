@@ -111,6 +111,7 @@ export default {
     // 退出登录
     handleLogOut({ state, commit }) {
       return new Promise((resolve, reject) => {
+        console.log("logout :" + state.token);
         logout(state.token).then(() => {
           commit('setToken', '')
           commit('setAccess', [])
@@ -172,7 +173,7 @@ export default {
 
     publishArticle({state},{article}){
       console.log(article);
-      return publishArticle({content:article.body.content,title:article.title,
+      return publishArticle({content:article.body.contentHtml,title:article.title,
         essayAbstract:article.summary,author:state.userName})
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表

@@ -15,7 +15,6 @@ export const login = ({ userName, password, Captcha, uuid }) => {
 }
 
 export const sign = ({ userName, password }) => {
-  console.log("注册开始");
   return axios.request({
     url: 'index/register',
     params: {
@@ -40,7 +39,6 @@ export const setPersonInfo = (token, { userName, userSex, userTelephone, userEma
 }
 
 export const viewArticle = (id) => {
-  console.log(id);
   return axios.request({
     url: 'getEssay',
     params: {
@@ -50,7 +48,6 @@ export const viewArticle = (id) => {
   })
 }
 export const getEssaies = (page) => {
-  console.log(page);
   return axios.request({
     url: 'getEssaies',
     params: {
@@ -84,6 +81,7 @@ export const publishArticle = ({content,title,essayAbstract,author}) => {
 }
 
 export const getUserInfo = (token) => {
+  console.log(token);
   return axios.request({
     url: 'user',
     params: {
@@ -93,6 +91,7 @@ export const getUserInfo = (token) => {
   })
 }
 export const logout = (token) => {
+  console.log(token);
   return axios.request({
     url: 'logout',
     params: {

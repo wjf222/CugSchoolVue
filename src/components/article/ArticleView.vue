@@ -17,13 +17,13 @@
               </div>
             </div>
             <!-- v-if="this.article.author.id == this.$store.state.id" -->
-            <el-button
+            <!-- <el-button
               @click="editArticle()"
               style="position: absolute;left: 60%;"
               size="mini"
               round
               icon="el-icon-edit"
-            >编辑</el-button>
+            >编辑</el-button> -->
           </div>
           <div class="me-view-content">
             <!-- <markdown-editor :editor="article.editor"></markdown-editor> -->
@@ -144,6 +144,7 @@ export default {
         author: {},
         category: {},
         createDate: "",
+        savePath:"",
         editor: {
           value: "",
           toolbarsFlag: false,
@@ -184,8 +185,8 @@ export default {
           this.article.name = data.essayAuthor;
           this.article.createDate = data.essayPublishTime;
           // Object.assign(this.article, data.data);
-          this.article.editor.value = data.savePath;
-          console.log(this.htmlMD);
+          this.article.savePath = data.savePath;
+          console.log(this.article.savePath);
           // that.getCommentsByArticle();
         })
         .catch(error => {
@@ -200,9 +201,11 @@ export default {
         });
     },
     getMd() {
+      const path = "images/"+this.article.savePath;
+      console.log(path);
       axios
         .request({
-          url: "images/README.md"
+          url: path
         })
         .then(res => {
           this.htmlMD = res.data
