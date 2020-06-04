@@ -6,8 +6,8 @@ export const login = ({ userName, password, Captcha, uuid }) => {
     url: 'login',
     params: {
       userName,
-      userPassword:password,
-      captcha:Captcha,
+      userPassword: password,
+      captcha: Captcha,
       uuid
     },
     method: 'get'
@@ -20,26 +20,26 @@ export const sign = ({ userName, password }) => {
     url: 'index/register',
     params: {
       userName,
-      userPassword:password
+      userPassword: password
     },
     method: 'get'
   })
 }
-export const setPersonInfo = (token,{userName,userSex,userTelephone,userEmail}) => {
+export const setPersonInfo = (token, { userName, userSex, userTelephone, userEmail }) => {
   return axios.request({
     url: 'user/update',
     params: {
-      token:token,
+      token: token,
       userName,
-      sex:userSex,
-      telephone:userTelephone,
-      email:userEmail
+      sex: userSex,
+      telephone: userTelephone,
+      email: userEmail
     },
     method: 'get'
   })
 }
 
-export const viewArticle = (id) =>{
+export const viewArticle = (id) => {
   console.log(id);
   return axios.request({
     url: 'getEssay',
@@ -49,31 +49,45 @@ export const viewArticle = (id) =>{
     method: 'get'
   })
 }
-export const getEssaies = (page) =>{
+export const getEssaies = (page) => {
   console.log(page);
   return axios.request({
     url: 'getEssaies',
     params: {
-      author:"zhouning"
+      author: "zhouning"
     },
     method: 'get'
   })
 }
-export const searchArticle= (searchText,page) =>{
+export const searchArticle = (searchText, page) => {
   return axios.request({
     url: 'search',
     params: {
-      keyword:searchText,
-      currentPage:page
+      keyword: searchText,
+      currentPage: page
     },
     method: 'get'
   })
 }
+
+export const publishArticle = ({content,title,essayAbstract,author}) => {
+  return axios.request({
+    url:"file/md",
+    params:{
+      content,
+      title,
+      essayAbstract,
+      author:"zhouning"
+    },
+    method:"get"
+  })
+}
+
 export const getUserInfo = (token) => {
   return axios.request({
     url: 'user',
     params: {
-      token:token
+      token: token
     },
     method: 'get'
   })

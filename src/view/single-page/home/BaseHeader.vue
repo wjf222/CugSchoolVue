@@ -1,13 +1,13 @@
 <template>
   <el-header class="me-area">
     <el-row class="me-header">
-       <el-col :span="4" class="me-header-left">
+      <el-col :span="4" class="me-header-left">
         <router-link to="/" class="me-title">
           <img src="http://39.99.203.80:8080/images/1.jpg" />
         </router-link>
       </el-col>
 
-      <el-col  :span="16">
+      <el-col v-if="!simple" :span="16">
         <el-menu
           :router="true"
           menu-trigger="click"
@@ -29,12 +29,15 @@
           </el-col>
         </el-menu>
       </el-col>
+      <template v-else>
+        <slot></slot>
+      </template>
     </el-row>
   </el-header>
 </template>
 
 <script>
-import User from '@/components/main/components/user'
+import User from "@/components/main/components/user";
 export default {
   name: "BaseHeader",
   components: {
@@ -50,7 +53,7 @@ export default {
   data() {
     return {
       homeImg: "http://39.99.203.80:8080/images/1.jpg",
-      unreadCount:[3,2,1]
+      unreadCount: [3, 2, 1]
     };
   },
   computed: {
