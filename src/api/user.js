@@ -59,12 +59,12 @@ export const getEssaies = (page) =>{
     method: 'get'
   })
 }
-export const searchArticle= (searchText) =>{
+export const searchArticle= (searchText,page) =>{
   return axios.request({
     url: 'search',
     params: {
       keyword:searchText,
-      currentPage:0
+      currentPage:page
     },
     method: 'get'
   })

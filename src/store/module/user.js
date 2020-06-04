@@ -160,8 +160,8 @@ export default {
       console.log(page);
       return getEssaies(page)
     },
-    searchArticle({ state, commit },{searchText}){
-      return searchArticle(searchText)
+    searchArticle({ state, commit },{searchText,page}){
+      return searchArticle(searchText,page)
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
     getUnreadMessageCount({ state, commit }) {

@@ -1,7 +1,7 @@
 <template>
   <el-card class="me-area" :body-style="{ padding: '16px' }">
     <div class="me-article-header">
-      <a @click="view(essayId)" class="me-article-title">{{essayTittle}}</a>
+      <a @click="view(essayId)" class="me-article-title">{{essayTitle}}</a>
       <el-button v-if="false > 0" class="me-article-icon" type="text">置顶</el-button>
       <span class="me-pull-right me-article-count">
         <!-- <i class="me-icon-comment"></i>&nbsp;{{commentCounts}} -->
@@ -36,7 +36,7 @@ export default {
   props: {
     essayId: Number,
     // weight: Number,
-    essayTittle: String,
+    essayTitle: String,
     // commentCounts: Number,
     // viewCounts: Number,
     essayAbstract: String,
@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     view(id) {
+      console.log(id);
       this.$router.push({ path: `/view/${id}` });
     }
   },

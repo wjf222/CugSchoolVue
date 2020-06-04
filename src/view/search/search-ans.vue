@@ -1,8 +1,12 @@
 <template>
   <div class="search-page">
     <SearchResultToolBar v-model="search" />
-    <div v-for="info in searchResultList" :key="info.essayId">
-      <SearchResultItem :info="info" />
+    <div>
+      <el-container>
+        <el-main class="me-articles">
+          <article-scroll-page></article-scroll-page>
+        </el-main>
+      </el-container>
     </div>
   </div>
 </template>
@@ -10,11 +14,13 @@
 <script>
 import SearchResultToolBar from "./components/SearchResultToolBar.vue";
 import SearchResultItem from "./components/SearchResultItem.vue";
+import ArticleScrollPage from "@/components/article/ArticleScrollPage"
 import { mapActions } from "vuex";
 export default {
   components: {
     SearchResultToolBar,
-    SearchResultItem
+    SearchResultItem,
+    ArticleScrollPage
   },
   data() {
     return {
@@ -45,3 +51,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.el-container {
+  width: 960px;
+}
+</style>
