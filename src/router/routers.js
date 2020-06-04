@@ -186,7 +186,18 @@ export default [
           title: '个人中心'
         },
         component: () => import('@/view/PersonMes/user-center.vue')
-      }
+      },
+      {
+        path: '/view/:id',
+            name: '文章',
+            meta: {
+              hideInBread: true,
+              hideInMenu: true,
+              icon: 'ios-bug',
+              title: '文章'
+            },
+            component: () => import('@/components/article/ArticleView.vue')
+      },
     ]
   },
   {

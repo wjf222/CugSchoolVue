@@ -1,76 +1,63 @@
 <template>
-  <div class="markdown-wrapper">
-    <textarea ref="editor"></textarea>
-  </div>
+  <mavon-editor
+    class="me-editor"
+    ref="md"
+    v-model="editor.value"
+    @imgAdd="imgAdd"
+    v-bind="editor">
+  </mavon-editor>
 </template>
 
+
 <script>
-import Simplemde from 'simplemde'
-import 'simplemde/dist/simplemde.min.css'
-export default {
-  name: 'MarkdownEditor',
-  props: {
-    value: {
-      type: String,
-      default: ''
+
+  import {mavonEditor} from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
+
+  // import {upload} from '@/api/upload'
+
+  export default {
+    name: 'MarkdownEditor',
+    props: {
+      editor: Object
     },
-    options: {
-      type: Object,
-      default: () => {
-        return {}
+    data() {
+      return {}
+    },
+    mounted() {
+      this.$set(this.editor, 'ref', this.$refs.md)
+    },
+    methods: {
+      imgAdd(pos, $file) {
+        let that = this
+        let formdata = new FormData();
+        formdata.append('image', $file);
+
+        upload(formdata).then(data => {
+          // 第二步.将返回的url替换到文本原位置![...](./0) -> ![...](url)
+          if (data.code == 0) {
+
+            that.$refs.md.$img2Url(pos, data.data.url);
+          } else {
+            that.$message({message: data.msg, type: 'error', showClose: true})
+          }
+
+        }).catch(err => {
+          that.$message({message: err, type: 'error', showClose: true});
+        })
       }
     },
-    localCache: {
-      type: Boolean,
-      default: true
+    components: {
+      mavonEditor
     }
-  },
-  data () {
-    return {
-      editor: null
-    }
-  },
-  methods: {
-    addEvents () {
-      this.editor.codemirror.on('change', () => {
-        let value = this.editor.value()
-        if (this.localCache) localStorage.markdownContent = value
-        this.$emit('input', value)
-        this.$emit('on-change', value)
-      })
-      this.editor.codemirror.on('focus', () => {
-        this.$emit('on-focus', this.editor.value())
-      })
-      this.editor.codemirror.on('blur', () => {
-        this.$emit('on-blur', this.editor.value())
-      })
-    }
-  },
-  mounted () {
-    this.editor = new Simplemde(Object.assign(this.options, {
-      element: this.$refs.editor
-    }))
-    /**
-     * 事件列表为Codemirror编辑器的事件，更多事件类型，请参考：
-     * https://codemirror.net/doc/manual.html#events
-     */
-    this.addEvents()
-    let content = localStorage.markdownContent
-    if (content) this.editor.value(content)
   }
-}
 </script>
+<style scoped>
+  .me-editor {
+    z-index: 6 !important;
+  }
 
-<style lang="less">
-.markdown-wrapper{
-  .editor-toolbar.fullscreen{
-    z-index: 9999;
+  .v-note-wrapper.fullscreen {
+    top: 60px !important
   }
-  .CodeMirror-fullscreen{
-    z-index: 9999;
-  }
-  .CodeMirror-fullscreen ~ .editor-preview-side{
-    z-index: 9999;
-  }
-}
 </style>

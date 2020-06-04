@@ -24,7 +24,7 @@ export default {
     getMd() {
       axios
         .request({
-          url: "images/index.md"
+          url: "images/README.md"
         })
         .then(res => {
           this.htmlMD = res.data
@@ -38,7 +38,7 @@ export default {
   },
   beforeCreate() {
     this.$nextTick(function() {
-      const url = "./index.md";
+      const url = "images/README.md";
       axios.get(url).then(response => {
         this.htmlMD = response.data;
       });

@@ -11,7 +11,8 @@ import {
   getUnreadCount,
   setPersonInfo,
   searchArticle,
-  getEssaies
+  getEssaies,
+  viewArticle
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -152,6 +153,9 @@ export default {
       })
     },
 
+    viewArticle({ state, commit },{id}){
+      return viewArticle(id)
+    },
     getEssaies({ state, commit },{page}){
       console.log(page);
       return getEssaies(page)

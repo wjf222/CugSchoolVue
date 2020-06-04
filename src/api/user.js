@@ -39,6 +39,16 @@ export const setPersonInfo = (token,{userName,userSex,userTelephone,userEmail}) 
   })
 }
 
+export const viewArticle = (id) =>{
+  console.log(id);
+  return axios.request({
+    url: 'getEssay',
+    params: {
+      id
+    },
+    method: 'get'
+  })
+}
 export const getEssaies = (page) =>{
   console.log(page);
   return axios.request({
