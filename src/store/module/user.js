@@ -13,7 +13,9 @@ import {
   searchArticle,
   getEssaies,
   viewArticle,
-  publishArticle
+  publishArticle,
+  getCommentsArticle,
+  publishComment
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -128,9 +130,9 @@ export default {
     getPersonInfo({ state, commit }) {
       return getUserInfo(state.token)
     },
-    setPersonInfo({ state },{userName,userSex,userTelephone,userEmail}) {
+    setPersonInfo({ state }, { userName, userSex, userTelephone, userEmail }) {
       const token = state.token;
-      return setPersonInfo(token,{userName,userSex,userTelephone,userEmail})
+      return setPersonInfo(token, { userName, userSex, userTelephone, userEmail })
     },
     // 获取用户相关信息
     getUserInfo({ state, commit }) {
@@ -156,25 +158,34 @@ export default {
     },
 
     //返回文章
-    viewArticle({ state, commit },{id}){
+    viewArticle({ state, commit }, { id }) {
       return viewArticle(id)
     },
 
     //获取文章
-    getEssaies({ state, commit },{page}){
-      console.log(page);
+    getEssaies({ state, commit }, { page }) {
       return getEssaies(page)
     },
 
+    //获取评论
+    getCommentsArticle({ state }, { id }) {
+      return getCommentsArticle(id);
+    },
+    publishMyMyComment({state},{id,content}){
+      console.log(content);
+      return publishComment({essayId:id,commentatorName:"zhouning",commentContent:content});
+    },
     //搜索文章
-    searchArticle({ state, commit },{searchText,page}){
-      return searchArticle(searchText,page)
+    searchArticle({ state, commit }, { searchText, page }) {
+      return searchArticle(searchText, page)
     },
 
-    publishArticle({state},{article}){
+    publishArticle({ state }, { article }) {
       console.log(article);
-      return publishArticle({content:article.body.contentHtml,title:article.title,
-        essayAbstract:article.summary,author:state.userName})
+      return publishArticle({
+        content: article.body.contentHtml, title: article.title,
+        essayAbstract: article.summary, author: state.userName
+      })
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
     getUnreadMessageCount({ state, commit }) {

@@ -43,6 +43,7 @@ export const setPersonInfo = (token, { userName, userSex, userTelephone, userEma
   })
 }
 
+
 export const viewArticle = (id) => {
   return axios.request({
     url: 'getEssay',
@@ -61,6 +62,8 @@ export const getEssaies = (page) => {
     method: 'get'
   })
 }
+
+
 export const searchArticle = (searchText, page) => {
   return axios.request({
     url: 'search',
@@ -79,18 +82,38 @@ export const publishArticle = ({content,title,essayAbstract,author}) => {
       content,
       title,
       essayAbstract,
-      author:"zhouning"
+      author:author
     },
     method:"get"
   })
 }
 
+export const publishComment=({essayId,commentatorName,commentContent}) =>{
+  return axios.request({
+    url:"comment/addComment",
+    params:{
+      essayId,
+      commentatorName,
+      commentContent
+    },
+    method:"get"
+  })
+}
 export const getUserInfo = (token) => {
-  console.log(token);
   return axios.request({
     url: 'user',
     params: {
       token: token
+    },
+    method: 'get'
+  })
+}
+
+export const getCommentsArticle = (id) => {
+  return axios.request({
+    url: 'comment/getComments',
+    params: {
+      essayId: id
     },
     method: 'get'
   })

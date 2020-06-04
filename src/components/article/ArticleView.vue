@@ -96,9 +96,9 @@
               :comment="c"
               :articleId="article.id"
               :index="index"
-              :rootCommentCounts="comments.length"
+              :rootCommentCounts="article.commentCounts"
               @commentCountsIncrement="commentCountsIncrement"
-              :key="c.id"
+              :key="c.commentId"
             ></commment-item>
           </div>
         </div>
@@ -109,7 +109,7 @@
 
 <script>
 import MarkdownEditor from "../markdown/markdown";
-
+import CommmentItem from '@/components/comment/CommentItem.vue'
 import { mapActions } from "vuex";
 import VueMarkdown from "vue-markdown";
 import HttpRequest from "@/libs/axios";
@@ -163,7 +163,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["viewArticle"]),
+    ...mapActions(["viewArticle","getCommentsArticle","publishMyMyComment"]),
     tagOrCategory(type, id) {
       this.$router.push({ path: `/${type}/${id}` });
     },
@@ -173,19 +173,16 @@ export default {
     getArticle() {
       this.viewArticle({ id: this.$route.params.id })
         .then(res => {
-          console.log(res);
           const data = res.data;
+          console.log(data);
           this.article.id = data.essayId;
           this.article.title = data.essayTitle;
           this.article.summary = data.essayAbstract;
           this.article.name = data.essayAuthor;
           this.article.createDate = data.essayPublishTime;
-          // Object.assign(this.article, data.data);
+          this.article.commentCounts = data.commentNum
           this.article.savePath = data.savePath;
-          console.log("savepath");
-          console.log(this.article.savePath);
           const path = "images/" + this.article.savePath;
-          console.log(path);
           axios
             .request({
               url: path
@@ -193,6 +190,7 @@ export default {
             .then(res => {
               this.htmlMD = res.data;
             });
+          this.getCommentsByArticle();
           // that.getCommentsByArticle();
         })
         .catch(error => {
@@ -205,18 +203,6 @@ export default {
             });
           }
         });
-      return new Promise();
-    },
-    getMd() {
-      const path = "images/" + this.article.savePath;
-      console.log(path);
-      axios
-        .request({
-          url: path
-        })
-        .then(res => {
-          this.htmlMD = res.data;
-        });
     },
     publishComment() {
       let that = this;
@@ -224,8 +210,8 @@ export default {
         return;
       }
       that.comment.article.id = that.article.id;
-
-      publishComment(that.comment)
+      console.log(that.comment);
+      this.publishMyMyComment({id:that.article.id,content:that.comment.content})
         .then(data => {
           that.$message({
             type: "success",
@@ -235,6 +221,7 @@ export default {
           that.comments.unshift(data.data);
           that.commentCountsIncrement();
           that.comment.content = "";
+          this.getArticle();
         })
         .catch(error => {
           if (error !== "error") {
@@ -248,9 +235,10 @@ export default {
     },
     getCommentsByArticle() {
       let that = this;
-      getCommentsByArticle(that.article.id)
-        .then(data => {
-          that.comments = data.data;
+      this.getCommentsArticle({id:that.article.id})
+        .then(res => {
+          console.log(res);
+          that.comments = res.data;
         })
         .catch(error => {
           if (error !== "error") {
@@ -268,6 +256,7 @@ export default {
   },
   components: {
     "markdown-editor": MarkdownEditor,
+    CommmentItem,
     VueMarkdown
     // CommmentItem
   },
@@ -289,7 +278,7 @@ export default {
 }
 
 .me-view-container {
-  width: 1400px;
+  width: 1200px;
 }
 
 .el-main {
