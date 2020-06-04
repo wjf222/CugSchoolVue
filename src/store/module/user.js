@@ -129,7 +129,7 @@ export default {
       return getUserInfo(state.token)
     },
     setPersonInfo({ state },{userName,userSex,userTelephone,userEmail}) {
-      const token = state.token
+      const token = state.token;
       return setPersonInfo(token,{userName,userSex,userTelephone,userEmail})
     },
     // 获取用户相关信息

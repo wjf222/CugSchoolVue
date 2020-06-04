@@ -9,7 +9,7 @@
               <img class="me-view-picture" src="http://39.99.203.80:8080/images/1.jpg" />
             </a>
             <div class="me-view-info">
-              <span>佚名</span>
+              <span>{{article.name}}</span>
               <div class="me-view-meta">
                 <span>{{article.createDate}}</span>
                 <span>阅读 {{article.viewCounts}}</span>
@@ -23,7 +23,7 @@
               size="mini"
               round
               icon="el-icon-edit"
-            >编辑</el-button> -->
+            >编辑</el-button>-->
           </div>
           <div class="me-view-content">
             <!-- <markdown-editor :editor="article.editor"></markdown-editor> -->
@@ -109,9 +109,6 @@
 
 <script>
 import MarkdownEditor from "../markdown/markdown";
-// import CommmentItem from "@/components/comment/CommentItem";
-// import { viewArticle } from "@/api/article";
-// import { getCommentsByArticle, publishComment } from "@/api/comment";
 
 import { mapActions } from "vuex";
 import VueMarkdown from "vue-markdown";
@@ -121,7 +118,6 @@ export default {
   name: "ArticleView",
   created() {
     this.getArticle();
-    this.getMd();
   },
   watch: {
     $route: "getArticle"
@@ -144,7 +140,7 @@ export default {
         author: {},
         category: {},
         createDate: "",
-        savePath:"",
+        savePath: "",
         editor: {
           value: "",
           toolbarsFlag: false,
@@ -186,7 +182,17 @@ export default {
           this.article.createDate = data.essayPublishTime;
           // Object.assign(this.article, data.data);
           this.article.savePath = data.savePath;
+          console.log("savepath");
           console.log(this.article.savePath);
+          const path = "images/" + this.article.savePath;
+          console.log(path);
+          axios
+            .request({
+              url: path
+            })
+            .then(res => {
+              this.htmlMD = res.data;
+            });
           // that.getCommentsByArticle();
         })
         .catch(error => {
@@ -199,16 +205,17 @@ export default {
             });
           }
         });
+      return new Promise();
     },
     getMd() {
-      const path = "images/"+this.article.savePath;
+      const path = "images/" + this.article.savePath;
       console.log(path);
       axios
         .request({
           url: path
         })
         .then(res => {
-          this.htmlMD = res.data
+          this.htmlMD = res.data;
         });
     },
     publishComment() {

@@ -107,6 +107,11 @@ export default {
       if (data.userSex == 0) this.user.sex = "女";
       this.user.email = data.userEmail;
       this.user.tel = data.userTelephone;
+      this.name = this.user.name;
+      if (data.userSex == 1) this.sex = "男";
+      if (data.userSex == 0) this.sex = "女";
+      this.email = this.user.email;
+      this.tel = this.user.tel;
     });
   },
   methods: {
@@ -122,8 +127,18 @@ export default {
         userTelephone: this.tel,
         userEmail: this.email
       }).then(res => {
-        alert("修改成功")
-        this.flag =1
+        console.log();
+        alert("修改成功");
+        this.flag = 1;
+        this.getPersonInfo().then(res => {
+          console.log(res);
+          const data = res.data;
+          this.user.name = data.userName;
+          if (data.userSex == 1) this.user.sex = "男";
+          if (data.userSex == 0) this.user.sex = "女";
+          this.user.email = data.userEmail;
+          this.user.tel = data.userTelephone;
+        });
       });
     }
   }
