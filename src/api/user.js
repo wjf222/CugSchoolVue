@@ -25,11 +25,6 @@ export const sign = ({ userName, password }) => {
   })
 }
 export const setPersonInfo = (token, { userName, userSex, userTelephone, userEmail }) => {
-  console.log(token);
-  console.log(userName);
-  console.log(userSex);
-  console.log(userTelephone);
-  console.log(userEmail);
   return axios.request({
     url: 'user/update',
     params: {
