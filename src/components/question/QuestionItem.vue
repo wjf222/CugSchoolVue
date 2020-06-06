@@ -1,13 +1,11 @@
 <template>
   <el-card class="me-area" :body-style="{ padding: '16px' }">
     <div class="me-article-header">
-      <a @click="view(essayId)" class="me-article-title" v-html="essayTitle">
-        <!-- {{essayTitle}}\ -->
+      <a @click="view(essayId)" class="me-article-title" v-html="questionTitle">
       </a>
       <el-button v-if="false > 0" class="me-article-icon" type="text">置顶</el-button>
       <span class="me-pull-right me-article-count">
-        <!-- <i class="me-icon-comment"></i>&nbsp;{{commentCounts}} -->
-        <i class="me-icon-comment"></i>&nbsp;10
+        <i class="me-icon-comment"></i>&nbsp;{{answerNum}}
       </span>
       <span class="me-pull-right me-article-count">
         <!-- <i class="el-icon-view"></i>&nbsp;{{viewCounts}} -->
@@ -15,18 +13,18 @@
       </span>
     </div>
 
-    <div class="me-artile-description">{{essayAbstract}}</div>
+    <div class="me-artile-description">{{questionContent}}</div>
     <div class="me-article-footer">
       <span class="me-article-author">
         <i class="me-icon-author"></i>
-        &nbsp;{{essayAuthor}}
+        &nbsp;{{questionerName}}
       </span>
 
       <!-- <el-tag v-for="t in tags" :key="t.tagname" size="mini" type="success">{{t.tagname}}</el-tag> -->
 
       <span class="me-pull-right me-article-count">
         <i class="el-icon-time"></i>
-        &nbsp;{{essayPublishTime}}
+        &nbsp;{{questionTime}}
       </span>
     </div>
   </el-card>
@@ -36,15 +34,15 @@
 export default {
   name: "ArticleItem",
   props: {
-    essayId: Number,
+    questionId: Number,
     // weight: Number,
-    essayTitle: String,
-    // commentCounts: Number,
+    questionTitle: String,
+    answerNum: Number,
     // viewCounts: Number,
-    essayAbstract: String,
-    essayAuthor: String,
+    questionContent: String,
+    questionerName: String,
     // tags: Array,
-    essayPublishTime: String
+    questionTime: String
   },
   data() {
     return {};
@@ -56,6 +54,7 @@ export default {
     }
   },
   created(){
+    console.log(this.essayAuthor);
   }
 };
 </script>

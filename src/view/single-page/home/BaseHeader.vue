@@ -15,11 +15,11 @@
           :default-active="activeIndex"
           mode="horizontal"
         >
-          <el-menu-item index="/">首页</el-menu-item>
-          <el-menu-item index="/category/all">文章</el-menu-item>
-          <el-menu-item index="/question/answer">问题</el-menu-item>
+          <el-menu-item index="/index">首页</el-menu-item>
+          <el-menu-item index="/question">等你来答</el-menu-item>
+          <el-menu-item index="/answer">回答</el-menu-item>
 
-          <el-menu-item>
+          <el-menu-item >
             <i-input icon="ios-search" placeholder="输入问题"></i-input>
             <i-button type="primary" @click="askShow()">提问</i-button>
           </el-menu-item>
@@ -74,7 +74,7 @@ export default {
     return {
       homeImg: "http://39.99.203.80:8080/images/1.jpg",
       unreadCount: [3, 2, 1],
-      askVisible: true,
+      askVisible: false,
       form: {
         title: "",
         editor: {

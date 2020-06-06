@@ -3,18 +3,17 @@
     <div>
       <el-container>
         <el-main class="me-articles">
-          <article-scroll-page ref="articlePage"></article-scroll-page>
+          <question-scroll-page></question-scroll-page>
         </el-main>
-
         <el-aside>
           <card-me class="me-area"></card-me>
           <card-tag :tags="hotTags"></card-tag>
 
-          <card-article cardHeader="最热文章" :articles="hotArticles"></card-article>
+          <card-article cardHeader="最热问题" :articles="hotArticles"></card-article>
 
-          <card-archive cardHeader="文章归档" :archives="archives"></card-archive>
+          <card-archive cardHeader="问题归档" :archives="archives"></card-archive>
 
-          <card-article cardHeader="最新文章" :articles="newArticles"></card-article>
+          <card-article cardHeader="最新问题" :articles="newArticles"></card-article>
         </el-aside>
       </el-container>
     </div>
@@ -22,23 +21,19 @@
 </template>
 
 <script>
-import ArticleScrollPage from "./common/ArticleScrollPage.vue";
+import QuestionScrollPage from "./common/QuestionScrollPage.vue";
 import CardMe from "./components/card/CardMe";
 import CardArticle from "./components/card/CardArticle";
 import CardArchive from "./components/card/CardArchive";
 import CardTag from "./components/card/CardTag";
 
-// import { getArticles, getHotArtices, getNewArtices } from "@/api/article";
-// import { getHotTags } from "@/api/tag";
-// import { listArchives } from "@/api/article";
 export default {
-  name: "home",
+  name: "questionList",
   created() {
     this.getHotArtices();
     this.getNewArtices();
     this.getHotTags();
     this.listArchives();
-
   },
   data() {
     return {
@@ -111,16 +106,13 @@ export default {
             });
           }
         });
-    },
-    getArticle(){
-
     }
   },
   components: {
     "card-me": CardMe,
     "card-article": CardArticle,
     "card-tag": CardTag,
-    "article-scroll-page":ArticleScrollPage,
+    QuestionScrollPage,
     CardArchive
   }
 };

@@ -16,7 +16,8 @@ import {
   publishArticle,
   getCommentsArticle,
   publishComment,
-  publishNetAsk
+  publishNetAsk,
+  getNetAsk
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -164,15 +165,17 @@ export default {
     },
 
     //获取文章
-    getEssaies({ state, commit }, { page }) {
-      return getEssaies(page)
+    getEssaies({ state, commit }, { author  }) {
+      return getEssaies(author)
     },
 
     //获取评论
     getCommentsArticle({ state }, { id }) {
       return getCommentsArticle(id);
     },
-    publishMyMyComment({state},{id,content}){
+
+    //发表评论
+    publishMyComment({state},{id,content}){
       console.log(content);
       return publishComment({essayId:id,commentatorName:"zhouning",commentContent:content});
     },
@@ -181,6 +184,7 @@ export default {
       return searchArticle(searchText, page)
     },
 
+    //发表文章
     publishArticle({ state }, { article }) {
       console.log(article);
       return publishArticle({
@@ -218,6 +222,10 @@ export default {
     
     publishNetAsk(){
       return publishNetAsk()
+    },
+    getNetAsk({state}){
+      console.log(1);
+      return getNetAsk("zhouning")
     },
     // 根据当前点击的消息的id获取内容
     getContentByMsgId({ state, commit }, { msg_id }) {

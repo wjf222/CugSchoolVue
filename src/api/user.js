@@ -48,11 +48,11 @@ export const viewArticle = (id) => {
     method: 'get'
   })
 }
-export const getEssaies = (page) => {
+export const getEssaies = (author) => {
   return axios.request({
     url: 'getEssaies',
     params: {
-      author: "zhouning"
+      author: author
     },
     method: 'get'
   })
@@ -60,6 +60,17 @@ export const getEssaies = (page) => {
 
 export const publishNetAsk = () => {
 
+}
+
+export const getNetAsk = (author) =>{
+  console.log(author);
+  return axios.request({
+    url: 'question/getQuestions',
+    params: {
+      asker: author,
+    },
+    method: 'get'
+  })
 }
 export const searchArticle = (searchText, page) => {
   return axios.request({

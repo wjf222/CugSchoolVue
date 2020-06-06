@@ -163,7 +163,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["viewArticle","getCommentsArticle","publishMyMyComment"]),
+    ...mapActions(["viewArticle","getCommentsArticle","publishMyComment"]),
     tagOrCategory(type, id) {
       this.$router.push({ path: `/${type}/${id}` });
     },
@@ -211,7 +211,7 @@ export default {
       }
       that.comment.article.id = that.article.id;
       console.log(that.comment);
-      this.publishMyMyComment({id:that.article.id,content:that.comment.content})
+      this.publishMyComment({id:that.article.id,content:that.comment.content})
         .then(data => {
           that.$message({
             type: "success",

@@ -58,7 +58,7 @@ export default [
         component: () => import('@/view/single-page/home'),
         children: [
           {
-            path: '/',
+            path: '/index',
             name: 'home',
             meta: {
               hideInMenu: true,
@@ -67,7 +67,18 @@ export default [
               icon: 'md-home'
             },
             component: () => import('@/view/single-page/home/index.vue'),
-          }],
+          },
+          {
+            path: '/question',
+            name: 'question',
+            meta: {
+              hideInMenu: true,
+              title: '问题',
+              notCache: true,
+              icon: 'md-home'
+            },
+            component: () => import('@/view/single-page/home/questionList.vue'),
+          },],
       }
     ]
   },

@@ -1,11 +1,10 @@
 <template>
   <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
-    <article-item v-for="a in articles" :key="a.Id" v-bind="a"></article-item>
+    <question-item v-for="a in articles" :key="a.id" v-bind="a"></question-item>
   </scroll-page>
 </template>
 
 <script>
-import ArticleItem from "@/components/article/ArticleItem";
 import QuestionItem from "@/components/question/QuestionItem";
 import ScrollPage from "./ScrollPage.vue";
 import { mapActions } from "vuex";
@@ -50,9 +49,7 @@ export default {
     }
   },
   created() {
-    console.log("zhouning");
-    // this.getArticleByAuthor("zhouning")
-    // this.getArticles();
+    this.getArticles();
   },
   data() {
     return {
@@ -60,67 +57,31 @@ export default {
       noData: false,
       innerPage: {
         pageSize: 5,
-        pageNumber: 0,
+        pageNumber: 1,
         name: "a.createDate",
         sort: "desc"
       },
-      articles: [],
-      questions: []
+      articles: []
     };
   },
   methods: {
-    ...mapActions(["searchArticle", "getEssaies"]),
+    ...mapActions(["getNetAsk"]),
     load() {
       this.getArticles();
     },
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },
-    rePageNumber() {
-      console.log(0);
-      this.innerPage.pageNumber = 0;
-    },
     getArticles() {
       let that = this;
-      const { searchText } = this.$route.params;
-      console.log(that.innerPage.pageNumber);
       that.loading = true;
-      this.searchArticle({ searchText, page: that.innerPage.pageNumber })
+      this.getNetAsk()
         .then(res => {
-          console.log(res);
-          let newArticles = res.data.searchList;
+           console.log(res);
+          let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1;
-            that.articles = newArticles;
-          } else {
-            that.noData = true;
-          }
-        })
-        .catch(err => {
-          if (error !== "error") {
-            that.$message({
-              type: "error",
-              message: "文章加载失败!",
-              showClose: true
-            });
-          }
-        })
-        .finally(() => {
-          that.loading = false;
-        });
-      console.log(this.articles);
-    },
-    getArticleByAuthor(Author) {
-      console.log(Author);
-      console.log("做着");
-      that.loading = true;
-      this.getEssaies({ author: Author })
-        .then(res => {
-          console.log(res);
-          let newArticles = res.data.searchList;
-          if (newArticles && newArticles.length > 0) {
-            // that.innerPage.pageNumber += 1;
-            that.articles = newArticles;
+            that.articles = that.articles.concat(newArticles);
           } else {
             that.noData = true;
           }
@@ -140,8 +101,8 @@ export default {
     }
   },
   components: {
-    "article-item": ArticleItem,
-    "scroll-page": ScrollPage
+    "scroll-page": ScrollPage,
+    QuestionItem
   }
 };
 </script>
