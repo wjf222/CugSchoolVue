@@ -72,6 +72,9 @@ export default {
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },
+    rePageNumber(){
+      this.innerPage.pageNumber = 0
+    },
     getArticles() {
       let that = this;
       const { searchText } = this.$route.params;
@@ -79,10 +82,9 @@ export default {
       this.searchArticle({searchText, page: that.innerPage.pageNumber })
         .then(res => {
           let newArticles = res.data.searchList;
-          console.log(newArticles);
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1;
-            that.articles = that.articles.concat(newArticles);
+            that.articles = newArticles;
           } else {
             that.noData = true;
           }

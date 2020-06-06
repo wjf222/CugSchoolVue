@@ -15,7 +15,8 @@ import {
   viewArticle,
   publishArticle,
   getCommentsArticle,
-  publishComment
+  publishComment,
+  publishNetAsk
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -214,7 +215,10 @@ export default {
         })
       })
     },
-
+    
+    publishNetAsk(){
+      return publishNetAsk()
+    },
     // 根据当前点击的消息的id获取内容
     getContentByMsgId({ state, commit }, { msg_id }) {
       return new Promise((resolve, reject) => {

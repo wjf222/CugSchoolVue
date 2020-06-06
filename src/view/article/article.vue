@@ -232,7 +232,6 @@ export default {
             lock: true,
             text: "发布中，请稍后..."
           });
-          console.log(article);
           this.publishArticle({article})
             .then(data => {
               loading.close();

@@ -58,40 +58,42 @@ export const getEssaies = (page) => {
   })
 }
 
+export const publishNetAsk = () => {
 
+}
 export const searchArticle = (searchText, page) => {
   return axios.request({
-    url: 'search',
+    url: 'highLight',
     params: {
-      keyword: searchText,
+      keyWord: searchText,
       currentPage: page
     },
     method: 'get'
   })
 }
 
-export const publishArticle = ({content,title,essayAbstract,author}) => {
+export const publishArticle = ({ content, title, essayAbstract, author }) => {
   return axios.request({
-    url:"file/md",
-    params:{
+    url: "file/md",
+    params: {
       content,
       title,
       essayAbstract,
-      author:author
+      author: author
     },
-    method:"get"
+    method: "get"
   })
 }
 
-export const publishComment=({essayId,commentatorName,commentContent}) =>{
+export const publishComment = ({ essayId, commentatorName, commentContent }) => {
   return axios.request({
-    url:"comment/addComment",
-    params:{
+    url: "comment/addComment",
+    params: {
       essayId,
       commentatorName,
       commentContent
     },
-    method:"get"
+    method: "get"
   })
 }
 export const getUserInfo = (token) => {

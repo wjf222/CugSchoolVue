@@ -4,7 +4,7 @@
     <div>
       <el-container>
         <el-main class="me-articles">
-          <article-scroll-page></article-scroll-page>
+          <article-scroll-page ref="articlePage"></article-scroll-page>
         </el-main>
       </el-container>
     </div>
@@ -43,9 +43,11 @@ export default {
     ...mapActions(["searchArticle"]),
     doSearchResult() {
       const { searchText } = this.$route.params;
-      this.searchArticle({ searchText }).then(res => {
-        const data = res.data
-        this.searchResultList = data.searchList
+      this.searchArticle({ searchText}).then(res => {
+        this.$refs.articlePage.rePageNumber();
+        this.$refs.articlePage.getArticles()
+        // const data = res.data
+        // this.searchResultList = data.searchList
       });
     }
   }
