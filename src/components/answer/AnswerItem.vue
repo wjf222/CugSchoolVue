@@ -55,8 +55,6 @@ export default {
     };
   },
   created() {
-    console.log(this.savePath);
-    // console.log(this.savePath);
     axios
       .request({
         url: this.savePath
@@ -67,7 +65,6 @@ export default {
   },
   methods: {
     view(id) {
-      console.log(id);
       this.$router.push({ path: `/view/${id}` });
     }
   },

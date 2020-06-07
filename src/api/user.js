@@ -58,11 +58,19 @@ export const getEssaies = (author) => {
   })
 }
 
-export const publishNetAsk = () => {
-
+export const publishNetAsk = (questionTitle, questionContent) => {
+  return axios.request({
+    url: 'question/askQuestion',
+    params: {
+      asker: "zhouning",
+      questionTitle,
+      questionContent
+    },
+    method: 'get'
+  })
 }
 
-export const getNetAsk = (author) =>{
+export const getNetAsk = (author) => {
   return axios.request({
     url: 'question/allQuestions',
     params: {
@@ -116,21 +124,21 @@ export const getUserInfo = (token) => {
   })
 }
 
-export const getNetAskById = (id) =>{
+export const getNetAskById = (id) => {
   return axios.request({
     url: 'question/getQuestion',
     params: {
-      questionId:id
+      questionId: id
     },
     method: 'get'
   })
 }
 
-export const getAnswerByArticleId = (id)=>{
+export const getAnswerByArticleId = (id) => {
   return axios.request({
     url: 'answer/getAnswers',
     params: {
-      questionId:id
+      questionId: id
     },
     method: 'get'
   })

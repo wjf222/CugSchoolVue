@@ -217,8 +217,9 @@ export default {
       })
     },
     
-    publishNetAsk(){
-      return publishNetAsk()
+    publishNetAsk({},{questionTitle,questionContent}){
+      console.log({questionTitle,questionContent});
+      return publishNetAsk(questionTitle,questionContent)
     },
     getNetAsk({state}){
       return getNetAsk()

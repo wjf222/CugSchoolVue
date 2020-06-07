@@ -168,9 +168,13 @@ export default {
         lock: true,
         text: "发布中，请稍后..."
       });
-      loading.default_open();
-      this.publishNetAsk()
+      // loading.default_open();
+      
+      let questionTitle =this.form.title
+      let questionContent = this.form.editor.ref.d_render
+      this.publishNetAsk({questionTitle,questionContent})
         .then(res => {
+          askVisible = false
           loading.close();
           that.$message({
             message: "发布成功啦",
