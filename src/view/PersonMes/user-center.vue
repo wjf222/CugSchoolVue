@@ -96,7 +96,6 @@ export default {
         this.$store.state.title = "个人信息";
       })
       .catch(error => {
-        console.log(error);
       });
   },
   created: function() {
@@ -120,18 +119,15 @@ export default {
       let sex = 1;
       if (this.sex == "男") sex = 1;
       if (this.sex == "女") sex = 0;
-      console.log(this.name);
       this.setPersonInfo({
         userName: this.name,
         userSex: sex,
         userTelephone: this.tel,
         userEmail: this.email
       }).then(res => {
-        console.log();
         alert("修改成功");
         this.flag = 1;
         this.getPersonInfo().then(res => {
-          console.log(res);
           const data = res.data;
           this.user.name = data.userName;
           if (data.userSex == 1) this.user.sex = "男";

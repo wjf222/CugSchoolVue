@@ -114,7 +114,6 @@ export default {
       'getUnreadMessageCount'
     ]),
     turnToPage (route) {
-      console.log(route)
       let { name, params, query } = {}
       if (typeof route === 'string') name = route
       else {

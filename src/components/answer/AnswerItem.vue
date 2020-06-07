@@ -1,59 +1,76 @@
 <template>
   <el-card class="me-area" :body-style="{ padding: '16px' }">
     <div class="me-article-header">
-      <a @click="view(questionId)" class="me-article-title" v-html="questionTitle">
-      </a>
+      <a @click="view(essayId)" class="me-article-title"></a>
       <el-button v-if="false > 0" class="me-article-icon" type="text">置顶</el-button>
       <span class="me-pull-right me-article-count">
-        <i class="me-icon-comment"></i>&nbsp;{{answerNum}}
+        <i class="me-icon-comment"></i>
+        &nbsp;{{commentNum}}
       </span>
       <span class="me-pull-right me-article-count">
-        <!-- <i class="el-icon-view"></i>&nbsp;{{viewCounts}} -->
-        <i class="el-icon-view"></i>&nbsp;10
+        <i class="el-icon-view"></i>
+        &nbsp;{{commentNum}}
       </span>
     </div>
 
-    <div class="me-artile-description">{{questionContent}}</div>
+    <div class="me-artile-description">
+      <a @click="view(essayId)" class="me-article-title" v-html="answerContent"></a>
+    </div>
     <div class="me-article-footer">
       <span class="me-article-author">
         <i class="me-icon-author"></i>
-        &nbsp;{{questionerName}}
+        &nbsp;{{answerer}}
       </span>
 
       <!-- <el-tag v-for="t in tags" :key="t.tagname" size="mini" type="success">{{t.tagname}}</el-tag> -->
 
       <span class="me-pull-right me-article-count">
         <i class="el-icon-time"></i>
-        &nbsp;{{questionTime}}
+        &nbsp;{{answerTime}}
       </span>
     </div>
   </el-card>
 </template>
 
 <script>
+import HttpRequest from "@/libs/axios";
+const axios = new HttpRequest("http://39.99.203.80:8080/images");
 export default {
-  name: "ArticleItem",
+  name: "AnswerItem",
   props: {
-    questionId: Number,
+    answerId: Number,
     // weight: Number,
-    questionTitle: String,
-    answerNum: Number,
+    commentNum: Number,
+    questionId: Number,
     // viewCounts: Number,
-    questionContent: String,
-    questionerName: String,
+    essayAbstract: String,
+    answerer: String,
     // tags: Array,
-    questionTime: String
+    answerTime: String,
+    savePath: String
   },
   data() {
-    return {};
+    return {
+      answerContent: String
+    };
+  },
+  created() {
+    console.log(this.savePath);
+    // console.log(this.savePath);
+    axios
+      .request({
+        url: this.savePath
+      })
+      .then(res => {
+        this.answerContent = res.data;
+      });
   },
   methods: {
     view(id) {
-      this.$router.push( `center/viewQuestion/${id}` );
+      console.log(id);
+      this.$router.push({ path: `/view/${id}` });
     }
   },
-  created(){
-  }
 };
 </script>
 

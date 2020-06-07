@@ -174,7 +174,6 @@ export default {
       this.viewArticle({ id: this.$route.params.id })
         .then(res => {
           const data = res.data;
-          console.log(data);
           this.article.id = data.essayId;
           this.article.title = data.essayTitle;
           this.article.summary = data.essayAbstract;
@@ -195,7 +194,6 @@ export default {
         })
         .catch(error => {
           if (error !== "error") {
-            console.log(error);
             this.$message({
               type: "error",
               message: "文章加载失败",
@@ -210,7 +208,6 @@ export default {
         return;
       }
       that.comment.article.id = that.article.id;
-      console.log(that.comment);
       this.publishMyComment({id:that.article.id,content:that.comment.content})
         .then(data => {
           that.$message({

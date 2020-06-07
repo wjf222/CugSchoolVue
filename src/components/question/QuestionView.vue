@@ -13,7 +13,7 @@
               <div class="me-view-meta">
                 <span>{{article.createDate}}</span>
                 <span>阅读 {{article.viewCounts}}</span>
-                <span>评论 {{article.commentCounts}}</span>
+                <span>评论 {{article.answerNum}}</span>
               </div>
             </div>
             <!-- v-if="this.article.author.id == this.$store.state.id" -->
@@ -99,19 +99,11 @@
           <div class="me-view-comment">
             <el-card class="box-card">
               <div slot="header" class="clearfix">
-                <span>{{article.commentCounts}} 条评论</span>
+                <span>{{article.answerNum}} 条评论</span>
                 <el-button style="float: right; padding: 3px 0" type="text">按时间顺序</el-button>
               </div>
               <el-divider></el-divider>
-              <div v-for="answer in answers" :key="answer.answerId">
-                  <img
-                    src="http://39.99.203.80:8080/images/zhihu.jpg "
-                    class="image"
-                    height="40"
-                    width="40"
-                  />
-                <span style="padding-top:4px;14px Base">{{answer.answerer}}</span>
-              </div>
+              <answer-item v-for="answer in answers" :key="answer.id" v-bind="answer"></answer-item>
             </el-card>
           </div>
         </div>
@@ -122,7 +114,7 @@
 
 <script>
 import MarkdownEditor from "../markdown/markdown";
-import CommmentItem from "@/components/comment/CommentItem.vue";
+import AnswerItem from "@/components/answer/AnswerItem.vue";
 import { mapActions } from "vuex";
 import VueMarkdown from "vue-markdown";
 import HttpRequest from "@/libs/axios";
@@ -181,7 +173,7 @@ export default {
       article: {
         id: "",
         title: "",
-        commentCounts: 0,
+        answerNum: 0,
         viewCounts: 0,
         summary: "",
         author: {},
@@ -222,16 +214,14 @@ export default {
       this.$router.push({ path: `/write/${this.article.id}` });
     },
     getArticle() {
-      console.log(this.$route.params.id);
       this.getNetAskById({ id: this.$route.params.id })
         .then(res => {
           const data = res.data;
-          this.article.id = data.essayId;
-          this.article.title = data.essayTitle;
-          this.article.summary = data.essayAbstract;
-          this.article.name = data.essayAuthor;
+          this.article.id = data.questionId;
+          this.article.title = data.questionTitle;
+          this.article.name = data.questionerName;
           this.article.createDate = data.essayPublishTime;
-          this.article.commentCounts = data.commentNum;
+          this.article.answerNum = data.answerNum;
           this.article.savePath = data.savePath;
           const path = "images/" + this.article.savePath;
           axios
@@ -245,7 +235,6 @@ export default {
         })
         .catch(error => {
           if (error !== "error") {
-            console.log(error);
             this.$message({
               type: "error",
               message: "文章加载失败",
@@ -260,7 +249,6 @@ export default {
         return;
       }
       this.comment.article.id = this.article.id;
-      console.log(this.comment);
       this.publishMyComment({
         id: this.article.id,
         content: this.comment.content
@@ -272,7 +260,7 @@ export default {
             showClose: true
           });
           this.comments.unshift(data.data);
-          this.commentCountsIncrement();
+          this.answerNumIncrement();
           this.comment.content = "";
           this.getArticle();
         })
@@ -302,15 +290,14 @@ export default {
           }
         });
     },
-    commentCountsIncrement() {
-      this.article.commentCounts += 1;
+    answerNumIncrement() {
+      this.article.answerNum += 1;
     }
   },
   components: {
     "markdown-editor": MarkdownEditor,
-    CommmentItem,
+    AnswerItem,
     VueMarkdown
-    // CommmentItem
   },
   //组件内的守卫 调整body的背景色
   beforeRouteEnter(to, from, next) {

@@ -23,7 +23,6 @@ export const login = req => {
 
 export const getUserInfo = req => {
   const params = getParams(req.url)
-  console.log(params);
   return USER_MAP[params.token]
 }
 

@@ -19,7 +19,7 @@
           <el-menu-item index="/question">等你来答</el-menu-item>
           <el-menu-item index="/answer">回答</el-menu-item>
 
-          <el-menu-item >
+          <el-menu-item>
             <i-input icon="ios-search" placeholder="输入问题"></i-input>
             <i-button type="primary" @click="askShow()">提问</i-button>
           </el-menu-item>
@@ -164,7 +164,6 @@ export default {
         });
         return;
       }
-      console.log(this);
       let loading = this.$loading({
         lock: true,
         text: "发布中，请稍后..."

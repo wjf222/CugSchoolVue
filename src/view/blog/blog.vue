@@ -5,24 +5,12 @@
 </template>
 <script>
 import BlogItem from "./blog-item.vue";
-// import 'highlight.js/styles/github.css'
-// import 'github-markdown-css'
-
-// import Index from "./mdFiles/index.md"
 export default {
   name: "blog_page",
   components: {
     BlogItem
   },
   methods: {
-    $save(value, render) {
-      console.log(value);
-      console.log(render);
-    },
-    $htmlCode(status, value) {
-      console.log(value);
-      console.log(render);
-    },
     $imgAdd(pos, $file) {
       // 第一步.将图片上传到服务器.
       var formdata = new FormData();

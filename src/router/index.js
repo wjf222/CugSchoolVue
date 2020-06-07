@@ -35,7 +35,6 @@ router.beforeEach((to, from, next) => {
   }
   else if (token && to.name === SEARCH_PAGE_NAME) {
     // 已登录且要跳转的页面是搜索页
-    console.log(toekn);
     next({
       name: SEARCH_PAGE_NAME // 跳转到homeName页
     })

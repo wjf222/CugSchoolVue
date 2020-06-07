@@ -176,7 +176,6 @@ export default {
         }
       })
       .catch(error => {
-        // console.log(error);
       });
   },
   methods: {
@@ -204,11 +203,9 @@ export default {
         })
         .then(res => {
           this.blog = res.body.blog;
-          console.log(this.blog);
           this.reviewlist = res.body.reviewlist;
         })
         .catch(error => {
-          console.log(error);
         });
     },
     showReplyDialog: function(name, index, id) {
@@ -244,7 +241,6 @@ export default {
           this.reviewlist = res.body.reviewlist;
         })
         .catch(res => {
-          console.log(res);
         });
     }
   }

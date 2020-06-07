@@ -69,18 +69,11 @@ export default {
       });
     },
     handleSignSubmit({ userName, password }) {
-      console.log("开始注册");
       this.handleSign({ userName, password }).then(res => {
         if (res.data == true) {
-          console.log(true);
           this.isLogin = !this.isLogin;
         } else {
           alert("注册成功");
-          // this.$dialog.alert("Please confirm to continue").then(function() {
-          //   // 点击确定执行
-          //   console.log("Clicked on proceed");
-          // });
-          // console.log(false);
         }
       });
     },

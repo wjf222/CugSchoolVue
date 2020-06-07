@@ -28,8 +28,6 @@ export default {
         })
         .then(res => {
           this.htmlMD = res.data
-          console.log(Index);
-          console.log(this.htmlMD);
         });
     }
   },
@@ -39,13 +37,7 @@ export default {
     };
   },
   beforeCreate() {
-    // this.$nextTick(function() {
-    //   const url = "images/README.md";
-    //   axios.get(url).then(response => {
-    //     this.htmlMD = response.data;
-    //   });
-    //   console.log(this.htmlMD);
-    // });
+
   }
 };
 </script>

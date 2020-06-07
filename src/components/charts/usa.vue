@@ -21,7 +21,6 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      console.log(USAJson);
       echarts.registerMap("USA", USAJson, {
         Alaska: {
           // 把阿拉斯加移到美国主大陆左下方

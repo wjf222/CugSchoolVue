@@ -63,7 +63,6 @@ export const publishNetAsk = () => {
 }
 
 export const getNetAsk = (author) =>{
-  console.log(author);
   return axios.request({
     url: 'question/allQuestions',
     params: {
@@ -119,9 +118,9 @@ export const getUserInfo = (token) => {
 
 export const getNetAskById = (id) =>{
   return axios.request({
-    url: 'user',
+    url: 'question/getQuestion',
     params: {
-      id
+      questionId:id
     },
     method: 'get'
   })
@@ -146,7 +145,6 @@ export const getCommentsArticle = (id) => {
   })
 }
 export const logout = (token) => {
-  console.log(token);
   return axios.request({
     url: 'logout',
     params: {

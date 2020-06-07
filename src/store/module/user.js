@@ -108,7 +108,6 @@ export default {
     //注册
     handleSign({ commit }, { userName, password }) {
       userName = userName.trim()
-      console.log("进入注册");
       return sign({
         userName,
         password
@@ -117,7 +116,6 @@ export default {
     // 退出登录
     handleLogOut({ state, commit }) {
       return new Promise((resolve, reject) => {
-        console.log("logout :" + state.token);
         getUserInfo(state.token).then(() => {
           commit('setToken', '')
           commit('setAccess', [])
@@ -145,7 +143,6 @@ export default {
           getUserInfo(state.token)
             .then(res => {
               const data = res.data
-              console.log(data);
               commit('setAvatar', "http://39.99.203.80:8080/images/1.jpg")
               commit('setUserName', data.name)
               commit('setUserId', data.user_id)
@@ -178,7 +175,6 @@ export default {
 
     //发表评论
     publishMyComment({state},{id,content}){
-      console.log(content);
       return publishComment({essayId:id,commentatorName:"zhouning",commentContent:content});
     },
     //搜索文章
@@ -188,7 +184,6 @@ export default {
 
     //发表文章
     publishArticle({ state }, { article }) {
-      console.log(article);
       return publishArticle({
         content: article.body.contentHtml, title: article.title,
         essayAbstract: article.summary, author: state.userName
@@ -229,10 +224,9 @@ export default {
       return getNetAsk()
     },
     getNetAskById({},{id}){
-        return getNetAskById()
+        return getNetAskById(id)
     },
     getAnswerByArticleId({},{id}){
-      console.log(id);
       return getAnswerByArticleId(id)
     },
     // 根据当前点击的消息的id获取内容

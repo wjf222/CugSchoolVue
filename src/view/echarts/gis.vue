@@ -72,7 +72,6 @@ export default {
           this.pieShow = true;
         })
         .catch(err => {
-          console.log(err);
         });
     });
   }

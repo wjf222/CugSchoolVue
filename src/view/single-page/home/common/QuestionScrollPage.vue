@@ -77,7 +77,6 @@ export default {
       that.loading = true;
       this.getNetAsk()
         .then(res => {
-           console.log(res);
           let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1;

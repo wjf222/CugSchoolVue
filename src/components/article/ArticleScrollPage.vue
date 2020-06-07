@@ -50,9 +50,6 @@ export default {
     }
   },
   created() {
-    console.log("zhouning");
-    // this.getArticleByAuthor("zhouning")
-    // this.getArticles();
   },
   data() {
     return {
@@ -77,17 +74,14 @@ export default {
       this.$router.push({ path: `/view/${id}` });
     },
     rePageNumber() {
-      console.log(0);
       this.innerPage.pageNumber = 0;
     },
     getArticles() {
       let that = this;
       const { searchText } = this.$route.params;
-      console.log(that.innerPage.pageNumber);
       that.loading = true;
       this.searchArticle({ searchText, page: that.innerPage.pageNumber })
         .then(res => {
-          console.log(res);
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1;
@@ -108,15 +102,11 @@ export default {
         .finally(() => {
           that.loading = false;
         });
-      console.log(this.articles);
     },
     getArticleByAuthor(Author) {
-      console.log(Author);
-      console.log("做着");
       that.loading = true;
       this.searchArticle({ author: Author })
         .then(res => {
-          console.log(res);
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             // that.innerPage.pageNumber += 1;
