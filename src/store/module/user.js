@@ -20,7 +20,8 @@ import {
   getNetAsk,
   getNetAskById,
   getAnswerByQuestionId,
-  publishMyAnswer
+  publishMyAnswer,
+  getAllTags
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -228,7 +229,9 @@ export default {
     getNetAskById({},{id}){
         return getNetAskById(id)
     },
-
+    getAllTags(){
+      return getAllTags();
+    },
     getAnswerById({state},{id}){
       return getAnswerByQuestionId(id)
     },

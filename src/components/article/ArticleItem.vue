@@ -25,7 +25,7 @@
         &nbsp;{{essayAuthor}}
       </span>
 
-      <!-- <el-tag v-for="t in tags" :key="t.tagname" size="mini" type="success">{{t.tagname}}</el-tag> -->
+      <el-tag v-for="t in tagList" :key="t.tagName" size="mini" type="success">{{t.tagName}}</el-tag>
 
       <span class="me-pull-right me-article-count">
         <i class="el-icon-time"></i>
@@ -46,7 +46,7 @@ export default {
     // viewCounts: Number,
     essayAbstract: String,
     essayAuthor: String,
-    // tags: Array,
+    tagList: Array,
     essayPublishTime: String
   },
   data() {

@@ -35,7 +35,7 @@
         :close-on-click-modal="false"
         custom-class="me-dialog"
       >
-        <el-form :model="articleForm" ref="articleForm" :rules="rules">
+        <el-form :model="articleForm" ref="articleForm" :rules="rules" @submit.native.prevent>
           <el-form-item prop="summary">
             <el-input type="textarea" v-model="articleForm.summary" :rows="6" placeholder="请输入摘要"></el-input>
           </el-form-item>
@@ -44,12 +44,26 @@
               <el-option v-for="c in categorys" :key="c.id" :label="c.categoryname" :value="c"></el-option>
             </el-select>
           </el-form-item>-->
-          <!-- 
-          <el-form-item label="文章标签" prop="tags">
-            <el-checkbox-group v-model="articleForm.tags">
-              <el-checkbox v-for="t in tags" :key="t.id" :label="t.id" name="tags">{{t.tagname}}</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>-->
+
+          <el-form-item label="文章标签" >
+            <el-tag
+              :key="tag.tagName"
+              v-for="tag in tags"
+              closable
+              :disable-transitions="false"
+              @close="handleClose(tag)"
+            >{{tag.tagName}}</el-tag>
+            <el-input
+              class="input-new-tag"
+              v-if="inputVisible"
+              v-model="inputValue"
+              ref="saveTagInput"
+              size="small"
+              @keyup.enter.native="handleInputConfirm"
+              @blur="handleInputConfirm"
+            ></el-input>
+            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+          </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="publishVisible = false">取 消</el-button>
@@ -92,6 +106,8 @@ export default {
       publishVisible: false,
       categorys: [],
       tags: [],
+      inputVisible: false,
+      inputValue: "",
       articleForm: {
         id: "",
         title: "",
@@ -153,13 +169,31 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["publishArticle"]),
+    ...mapActions(["publishArticle", "getAllTags"]),
+    handleClose(tag) {
+      this.tags.splice(this.tags.indexOf(tag), 1);
+    },
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+    handleInputConfirm() {
+      console.log(this.inputValue);
+      let inputValue = this.inputValue;
+      if (inputValue) {
+        this.tags.push({tagId:1,
+        tagName:inputValue});
+      }
+      this.inputVisible = false;
+      this.inputValue = "";
+    },
     getArticleById(id) {
-      let that = this;
       getArticleById(id)
         .then(data => {
-          Object.assign(that.articleForm, data.data);
-          that.articleForm.editor.value = data.data.body.content;
+          Object.assign(this.articleForm, data.data);
+          this.articleForm.editor.value = data.data.body.content;
 
           let tags = this.articleForm.tags.map(function(item) {
             return item.id;
@@ -169,7 +203,7 @@ export default {
         })
         .catch(error => {
           if (error !== "error") {
-            that.$message({
+            this.$message({
               type: "error",
               message: "文章加载失败",
               showClose: true
@@ -208,12 +242,11 @@ export default {
       this.publishVisible = true;
     },
     publish(articleForm) {
-      let that = this;
       this.$refs[articleForm].validate(valid => {
         if (valid) {
-          let tags = this.articleForm.tags.map(function(item) {
-            return { id: item };
-          });
+          // let tags = this.articleForm.tags.map(function(item) {
+          //   return { id: item };
+          // });
 
           let article = {
             id: this.articleForm.id,
@@ -232,20 +265,20 @@ export default {
             lock: true,
             text: "发布中，请稍后..."
           });
-          this.publishArticle({article})
+          this.publishArticle({ article })
             .then(data => {
               loading.close();
-              that.$message({
+              this.$message({
                 message: "发布成功啦",
                 type: "success",
                 showClose: true
               });
-              // that.$router.push({ path: `/view/${data.data.articleId}` });
+              // this.$router.push({ path: `/view/${data.data.articleId}` });
             })
             .catch(error => {
               loading.close();
               if (error !== "error") {
-                that.$message({
+                this.$message({
                   message: error,
                   type: "error",
                   showClose: true
@@ -267,28 +300,28 @@ export default {
       });
     },
     getCategorysAndTags() {
-      let that = this;
-      getAllCategorys()
-        .then(data => {
-          that.categorys = data.data;
-        })
-        .catch(error => {
-          if (error !== "error") {
-            that.$message({
-              type: "error",
-              message: "文章分类加载失败",
-              showClose: true
-            });
-          }
-        });
+      // getAllCategorys()
+      //   .then(data => {
+      //     this.categorys = data.data;
+      //   })
+      //   .catch(error => {
+      //     if (error !== "error") {
+      //       this.$message({
+      //         type: "error",
+      //         message: "文章分类加载失败",
+      //         showClose: true
+      //       });
+      //     }
+      //   });
 
-      getAllTags()
-        .then(data => {
-          that.tags = data.data;
+      this.getAllTags()
+        .then(res => {
+          console.log(res);
+          this.tags = res.data;
         })
         .catch(error => {
           if (error !== "error") {
-            that.$message({
+            this.$message({
               type: "error",
               message: "标签加载失败",
               showClose: true
@@ -385,6 +418,21 @@ export default {
 .auto-textarea-input,
 .auto-textarea-block {
   font-size: 18px !important;
+}
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
 }
 </style>
 

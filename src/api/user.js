@@ -58,6 +58,14 @@ export const getEssaies = (author) => {
   })
 }
 
+export const getAllTags = () =>{
+  return axios.request({
+    url: 'allTags',
+    params: {
+    },
+    method: 'get'
+  })
+}
 export const publishNetAsk = (questionTitle, questionContent) => {
   return axios.request({
     url: 'question/askQuestion',

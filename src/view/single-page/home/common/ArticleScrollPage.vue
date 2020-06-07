@@ -73,21 +73,21 @@ export default {
       this.$router.push({ path: `/view/${id}` });
     },
     getArticles() {
-      let that = this;
-      that.loading = true;
-      this.getEssaies({ page: that.innerPage.pageNumber })
+      this.loading = true;
+      this.getEssaies({ page: this.innerPage.pageNumber })
         .then(res => {
+          console.log(res);
           let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {
-            that.innerPage.pageNumber += 1;
-            that.articles = that.articles.concat(newArticles);
+            this.innerPage.pageNumber += 1;
+            this.articles = this.articles.concat(newArticles);
           } else {
-            that.noData = true;
+            this.noData = true;
           }
         })
         .catch(err => {
           if (error !== "error") {
-            that.$message({
+            this.$message({
               type: "error",
               message: "文章加载失败!",
               showClose: true
@@ -95,7 +95,7 @@ export default {
           }
         })
         .finally(() => {
-          that.loading = false;
+          this.loading = false;
         });
     }
   },

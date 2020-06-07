@@ -82,6 +82,7 @@ export default {
       that.loading = true;
       this.searchArticle({ searchText, page: that.innerPage.pageNumber })
         .then(res => {
+          console.log(res);
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1;
