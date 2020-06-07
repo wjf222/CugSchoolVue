@@ -49,7 +49,7 @@ export default {
     }
   },
   created() {
-    this.getArticles();
+    this.getQuestions();
   },
   data() {
     return {
@@ -72,7 +72,7 @@ export default {
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },
-    getArticles() {
+    getQuestions() {
       let that = this;
       that.loading = true;
       this.getNetAsk()

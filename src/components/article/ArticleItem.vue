@@ -15,7 +15,11 @@
       </span>
     </div>
 
-    <div class="me-artile-description">{{essayAbstract}}</div>
+    <div class="me-artile-description">
+      <a @click="view(essayId)" class="me-article-title" v-html="essayAbstract">
+        <!-- {{essayTitle}}\ -->
+      </a>
+    </div>
     <div class="me-article-footer">
       <span class="me-article-author">
         <i class="me-icon-author"></i>

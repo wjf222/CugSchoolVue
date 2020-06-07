@@ -17,7 +17,9 @@ import {
   getCommentsArticle,
   publishComment,
   publishNetAsk,
-  getNetAsk
+  getNetAsk,
+  getNetAskById,
+  getAnswerByArticleId
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -180,7 +182,7 @@ export default {
       return publishComment({essayId:id,commentatorName:"zhouning",commentContent:content});
     },
     //搜索文章
-    searchArticle({ state, commit }, { searchText, page }) {
+    searchArticle({ }, { searchText, page }) {
       return searchArticle(searchText, page)
     },
 
@@ -224,8 +226,14 @@ export default {
       return publishNetAsk()
     },
     getNetAsk({state}){
-      console.log(1);
-      return getNetAsk("zhouning")
+      return getNetAsk()
+    },
+    getNetAskById({},{id}){
+        return getNetAskById()
+    },
+    getAnswerByArticleId({},{id}){
+      console.log(id);
+      return getAnswerByArticleId(id)
     },
     // 根据当前点击的消息的id获取内容
     getContentByMsgId({ state, commit }, { msg_id }) {

@@ -114,7 +114,7 @@ export default {
       console.log(Author);
       console.log("做着");
       that.loading = true;
-      this.getEssaies({ author: Author })
+      this.searchArticle({ author: Author })
         .then(res => {
           console.log(res);
           let newArticles = res.data.searchList;

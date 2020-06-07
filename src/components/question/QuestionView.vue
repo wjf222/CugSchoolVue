@@ -1,5 +1,5 @@
 <template>
-  <div class="me-view-body">
+  <div>
     <el-container class="me-view-container">
       <el-main>
         <div class="me-view-card">
@@ -31,9 +31,45 @@
           </div>
 
           <div class="me-view-end">
-            <el-alert title="文章End..." type="success" center :closable="false"></el-alert>
+            <!-- <el-alert title="文章End..." type="success" center :closable="false"></el-alert> -->
+            <el-row>
+              <el-button type="primary">关注问题</el-button>
+              <el-button
+                type="primary"
+                icon="el-icon-edit"
+                plain
+                v-on:click="answerShow=!answerShow"
+              >写回答</el-button>
+              <el-button type="info" icon="el-icon-user" plain>邀请回答</el-button>
+            </el-row>
           </div>
-
+          <div>
+            <el-row>
+              <el-card :body-style="{ padding: '10px'}" class="card-body" v-if="answerShow">
+                <el-row>
+                  <div>
+                    <img
+                      src="http://39.99.203.80:8080/images/zhihu.jpg "
+                      class="image"
+                      height="40"
+                      width="40"
+                    />
+                  </div>
+                  <div>
+                    <span style="padding-top:4px;14px Base">王纪锋</span>
+                  </div>
+                </el-row>
+                <el-divider></el-divider>
+                <div style="margin-top: 20px;">
+                  <markdown-editor :editor="form.editor"></markdown-editor>
+                  <el-button
+                    type="primary"
+                    style="margin-top: 10px;margin-bottom: 10px;float:right"
+                  >提交回答</el-button>
+                </div>
+              </el-card>
+            </el-row>
+          </div>
           <!-- <div class="me-view-tag">
             标签：
             <el-tag v-for="t in article.tags" :key="t.id" class="me-view-tag-item" size="mini" type="success">{{t.tagname}}</el-tag>
@@ -61,45 +97,22 @@
           </div>-->
 
           <div class="me-view-comment">
-            <div class="me-view-comment-write">
-              <el-row :gutter="20">
-                <el-col :span="2">
-                  <a class>
-                    <img class="me-view-picture" src="http://39.99.203.80:8080/images/1.jpg" />
-                  </a>
-                </el-col>
-                <el-col :span="22">
-                  <el-input
-                    type="textarea"
-                    :autosize="{ minRows: 2}"
-                    placeholder="你的评论..."
-                    class="me-view-comment-text"
-                    v-model="comment.content"
-                    resize="none"
-                  ></el-input>
-                </el-col>
-              </el-row>
-
-              <el-row :gutter="20">
-                <el-col :span="2" :offset="22">
-                  <el-button type="text" @click="publishComment()">评论</el-button>
-                </el-col>
-              </el-row>
-            </div>
-
-            <div class="me-view-comment-title">
-              <span>{{article.commentCounts}} 条评论</span>
-            </div>
-
-            <commment-item
-              v-for="(c,index) in comments"
-              :comment="c"
-              :articleId="article.id"
-              :index="index"
-              :rootCommentCounts="article.commentCounts"
-              @commentCountsIncrement="commentCountsIncrement"
-              :key="c.commentId"
-            ></commment-item>
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>{{article.commentCounts}} 条评论</span>
+                <el-button style="float: right; padding: 3px 0" type="text">按时间顺序</el-button>
+              </div>
+              <el-divider></el-divider>
+              <div v-for="answer in answers" :key="answer.answerId">
+                  <img
+                    src="http://39.99.203.80:8080/images/zhihu.jpg "
+                    class="image"
+                    height="40"
+                    width="40"
+                  />
+                <span style="padding-top:4px;14px Base">{{answer.answerer}}</span>
+              </div>
+            </el-card>
           </div>
         </div>
       </el-main>
@@ -109,7 +122,7 @@
 
 <script>
 import MarkdownEditor from "../markdown/markdown";
-import CommmentItem from '@/components/comment/CommentItem.vue'
+import CommmentItem from "@/components/comment/CommentItem.vue";
 import { mapActions } from "vuex";
 import VueMarkdown from "vue-markdown";
 import HttpRequest from "@/libs/axios";
@@ -130,7 +143,41 @@ export default {
         article: {},
         content: ""
       },
+      answerShow: false,
       htmlMD: "",
+      answers: [],
+      form: {
+        title: "",
+        editor: {
+          value: "",
+          ref: "", //保存mavonEditor实例  实际不该这样
+          default_open: "edit",
+          toolbars: {
+            bold: true, // 粗体
+            italic: true, // 斜体
+            header: true, // 标题
+            underline: true, // 下划线
+            strikethrough: true, // 中划线
+            mark: true, // 标记
+            superscript: true, // 上角标
+            subscript: true, // 下角标
+            quote: true, // 引用
+            ol: true, // 有序列表
+            ul: true, // 无序列表
+            imagelink: true, // 图片链接
+            code: true, // code
+            fullscreen: true, // 全屏编辑
+            readmodel: true, // 沉浸式阅读
+            help: true, // 帮助
+            undo: true, // 上一步
+            redo: true, // 下一步
+            trash: true, // 清空
+            navigation: true, // 导航目录
+            subfield: true, // 单双栏模式
+            preview: true // 预览
+          }
+        }
+      },
       article: {
         id: "",
         title: "",
@@ -163,7 +210,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["viewArticle","getCommentsArticle","publishMyComment"]),
+    ...mapActions([
+      "getAnswerByArticleId",
+      "publishMyComment",
+      "getNetAskById"
+    ]),
     tagOrCategory(type, id) {
       this.$router.push({ path: `/${type}/${id}` });
     },
@@ -171,16 +222,16 @@ export default {
       this.$router.push({ path: `/write/${this.article.id}` });
     },
     getArticle() {
-      this.viewArticle({ id: this.$route.params.id })
+      console.log(this.$route.params.id);
+      this.getNetAskById({ id: this.$route.params.id })
         .then(res => {
           const data = res.data;
-          console.log(data);
           this.article.id = data.essayId;
           this.article.title = data.essayTitle;
           this.article.summary = data.essayAbstract;
           this.article.name = data.essayAuthor;
           this.article.createDate = data.essayPublishTime;
-          this.article.commentCounts = data.commentNum
+          this.article.commentCounts = data.commentNum;
           this.article.savePath = data.savePath;
           const path = "images/" + this.article.savePath;
           axios
@@ -190,8 +241,7 @@ export default {
             .then(res => {
               this.htmlMD = res.data;
             });
-          this.getCommentsByArticle();
-          // that.getCommentsByArticle();
+          // this.getCommentsByArticle();
         })
         .catch(error => {
           if (error !== "error") {
@@ -203,29 +253,32 @@ export default {
             });
           }
         });
+      this.getAnswerByArticle();
     },
     publishComment() {
-      let that = this;
-      if (!that.comment.content) {
+      if (!this.comment.content) {
         return;
       }
-      that.comment.article.id = that.article.id;
-      console.log(that.comment);
-      this.publishMyComment({id:that.article.id,content:that.comment.content})
+      this.comment.article.id = this.article.id;
+      console.log(this.comment);
+      this.publishMyComment({
+        id: this.article.id,
+        content: this.comment.content
+      })
         .then(data => {
-          that.$message({
+          this.$message({
             type: "success",
             message: "评论成功",
             showClose: true
           });
-          that.comments.unshift(data.data);
-          that.commentCountsIncrement();
-          that.comment.content = "";
+          this.comments.unshift(data.data);
+          this.commentCountsIncrement();
+          this.comment.content = "";
           this.getArticle();
         })
         .catch(error => {
           if (error !== "error") {
-            that.$message({
+            this.$message({
               type: "error",
               message: "评论失败",
               showClose: true
@@ -233,16 +286,15 @@ export default {
           }
         });
     },
-    getCommentsByArticle() {
-      let that = this;
-      this.getCommentsArticle({id:that.article.id})
+    getAnswerByArticle() {
+      this.getAnswerByArticleId({ id: this.$route.params.id })
         .then(res => {
           console.log(res);
-          that.comments = res.data;
+          this.answers = res.data;
         })
         .catch(error => {
           if (error !== "error") {
-            that.$message({
+            this.$message({
               type: "error",
               message: "评论加载失败",
               showClose: true
@@ -274,12 +326,11 @@ export default {
 
 <style>
 .me-view-body {
-  margin: 200px auto 280px;
+  margin: 20px 20px;
 }
 
 .me-view-container {
-  margin: 0;
-  width: 1200px;
+  width: 1000px;
 }
 
 .el-main {

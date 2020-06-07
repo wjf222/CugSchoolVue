@@ -52,7 +52,7 @@ export const getEssaies = (author) => {
   return axios.request({
     url: 'getEssaies',
     params: {
-      author: author
+      author: "zhouning"
     },
     method: 'get'
   })
@@ -65,18 +65,18 @@ export const publishNetAsk = () => {
 export const getNetAsk = (author) =>{
   console.log(author);
   return axios.request({
-    url: 'question/getQuestions',
+    url: 'question/allQuestions',
     params: {
-      asker: author,
+      // asker: author,
     },
     method: 'get'
   })
 }
 export const searchArticle = (searchText, page) => {
   return axios.request({
-    url: 'highLight',
+    url: 'search/essay',
     params: {
-      keyWord: searchText,
+      keyword: searchText,
       currentPage: page
     },
     method: 'get'
@@ -117,6 +117,25 @@ export const getUserInfo = (token) => {
   })
 }
 
+export const getNetAskById = (id) =>{
+  return axios.request({
+    url: 'user',
+    params: {
+      id
+    },
+    method: 'get'
+  })
+}
+
+export const getAnswerByArticleId = (id)=>{
+  return axios.request({
+    url: 'answer/getAnswers',
+    params: {
+      questionId:id
+    },
+    method: 'get'
+  })
+}
 export const getCommentsArticle = (id) => {
   return axios.request({
     url: 'comment/getComments',

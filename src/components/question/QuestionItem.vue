@@ -1,7 +1,7 @@
 <template>
   <el-card class="me-area" :body-style="{ padding: '16px' }">
     <div class="me-article-header">
-      <a @click="view(essayId)" class="me-article-title" v-html="questionTitle">
+      <a @click="view(questionId)" class="me-article-title" v-html="questionTitle">
       </a>
       <el-button v-if="false > 0" class="me-article-icon" type="text">置顶</el-button>
       <span class="me-pull-right me-article-count">
@@ -50,11 +50,10 @@ export default {
   methods: {
     view(id) {
       console.log(id);
-      this.$router.push({ path: `/view/${id}` });
+      this.$router.push( `center/viewQuestion/${id}` );
     }
   },
   created(){
-    console.log(this.essayAuthor);
   }
 };
 </script>

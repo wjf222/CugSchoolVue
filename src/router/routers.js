@@ -147,7 +147,7 @@ export default [
     path: '/article',
     name: 'article',
     meta: {
-      hideInBread: true
+      hideInBread: true,
     },
     component: Main,
     children: [
@@ -185,7 +185,8 @@ export default [
     path: '/center',
     name: 'center',
     meta: {
-      hideInBread: true
+      hideInBread: true,
+      // hideInMenu: true
     },
     component: Main,
     children: [
@@ -199,7 +200,7 @@ export default [
         component: () => import('@/view/PersonMes/user-center.vue')
       },
       {
-        path: '/view/:id',
+        path: 'view/:id',
             name: '文章',
             meta: {
               hideInBread: true,
@@ -208,6 +209,17 @@ export default [
               title: '文章'
             },
             component: () => import('@/components/article/ArticleView.vue')
+      },
+      {
+        path: 'viewQuestion/:id',
+            name: '问题',
+            meta: {
+              hideInBread: true,
+              hideInMenu: true,
+              icon: 'ios-bug',
+              title: '问题'
+            },
+            component: () => import('@/components/question/QuestionView.vue')
       },
     ]
   },
