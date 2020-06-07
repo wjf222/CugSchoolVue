@@ -19,7 +19,8 @@ import {
   publishNetAsk,
   getNetAsk,
   getNetAskById,
-  getAnswerByArticleId
+  getAnswerByQuestionId,
+  publishMyAnswer
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -227,8 +228,13 @@ export default {
     getNetAskById({},{id}){
         return getNetAskById(id)
     },
-    getAnswerByArticleId({},{id}){
-      return getAnswerByArticleId(id)
+
+    getAnswerById({state},{id}){
+      return getAnswerByQuestionId(id)
+    },
+    
+    publishMyAnswer({},{content,questionId}){
+        return publishMyAnswer(content,questionId,"王纪锋")
     },
     // 根据当前点击的消息的id获取内容
     getContentByMsgId({ state, commit }, { msg_id }) {

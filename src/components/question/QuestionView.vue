@@ -3,22 +3,22 @@
     <el-container class="me-view-container">
       <el-main>
         <div class="me-view-card">
-          <h1 class="me-view-title">{{article.title}}</h1>
+          <h1 class="me-view-title">{{question.title}}</h1>
           <div class="me-view-author">
             <a class>
               <img class="me-view-picture" src="http://39.99.203.80:8080/images/1.jpg" />
             </a>
             <div class="me-view-info">
-              <span>{{article.name}}</span>
+              <span>{{question.name}}</span>
               <div class="me-view-meta">
-                <span>{{article.createDate}}</span>
-                <span>阅读 {{article.viewCounts}}</span>
-                <span>评论 {{article.answerNum}}</span>
+                <span>{{question.createDate}}</span>
+                <span>阅读 {{question.viewCounts}}</span>
+                <span>评论 {{question.answerNum}}</span>
               </div>
             </div>
-            <!-- v-if="this.article.author.id == this.$store.state.id" -->
+            <!-- v-if="this.question.author.id == this.$store.state.id" -->
             <!-- <el-button
-              @click="editArticle()"
+              @click="editquestion()"
               style="position: absolute;left: 60%;"
               size="mini"
               round
@@ -26,7 +26,7 @@
             >编辑</el-button>-->
           </div>
           <div class="me-view-content">
-            <!-- <markdown-editor :editor="article.editor"></markdown-editor> -->
+            <!-- <markdown-editor :editor="question.editor"></markdown-editor> -->
             <vue-markdown :source="htmlMD"></vue-markdown>
           </div>
 
@@ -65,6 +65,7 @@
                   <el-button
                     type="primary"
                     style="margin-top: 10px;margin-bottom: 10px;float:right"
+                    v-on:click="publishAnswer()"
                   >提交回答</el-button>
                 </div>
               </el-card>
@@ -72,12 +73,12 @@
           </div>
           <!-- <div class="me-view-tag">
             标签：
-            <el-tag v-for="t in article.tags" :key="t.id" class="me-view-tag-item" size="mini" type="success">{{t.tagname}}</el-tag>
+            <el-tag v-for="t in question.tags" :key="t.id" class="me-view-tag-item" size="mini" type="success">{{t.tagname}}</el-tag>
             <el-button
               @click="tagOrCategory('tag', t.id)"
               size="mini"
               type="primary"
-              v-for="t in article.tags"
+              v-for="t in question.tags"
               :key="t.id"
               round
               plain
@@ -86,20 +87,20 @@
 
           <!-- <div class="me-view-tag">
             文章分类：
-          <span style="font-weight: 600">{{article.category.categoryname}}</span>-->
+          <span style="font-weight: 600">{{question.category.categoryname}}</span>-->
           <!-- <el-button
-              @click="tagOrCategory('category', article.category.id)"
+              @click="tagOrCategory('category', question.category.id)"
               size="mini"
               type="primary"
               round
               plain
-            >{{article.category.categoryname}}</el-button>
+            >{{question.category.categoryname}}</el-button>
           </div>-->
 
           <div class="me-view-comment">
             <el-card class="box-card">
               <div slot="header" class="clearfix">
-                <span>{{article.answerNum}} 条评论</span>
+                <span>{{question.answerNum}} 条评论</span>
                 <el-button style="float: right; padding: 3px 0" type="text">按时间顺序</el-button>
               </div>
               <el-divider></el-divider>
@@ -120,21 +121,16 @@ import VueMarkdown from "vue-markdown";
 import HttpRequest from "@/libs/axios";
 const axios = new HttpRequest("http://39.99.203.80:8080/");
 export default {
-  name: "ArticleView",
+  name: "questionView",
   created() {
-    this.getArticle();
+    this.getquestion();
   },
   watch: {
-    $route: "getArticle"
+    $route: "getquestion"
   },
   props: {},
   data() {
     return {
-      comments: [],
-      comment: {
-        article: {},
-        content: ""
-      },
       answerShow: false,
       htmlMD: "",
       answers: [],
@@ -170,7 +166,7 @@ export default {
           }
         }
       },
-      article: {
+      question: {
         id: "",
         title: "",
         answerNum: 0,
@@ -198,32 +194,28 @@ export default {
       return "http://39.99.203.80:8080/images/1.jpg";
     },
     title() {
-      return `${this.article.title} - 文章 - For Fun`;
+      return `${this.question.title} - 文章 - For Fun`;
     }
   },
   methods: {
-    ...mapActions([
-      "getAnswerByArticleId",
-      "publishMyComment",
-      "getNetAskById"
-    ]),
+    ...mapActions(["getAnswerById", "publishMyAnswer", "getNetAskById"]),
     tagOrCategory(type, id) {
       this.$router.push({ path: `/${type}/${id}` });
     },
-    editArticle() {
-      this.$router.push({ path: `/write/${this.article.id}` });
+    editquestion() {
+      this.$router.push({ path: `/write/${this.question.id}` });
     },
-    getArticle() {
+    getquestion() {
       this.getNetAskById({ id: this.$route.params.id })
         .then(res => {
           const data = res.data;
-          this.article.id = data.questionId;
-          this.article.title = data.questionTitle;
-          this.article.name = data.questionerName;
-          this.article.createDate = data.essayPublishTime;
-          this.article.answerNum = data.answerNum;
-          this.article.savePath = data.savePath;
-          const path = "images/" + this.article.savePath;
+          this.question.id = data.questionId;
+          this.question.title = data.questionTitle;
+          this.question.name = data.questionerName;
+          this.question.createDate = data.essayPublishTime;
+          this.question.answerNum = data.answerNum;
+          this.question.savePath = data.savePath;
+          const path = "images/" + this.question.savePath;
           axios
             .request({
               url: path
@@ -231,10 +223,11 @@ export default {
             .then(res => {
               this.htmlMD = res.data;
             });
-          // this.getCommentsByArticle();
+          this.getAnswerByQuestion();
         })
         .catch(error => {
           if (error !== "error") {
+            console.log(error);
             this.$message({
               type: "error",
               message: "文章加载失败",
@@ -242,40 +235,52 @@ export default {
             });
           }
         });
-      this.getAnswerByArticle();
+      // this.getAnswerByQuestion();
     },
-    publishComment() {
-      if (!this.comment.content) {
+    publishAnswer() {
+      if (!this.form.editor.ref.d_render) {
+        this.$message({
+          message: "内容不能为空哦",
+          type: "warning",
+          showClose: true
+        });
         return;
       }
-      this.comment.article.id = this.article.id;
-      this.publishMyComment({
-        id: this.article.id,
-        content: this.comment.content
+      let loading = this.$loading({
+        lock: true,
+        text: "发布中，请稍后..."
+      });
+      let questionContent = this.form.editor.ref.d_render;
+      let questionId = this.$route.params.id;
+      this.publishMyAnswer({
+        questionId: questionId,
+        content: questionContent
       })
-        .then(data => {
+        .then(res => {
+          console.log(res);
+          this.answers.unshift(res.data);
+          this.answerNumIncrement();
+          this.getquestion();
           this.$message({
             type: "success",
-            message: "评论成功",
+            message: "回答成功",
             showClose: true
           });
-          this.comments.unshift(data.data);
-          this.answerNumIncrement();
-          this.comment.content = "";
-          this.getArticle();
+          loading.close();
         })
         .catch(error => {
           if (error !== "error") {
+            console.log(error);
             this.$message({
               type: "error",
-              message: "评论失败",
+              message: "回答失败",
               showClose: true
             });
           }
         });
     },
-    getAnswerByArticle() {
-      this.getAnswerByArticleId({ id: this.$route.params.id })
+    getAnswerByQuestion() {
+      this.getAnswerById({ id: this.$route.params.id })
         .then(res => {
           console.log(res);
           this.answers = res.data;
@@ -284,14 +289,14 @@ export default {
           if (error !== "error") {
             this.$message({
               type: "error",
-              message: "评论加载失败",
+              message: "回答加载失败",
               showClose: true
             });
           }
         });
     },
     answerNumIncrement() {
-      this.article.answerNum += 1;
+      this.question.answerNum += 1;
     }
   },
   components: {

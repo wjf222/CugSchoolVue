@@ -70,6 +70,17 @@ export const publishNetAsk = (questionTitle, questionContent) => {
   })
 }
 
+export const publishMyAnswer = (content, questionId, answerer) => {
+  return axios.request({
+    url: 'answer/answerQuestion',
+    params: {
+      answerer,
+      content,
+      questionId
+    },
+    method: 'get'
+  })
+}
 export const getNetAsk = (author) => {
   return axios.request({
     url: 'question/allQuestions',
@@ -134,7 +145,7 @@ export const getNetAskById = (id) => {
   })
 }
 
-export const getAnswerByArticleId = (id) => {
+export const getAnswerByQuestionId = (id) => {
   return axios.request({
     url: 'answer/getAnswers',
     params: {
