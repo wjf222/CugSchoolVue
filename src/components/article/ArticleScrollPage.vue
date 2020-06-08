@@ -1,6 +1,7 @@
 <template>
   <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
     <article-item v-for="a in articles" :key="a.Id" v-bind="a"></article-item>
+    <Page :total="100" @on-change="handleCurrentChange" class="page-jump" :page-size="5" show-total show-elevator></Page>
   </scroll-page>
 </template>
 
@@ -49,10 +50,10 @@ export default {
       deep: true
     }
   },
-  created() {
-  },
+  created() {},
   data() {
     return {
+      articleNum:Number,
       loading: false,
       noData: false,
       innerPage: {
@@ -104,6 +105,12 @@ export default {
           that.loading = false;
         });
     },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
     getArticleByAuthor(Author) {
       that.loading = true;
       this.searchArticle({ author: Author })
@@ -138,6 +145,9 @@ export default {
 </script>
 
 <style scoped>
+.page-jump {
+  text-align: center;
+}
 .el-card {
   border-radius: 0;
 }

@@ -14,7 +14,7 @@
 <script>
 import SearchResultToolBar from "./components/SearchResultToolBar.vue";
 import SearchResultItem from "./components/SearchResultItem.vue";
-import ArticleScrollPage from "@/components/article/ArticleScrollPage"
+import ArticleScrollPage from "@/components/article/ArticleScrollPage";
 import { mapActions } from "vuex";
 export default {
   components: {
@@ -43,9 +43,9 @@ export default {
     ...mapActions(["searchArticle"]),
     doSearchResult() {
       const { searchText } = this.$route.params;
-      this.searchArticle({ searchText}).then(res => {
+      this.searchArticle({ searchText }).then(res => {
         this.$refs.articlePage.rePageNumber();
-        this.$refs.articlePage.getArticles()
+        this.$refs.articlePage.getArticles();
         // const data = res.data
         // this.searchResultList = data.searchList
       });

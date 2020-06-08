@@ -75,7 +75,7 @@ export default {
       loginName: "登录",
       signNanme: "注册",
       DisableEmail: false,
-      verifyCode:Number,
+      verifyCode: Number,
       userEmail: "@",
       vurifyValue: "验证码",
       endTime: 60
@@ -84,6 +84,14 @@ export default {
   methods: {
     ...mapActions(["handleLogin", "getUserInfo", "handleSign", "sendEmail"]),
     handleSubmit({ userName, password, Captcha, uuid }) {
+      if (password.indexOf(" ") != -1) {
+        this.$message({
+          type: "error",
+          message: "密码中有空格!",
+          showClose: true
+        });
+        return;
+      }
       this.handleLogin({ userName, password, Captcha, uuid }).then(res => {
         this.getUserInfo().then(res => {
           this.$router.push({
@@ -93,9 +101,29 @@ export default {
       });
     },
     handleSignSubmit({ userName, password }) {
-      console.log(userName);
       console.log(password);
-      this.handleSign({email:this.userEmail, userName, userPassword:password,verifyCode:this.verifyCode}).then(res => {
+      if (password.indexOf(" ") != -1) {
+        this.$message({
+          type: "error",
+          message: "密码中有空格!",
+          showClose: true
+        });
+        return;
+      }
+      if (password.length < 6) {
+        this.$message({
+          type: "error",
+          message: "密码过短!",
+          showClose: true
+        });
+        return;
+      }
+      this.handleSign({
+        email: this.userEmail,
+        userName,
+        userPassword: password,
+        verifyCode: this.verifyCode
+      }).then(res => {
         if (res.data == true) {
           this.isLogin = !this.isLogin;
         } else {
@@ -124,9 +152,9 @@ export default {
       }, 1000);
 
       const code = Math.floor(Math.random() * 10000 + 1000);
-      this.verifyCode = code
+      this.verifyCode = code;
       console.log(this.verifyCode);
-      this.sendEmail({ reciver: this.userEmail, verifyCode:code})
+      this.sendEmail({ reciver: this.userEmail, verifyCode: code })
         .then(res => {
           this.$message({
             type: "success",
