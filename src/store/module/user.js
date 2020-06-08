@@ -21,7 +21,8 @@ import {
   getNetAskById,
   getAnswerByQuestionId,
   publishMyAnswer,
-  getAllTags
+  getAllTags,
+  sendEmail
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -108,12 +109,21 @@ export default {
       })
     },
     //注册
-    handleSign({ commit }, { userName, password }) {
+    handleSign({  }, {email, userName, password,verifyCode}) {
+      console.log(verifyCode);
       userName = userName.trim()
       return sign({
+        email,
         userName,
-        password
+        password,
+        verifyCode
       })
+    },
+
+    //发送邮箱验证码
+    sendEmail({},{reciver,verifyCode}){
+      console.log(reciver);
+      return sendEmail({reciver,verifyCode})
     },
     // 退出登录
     handleLogOut({ state, commit }) {

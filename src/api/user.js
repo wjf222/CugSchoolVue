@@ -14,12 +14,27 @@ export const login = ({ userName, password, Captcha, uuid }) => {
   })
 }
 
-export const sign = ({ userName, password }) => {
+export const sign = ({ email,userName, userPassword,verifyCode}) => {
   return axios.request({
-    url: 'index/register',
+    url: 'register',
     params: {
+      email,
       userName,
-      userPassword: password
+      userPassword,
+      verifyCode
+    },
+    method: 'get'
+  })
+}
+
+//发送邮箱验证码
+export const sendEmail = ({ reciver, verifyCode }) => {
+  console.log();
+  return axios.request({
+    url: 'sendemail',
+    params: {
+      reciver,
+      verifyCode
     },
     method: 'get'
   })
@@ -58,7 +73,7 @@ export const getEssaies = (author) => {
   })
 }
 
-export const getAllTags = () =>{
+export const getAllTags = () => {
   return axios.request({
     url: 'allTags',
     params: {

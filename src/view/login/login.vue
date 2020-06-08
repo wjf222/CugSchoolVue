@@ -20,7 +20,26 @@
       </Card>
       <Card icon="log-in" title="欢迎注册" :bordered="false" v-if="!isLogin">
         <div class="form-con">
-          <login-form @on-success-valid="handleSignSubmit" v-bind:meType="signNanme"></login-form>
+          <login-form @on-success-valid="handleSignSubmit" v-bind:meType="signNanme">
+            <FormItem slot="catpch">
+              <Row>
+                <i-col span="18">
+                  <i-input type="email" v-model="userEmail" :maxlength="20" placeholder="邮箱">
+                    <span slot="prepend">
+                      <Icon :size="14" type="ios-filing"></Icon>
+                    </span>
+                  </i-input>
+                </i-col>
+                <i-col span="1">
+                  <i-button
+                    type="primary"
+                    :disabled="DisableEmail"
+                    @click="sendEmailSubmit"
+                  >{{vurifyValue}}</i-button>
+                </i-col>
+              </Row>
+            </FormItem>
+          </login-form>
           <div class="text-center p-t-136">
             <a
               class="txt2"
@@ -54,11 +73,16 @@ export default {
     return {
       isLogin: true,
       loginName: "登录",
-      signNanme: "注册"
+      signNanme: "注册",
+      DisableEmail: false,
+      verifyCode:Number,
+      userEmail: "@",
+      vurifyValue: "验证码",
+      endTime: 60
     };
   },
   methods: {
-    ...mapActions(["handleLogin", "getUserInfo", "handleSign"]),
+    ...mapActions(["handleLogin", "getUserInfo", "handleSign", "sendEmail"]),
     handleSubmit({ userName, password, Captcha, uuid }) {
       this.handleLogin({ userName, password, Captcha, uuid }).then(res => {
         this.getUserInfo().then(res => {
@@ -69,16 +93,54 @@ export default {
       });
     },
     handleSignSubmit({ userName, password }) {
-      this.handleSign({ userName, password }).then(res => {
+      console.log(userName);
+      console.log(password);
+      this.handleSign({email:this.userEmail, userName, userPassword:password,verifyCode:this.verifyCode}).then(res => {
         if (res.data == true) {
           this.isLogin = !this.isLogin;
         } else {
-          alert("注册成功");
+          this.$message({
+            type: "success",
+            message: "注册成功!",
+            showClose: true
+          });
         }
       });
     },
     doSign() {
       this.isLogin = !this.isLogin;
+    },
+    sendEmailSubmit() {
+      this.DisableEmail = true;
+      let time = setInterval(() => {
+        this.vurifyValue = this.endTime;
+        this.endTime--;
+        if (this.endTime == 0) {
+          this.DisableEmail = false;
+          this.endTime = 60;
+          this.vurifyValue = "验证码";
+          clearInterval(time);
+        }
+      }, 1000);
+
+      const code = Math.floor(Math.random() * 10000 + 1000);
+      this.verifyCode = code
+      console.log(this.verifyCode);
+      this.sendEmail({ reciver: this.userEmail, verifyCode:code})
+        .then(res => {
+          this.$message({
+            type: "success",
+            message: "验证码以发送!",
+            showClose: true
+          });
+        })
+        .catch(err => {
+          this.$message({
+            type: "error",
+            message: "发送失败!，请检查邮箱格式",
+            showClose: true
+          });
+        });
     }
   }
 };
