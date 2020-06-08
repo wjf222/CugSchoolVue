@@ -34,7 +34,7 @@
             <el-alert title="文章End..." type="success" center :closable="false"></el-alert>
           </div>
 
-          <!-- <div class="me-view-tag">
+          <div class="me-view-tag">
             标签：
             <el-tag v-for="t in article.tags" :key="t.id" class="me-view-tag-item" size="mini" type="success">{{t.tagname}}</el-tag>
             <el-button
@@ -46,7 +46,7 @@
               round
               plain
             >{{t.tagname}}</el-button>
-          </div>-->
+          </div>
 
           <!-- <div class="me-view-tag">
             文章分类：
@@ -173,6 +173,7 @@ export default {
     getArticle() {
       this.viewArticle({ id: this.$route.params.id })
         .then(res => {
+          console.log(res);
           const data = res.data;
           this.article.id = data.essayId;
           this.article.title = data.essayTitle;

@@ -16,13 +16,12 @@
 
     <div class="me-artile-description">
       <a @click="view(essayId)" class="me-article-title" v-html="essayAbstract">
-        <!-- {{essayTitle}}\ -->
       </a>
     </div>
     <div class="me-article-footer">
       <span class="me-article-author">
-        <i class="me-icon-author"></i>
-        &nbsp;{{essayAuthor}}
+        <i class="me-icon-author" v-html="essayAuthor"></i>
+        &nbsp;
       </span>
 
       <el-tag v-for="t in tagList" :key="t.tagName" size="mini" type="success">{{t.tagName}}</el-tag>
@@ -54,7 +53,7 @@ export default {
   },
   methods: {
     view(id) {
-      this.$router.push({ path: `/view/${id}` });
+      this.$router.push({ path: `/center/view/${id}` });
     }
   },
   created(){
