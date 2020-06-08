@@ -22,7 +22,8 @@ import {
   getAnswerByQuestionId,
   publishMyAnswer,
   getAllTags,
-  sendEmail
+  sendEmail,
+  imgUpload
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -170,6 +171,9 @@ export default {
       })
     },
 
+    imgUpload({},{formData}){
+      return imgUpload(formData)
+    },
     //返回文章
     viewArticle({ state, commit }, { id }) {
       return viewArticle(id)

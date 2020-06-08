@@ -164,10 +164,19 @@ export const getNetAskById = (id) => {
     params: {
       questionId: id
     },
+    headers: { 'Content-Type': 'multipart/form-data' },
     method: 'get'
   })
 }
 
+export const imgUpload = (formData) => {
+  return axios.request({
+    url: 'file/upload',
+    data:formData,
+    method: 'post',
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+}
 export const getAnswerByQuestionId = (id) => {
   return axios.request({
     url: 'answer/getAnswers',

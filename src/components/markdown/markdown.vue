@@ -13,8 +13,7 @@
 
   import {mavonEditor} from 'mavon-editor'
   import 'mavon-editor/dist/css/index.css'
-
-  // import {upload} from '@/api/upload'
+  import { mapActions } from "vuex";
 
   export default {
     name: 'MarkdownEditor',
@@ -28,22 +27,16 @@
       this.$set(this.editor, 'ref', this.$refs.md)
     },
     methods: {
+      ...mapActions(["imgUpload"]),
       imgAdd(pos, $file) {
-        let that = this
-        let formdata = new FormData();
-        formdata.append('image', $file);
-
-        upload(formdata).then(data => {
+        let formData = new FormData();
+        formData.append('file', $file);
+        this.imgUpload({formData}).then(res => {
           // 第二步.将返回的url替换到文本原位置![...](./0) -> ![...](url)
-          if (data.code == 0) {
-
-            that.$refs.md.$img2Url(pos, data.data.url);
-          } else {
-            that.$message({message: data.msg, type: 'error', showClose: true})
-          }
-
+          console.log(res);
+          this.$refs.md.$img2Url(pos, res.data);
         }).catch(err => {
-          that.$message({message: err, type: 'error', showClose: true});
+          this.$message({message: err, type: 'error', showClose: true});
         })
       }
     },
