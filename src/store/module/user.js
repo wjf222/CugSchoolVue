@@ -1,7 +1,6 @@
 import {
   login,
   sign,
-  logout,
   getUserInfo,
   getMessage,
   getContentByMsgId,
@@ -24,7 +23,8 @@ import {
   getAllTags,
   sendEmail,
   imgUpload,
-  essaynumOfAuthor
+  essaynumOfAuthor,
+  countOfAllQuestions
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -190,6 +190,10 @@ export default {
       return getEssaies({page,author:state.userName})
     },
 
+    //获取所有问题的数目
+    countOfAllQuestions(){
+      return countOfAllQuestions()
+    },
     //获取评论
     getCommentsArticle({ state }, { id }) {
       return getCommentsArticle(id);
@@ -243,8 +247,8 @@ export default {
       console.log({questionTitle,questionContent});
       return publishNetAsk(questionTitle,questionContent)
     },
-    getNetAsk({state}){
-      return getNetAsk()
+    getNetAsk({state},{pageIndex}){
+      return getNetAsk(pageIndex)
     },
     getNetAskById({},{id}){
         return getNetAskById(id)

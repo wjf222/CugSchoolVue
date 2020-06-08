@@ -56,9 +56,6 @@ export default {
       deep: true
     }
   },
-  created() {
-    this.getArticles();
-  },
   data() {
     return {
       loading: false,
@@ -84,10 +81,8 @@ export default {
       this.$router.push({ path: `/view/${id}` });
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       this.getArticles({pageIndex:val - 1});
     },
     getArticles({pageIndex}) {
@@ -95,10 +90,8 @@ export default {
       this.essaynumOfAuthor().then(res => {
         this.articleNum = res.data;
       });
-      console.log(pageIndex);
       this.getEssaies({ page: pageIndex })
         .then(res => {
-          console.log(res);
           let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {
             this.articles = newArticles;

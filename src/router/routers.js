@@ -183,21 +183,32 @@ export default [
   },
   {
     path: '/center',
-    name: 'center',
+    name: '个人中心',
     meta: {
-      hideInBread: true,
+      // hideInBread: true,
       // hideInMenu: true
+      icon: 'ios-person',
+      title: '个人中心'
     },
     component: Main,
     children: [
       {
         path: 'center_page',
-        name: '个人中心',
+        name: '信息管理',
         meta: {
           icon: 'ios-person',
-          title: '个人中心'
+          title: '信息管理'
         },
         component: () => import('@/view/PersonMes/user-center.vue')
+      },
+      {
+        path: 'MyArticle',
+        name: '我的文章',
+        meta: {
+          icon: 'ios-book',
+          title: '我的文章'
+        },
+        component: () => import('@/view/PersonMes/MyArticle.vue')
       },
       {
         path: 'view/:id',

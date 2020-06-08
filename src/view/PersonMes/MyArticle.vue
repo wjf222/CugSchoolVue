@@ -1,20 +1,22 @@
 <template>
-  <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
-    <question-item v-for="a in articles" :key="a.id" v-bind="a"></question-item>
-        <Page
-      :total="questionNum"
+  <!-- <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load"> -->
+    <div>
+    <article-item v-for="a in articles" :key="a.id" v-bind="a"></article-item>
+    <Page
+      :total="articleNum"
       @on-change="handleCurrentChange"
       class="page-jump"
       :page-size="5"
       show-total
       show-elevator
     ></Page>
-  </scroll-page>
+    </div>
+  <!-- </scroll-page> -->
 </template>
 
 <script>
-import QuestionItem from "@/components/question/QuestionItem";
-import ScrollPage from "./ScrollPage.vue";
+import ArticleItem from "@/components/article/ArticleItem";
+// import ScrollPage from "./ScrollPage.vue";
 import { mapActions } from "vuex";
 export default {
   name: "ArticleScrollPage",
@@ -41,7 +43,7 @@ export default {
       handler() {
         this.noData = false;
         this.articles = [];
-        this.innerPage.pageNumber = 1;
+        this.innerPage.pageNumber = 0;
         this.getArticles();
       },
       deep: true
@@ -57,7 +59,7 @@ export default {
     }
   },
   created() {
-    this.getQuestions({pageIndex:this.innerPage.pageNumber});
+    this.getArticles();
   },
   data() {
     return {
@@ -70,39 +72,45 @@ export default {
         sort: "desc"
       },
       articles: [],
-      questionNum:0
+      articleNum: Number
     };
   },
+  created() {
+    this.getArticles({ pageIndex: this.innerPage.pageNumber });
+  },
   methods: {
-    ...mapActions(["getNetAsk","countOfAllQuestions"]),
-    load() {
-    },
+    ...mapActions(["getEssaies", "essaynumOfAuthor"]),
+    load() {},
+
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },
-    handleCurrentChange(val) {
-      this.getQuestions({pageIndex:val - 1});
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
     },
-    getQuestions({pageIndex}) {
-      let that = this;
-      that.loading = true;
-      this.countOfAllQuestions().then(res =>{
-        this.questionNum = res.data
-      })
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.getArticles({pageIndex:val - 1});
+    },
+    getArticles({pageIndex}) {
+      this.loading = true;
+      this.essaynumOfAuthor().then(res => {
+        this.articleNum = res.data;
+      });
       console.log(pageIndex);
-      this.getNetAsk({pageIndex})
+      this.getEssaies({ page: pageIndex })
         .then(res => {
+          console.log(res);
           let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {
-            that.innerPage.pageNumber += 1;
-            that.articles = newArticles;
+            this.articles = newArticles;
           } else {
-            that.noData = true;
+            this.noData = true;
           }
         })
         .catch(err => {
           if (error !== "error") {
-            that.$message({
+            this.$message({
               type: "error",
               message: "文章加载失败!",
               showClose: true
@@ -110,13 +118,13 @@ export default {
           }
         })
         .finally(() => {
-          that.loading = false;
+          this.loading = false;
         });
     }
   },
   components: {
-    "scroll-page": ScrollPage,
-    QuestionItem
+    "article-item": ArticleItem,
+    // "scroll-page": ScrollPage
   }
 };
 </script>
@@ -125,6 +133,7 @@ export default {
 .page-jump {
   text-align: center;
 }
+
 .el-card {
   border-radius: 0;
 }

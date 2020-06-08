@@ -1,22 +1,10 @@
 <template>
   <div>
-    <div>
-      <el-container>
-        <el-main class="me-articles">
-          <question-scroll-page></question-scroll-page>
-        </el-main>
-        <el-aside>
-          <card-me class="me-area"></card-me>
-          <card-tag :tags="hotTags"></card-tag>
-
-          <card-article cardHeader="最热问题" :articles="hotArticles"></card-article>
-
-          <card-archive cardHeader="问题归档" :archives="archives"></card-archive>
-
-          <card-article cardHeader="最新问题" :articles="newArticles"></card-article>
-        </el-aside>
-      </el-container>
-    </div>
+    <el-container>
+      <el-main class="me-articles">
+        <question-scroll-page></question-scroll-page>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
