@@ -105,7 +105,7 @@ export default [
         path: '/search_page',
         name: '搜索',
         meta: {
-          icon: 'ios-bug',
+          icon: 'ios-search',
           title: '搜索'
         },
         component: () => import('@/view/search/search.vue')
@@ -155,7 +155,7 @@ export default [
         path: 'article_page',
         name: '发布文章',
         meta: {
-          icon: 'ios-bug',
+          icon: 'ios-book',
           title: '发布文章'
         },
         component: () => import('@/view/article/article.vue')
@@ -174,7 +174,7 @@ export default [
         path: 'comment_page',
         name: '评论',
         meta: {
-          icon: 'ios-bug',
+          icon: 'ios-chatboxes',
           title: '评论'
         },
         component: () => import('@/view/comment/comment.vue')
@@ -194,7 +194,7 @@ export default [
         path: 'center_page',
         name: '个人中心',
         meta: {
-          icon: 'ios-bug',
+          icon: 'ios-person',
           title: '个人中心'
         },
         component: () => import('@/view/PersonMes/user-center.vue')
@@ -221,44 +221,6 @@ export default [
             },
             component: () => import('@/components/question/QuestionView.vue')
       },
-    ]
-  },
-  {
-    path: '/blog',
-    name: 'blog',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'blog_page',
-        name: '博客',
-        meta: {
-          icon: 'ios-bug',
-          title: '博客'
-        },
-        component: () => import('@/view/blog/blog.vue')
-      }
-    ]
-  },
-  {
-    path: '/md',
-    name: 'md',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'blog_page',
-        name: 'md文档',
-        meta: {
-          icon: 'ios-bug',
-          title: 'md文档'
-        },
-        component: () => import('@/view/mdShow/mdown.vue')
-      }
     ]
   },
   {

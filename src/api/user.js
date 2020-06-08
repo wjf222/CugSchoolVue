@@ -39,10 +39,11 @@ export const sendEmail = ({ reciver, verifyCode }) => {
     method: 'get'
   })
 }
-export const setPersonInfo = (token, { userName, userSex, userTelephone, userEmail }) => {
+export const setPersonInfo = (token, {password, userName, userSex, userTelephone, userEmail }) => {
   return axios.request({
     url: 'user/update',
     params: {
+      password,
       token: token,
       userName,
       sex: userSex,

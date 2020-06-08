@@ -145,9 +145,9 @@ export default {
     getPersonInfo({ state, commit }) {
       return getUserInfo(state.token)
     },
-    setPersonInfo({ state }, { userName, userSex, userTelephone, userEmail }) {
+    setPersonInfo({ state }, { password,userName, userSex, userTelephone, userEmail }) {
       const token = state.token;
-      return setPersonInfo(token, { userName, userSex, userTelephone, userEmail })
+      return setPersonInfo(token, {password, userName, userSex, userTelephone, userEmail })
     },
     // 获取用户相关信息
     getUserInfo({ state, commit }) {
