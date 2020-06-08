@@ -23,7 +23,8 @@ import {
   publishMyAnswer,
   getAllTags,
   sendEmail,
-  imgUpload
+  imgUpload,
+  essaynumOfAuthor
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -156,9 +157,10 @@ export default {
           getUserInfo(state.token)
             .then(res => {
               const data = res.data
-              commit('setAvatar', "http://39.99.203.80:8080/images/1.jpg")
-              commit('setUserName', data.name)
-              commit('setUserId', data.user_id)
+              console.log(data);
+              commit('setAvatar', data.userAvatarPath)
+              commit('setUserName', data.userName)
+              commit('setUserId', data.userId)
               commit('setAccess', ['super_admin', 'admin'])
               commit('setHasGetInfo', true)
               resolve(data)
@@ -175,13 +177,17 @@ export default {
       return imgUpload(formData)
     },
     //返回文章
-    viewArticle({ state, commit }, { id }) {
+    viewArticle({ }, { id }) {
       return viewArticle(id)
     },
 
+    //获取某个作者的文章的数量
+    essaynumOfAuthor({state}){
+      return essaynumOfAuthor(state.userName);
+    },
     //获取文章
-    getEssaies({ state, commit }, { author  }) {
-      return getEssaies(author)
+    getEssaies({ state}, { page }) {
+      return getEssaies({page,author:state.userName})
     },
 
     //获取评论

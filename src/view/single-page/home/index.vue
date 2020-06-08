@@ -28,9 +28,7 @@ import CardArticle from "./components/card/CardArticle";
 import CardArchive from "./components/card/CardArchive";
 import CardTag from "./components/card/CardTag";
 
-// import { getArticles, getHotArtices, getNewArtices } from "@/api/article";
-// import { getHotTags } from "@/api/tag";
-// import { listArchives } from "@/api/article";
+
 export default {
   name: "home",
   created() {

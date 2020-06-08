@@ -39,6 +39,7 @@ export const sendEmail = ({ reciver, verifyCode }) => {
     method: 'get'
   })
 }
+
 export const setPersonInfo = (token, {password, userName, userSex, userTelephone, userEmail }) => {
   return axios.request({
     url: 'user/update',
@@ -64,16 +65,26 @@ export const viewArticle = (id) => {
     method: 'get'
   })
 }
-export const getEssaies = (author) => {
+export const getEssaies = ({page,author}) => {
   return axios.request({
     url: 'getEssaies',
     params: {
-      author: "zhouning"
+      author,
+      pageIndex:page
     },
     method: 'get'
   })
 }
 
+export const essaynumOfAuthor = (author) =>{
+  return axios.request({
+    url: 'countOfEssay',
+    params: {
+      author
+    },
+    method: 'get'
+  })
+}
 export const getAllTags = () => {
   return axios.request({
     url: 'allTags',

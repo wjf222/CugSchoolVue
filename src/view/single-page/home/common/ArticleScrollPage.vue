@@ -1,6 +1,14 @@
 <template>
   <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
     <article-item v-for="a in articles" :key="a.id" v-bind="a"></article-item>
+    <Page
+      :total="articleNum"
+      @on-change="handleCurrentChange"
+      class="page-jump"
+      :page-size="5"
+      show-total
+      show-elevator
+    ></Page>
   </scroll-page>
 </template>
 
@@ -33,7 +41,7 @@ export default {
       handler() {
         this.noData = false;
         this.articles = [];
-        this.innerPage.pageNumber = 1;
+        this.innerPage.pageNumber = 0;
         this.getArticles();
       },
       deep: true
@@ -57,30 +65,43 @@ export default {
       noData: false,
       innerPage: {
         pageSize: 5,
-        pageNumber: 1,
+        pageNumber: 0,
         name: "a.createDate",
         sort: "desc"
       },
-      articles: []
+      articles: [],
+      articleNum: Number
     };
   },
+  created() {
+    this.getArticles({ pageIndex: this.innerPage.pageNumber });
+  },
   methods: {
-    ...mapActions(["getEssaies"]),
-    load() {
-      this.getArticles();
-    },
+    ...mapActions(["getEssaies", "essaynumOfAuthor"]),
+    load() {},
+
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },
-    getArticles() {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.getArticles({pageIndex:val - 1});
+    },
+    getArticles({pageIndex}) {
       this.loading = true;
-      this.getEssaies({ page: this.innerPage.pageNumber })
+      this.essaynumOfAuthor().then(res => {
+        this.articleNum = res.data;
+      });
+      console.log(pageIndex);
+      this.getEssaies({ page: pageIndex })
         .then(res => {
           console.log(res);
           let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {
-            this.innerPage.pageNumber += 1;
-            this.articles = this.articles.concat(newArticles);
+            this.articles = newArticles;
           } else {
             this.noData = true;
           }
@@ -100,13 +121,17 @@ export default {
     }
   },
   components: {
-    'article-item': ArticleItem,
+    "article-item": ArticleItem,
     "scroll-page": ScrollPage
   }
 };
 </script>
 
 <style scoped>
+.page-jump {
+  text-align: center;
+}
+
 .el-card {
   border-radius: 0;
 }

@@ -101,7 +101,6 @@ export default {
       });
     },
     handleSignSubmit({ userName, password }) {
-      console.log(password);
       if (password.indexOf(" ") != -1) {
         this.$message({
           type: "error",

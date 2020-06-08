@@ -81,7 +81,7 @@ export default {
       return this.$store.state.app.tagRouter
     },
     userAvatar () {
-      return this.$store.state.user.avatarImgPath
+      return "http://39.99.203.80:8080"+this.$store.state.user.avatarImgPath
     },
     cacheList () {
       const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
