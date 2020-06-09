@@ -1,14 +1,14 @@
 <template>
   <!-- <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load"> -->
   <div>
-    <article-item v-for="(a,index) in articles" :key="a.essayId" v-bind="a" ref ="ArticleItem" >
+    <article-item v-for="(a,index) in articles" :key="a.essayId" v-bind="a" ref="ArticleItem">
       <el-dropdown slot="MoreAction" @command="handleCommand">
         <span class="el-dropdown-link">
           更多操作
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="index">{{index}}</el-dropdown-item>
+          <el-dropdown-item :command="index">删除</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </article-item>
@@ -92,15 +92,21 @@ export default {
     ...mapActions(["getEssaies", "essaynumOfAuthor"]),
     load() {},
 
-    handleCommand(command){
-        this.$refs.ArticleItem[command].delete();
+    handleCommand(command) {
+      this.$refs.ArticleItem[command].delete();
+      this.$message({
+        type: "success",
+        message: "删除成功!",
+        showClose: true
+      });
+      this.getArticles({ pageIndex: this.innerPage.pageNumber });
     },
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },
-    handleSizeChange(val) {
-    },
+    handleSizeChange(val) {},
     handleCurrentChange(val) {
+      this.innerPage.pageNumber = val - 1;
       this.getArticles({ pageIndex: val - 1 });
     },
     getArticles({ pageIndex }) {
@@ -150,11 +156,11 @@ export default {
 .el-card:not(:first-child) {
   margin-top: 10px;
 }
- .el-dropdown-link {
-    cursor: pointer;
-    color: #409EFF;
-  }
-  .el-icon-arrow-down {
-    font-size: 12px;
-  }
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
 </style>

@@ -1,16 +1,17 @@
 <template>
   <el-card class="me-area" :body-style="{ padding: '16px' }">
     <div class="me-article-header">
-      <a @click="view(questionId)" class="me-article-title" v-html="questionTitle">
-      </a>
+      <a @click="view(questionId)" class="me-article-title" v-html="questionTitle"></a>
       <el-button v-if="false > 0" class="me-article-icon" type="text">置顶</el-button>
-      <span class="me-pull-right me-article-count">
-        <i class="me-icon-comment"></i>&nbsp;{{answerNum}}
+      <span class="me-pull-left me-article-count">
+        <i class="me-icon-comment"></i>
+        &nbsp;{{answerNum}}
       </span>
-      <span class="me-pull-right me-article-count">
-        <!-- <i class="el-icon-view"></i>&nbsp;{{viewCounts}} -->
-        <i class="el-icon-view"></i>&nbsp;10
+      <span class="me-pull-left me-article-count">
+        <i class="el-icon-view"></i>
+        &nbsp;{{answerNum}}
       </span>
+      <slot class="me-pull-right me-article-count" name="MoreAction"></slot>
     </div>
 
     <div class="me-artile-description">{{questionContent}}</div>
@@ -31,6 +32,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "ArticleItem",
   props: {
@@ -48,12 +50,21 @@ export default {
     return {};
   },
   methods: {
+    ...mapActions(["deleteQuestion"]),
+    delete() {
+      this.deleteQuestion({ questionId: this.questionId })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     view(id) {
-      this.$router.push( `center/viewQuestion/${id}` );
+      this.$router.push(`center/viewQuestion/${id}`);
     }
   },
-  created(){
-  }
+  created() {}
 };
 </script>
 

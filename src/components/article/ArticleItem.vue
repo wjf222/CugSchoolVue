@@ -13,7 +13,7 @@
         <i class="el-icon-view"></i>&nbsp;10
       </span>
       <slot class="me-pull-right me-article-count" name="MoreAction">
-      </slot>
+      </slot> 
     </div>
 
     <div class="me-artile-description">

@@ -1,7 +1,18 @@
 <template>
-<div>
-    <question-item v-for="a in articles" :key="a.id" v-bind="a"></question-item>
-        <Page
+  <div>
+    <question-item v-for=" (a,index) in articles" :key="a.id" v-bind="a" ref="QuestionItem">
+      <el-dropdown slot="MoreAction" @command="handleCommand">
+        <span class="el-dropdown-link">
+          更多操作
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item :command="index">删除</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </question-item>
+
+    <Page
       :total="questionNum"
       @on-change="handleCurrentChange"
       class="page-jump"
@@ -9,7 +20,7 @@
       show-total
       show-elevator
     ></Page>
-</div>
+  </div>
 </template>
 
 <script>
@@ -56,7 +67,7 @@ export default {
     }
   },
   created() {
-    this.getQuestions({pageIndex:this.innerPage.pageNumber});
+    this.getQuestions({ pageIndex: this.innerPage.pageNumber });
   },
   data() {
     return {
@@ -69,26 +80,34 @@ export default {
         sort: "desc"
       },
       articles: [],
-      questionNum:0
+      questionNum: 0
     };
   },
   methods: {
-    ...mapActions(["getNetAskByAuthor","countOfAuthorQuestions"]),
-    load() {
-    },
+    ...mapActions(["getNetAskByAuthor", "countOfAuthorQuestions"]),
+    load() {},
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },
-    handleCurrentChange(val) {
-      this.getQuestions({pageIndex:val - 1});
+    
+    handleCommand(command) {
+      this.$refs.QuestionItem[command].delete();
+            this.$message({
+        type: "success",
+        message: "删除成功!",
+        showClose: true
+      });
     },
-    getQuestions({pageIndex}) {
+    handleCurrentChange(val) {
+      this.getQuestions({ pageIndex: val - 1 });
+    },
+    getQuestions({ pageIndex }) {
       let that = this;
       that.loading = true;
-      this.countOfAuthorQuestions().then(res =>{
-        this.questionNum = res.data
-      })
-      this.getNetAskByAuthor({pageIndex})
+      this.countOfAuthorQuestions().then(res => {
+        this.questionNum = res.data;
+      });
+      this.getNetAskByAuthor({ pageIndex })
         .then(res => {
           let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {

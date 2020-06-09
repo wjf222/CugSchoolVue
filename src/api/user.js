@@ -211,6 +211,17 @@ export const deleteEssay = ({essayId}) =>{
     method: 'get'
   })
 }
+
+export const deleteQuestion = ({questionId}) =>{
+  return axios.request({
+    url: 'question/deleteQuestion',
+    params: {
+      questionId
+    },
+    method: 'get'
+  })
+}
+
 export const publishArticle = ({ content, title, essayAbstract, author, tags }) => {
   return axios.request({
     url: "md",
