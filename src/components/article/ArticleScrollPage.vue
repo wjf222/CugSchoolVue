@@ -1,7 +1,14 @@
 <template>
   <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
     <article-item v-for="a in articles" :key="a.Id" v-bind="a"></article-item>
-    <Page :total="100" @on-change="handleCurrentChange" class="page-jump" :page-size="5" show-total show-elevator></Page>
+    <Page
+      :total="ArticlNum"
+      @on-change="handleCurrentChange"
+      class="page-jump"
+      :page-size="5"
+      show-total
+      show-elevator
+    ></Page>
   </scroll-page>
 </template>
 
@@ -53,9 +60,10 @@ export default {
   created() {},
   data() {
     return {
-      articleNum:Number,
+      articleNum: Number,
       loading: false,
       noData: false,
+      ArticlNum: 0,
       innerPage: {
         pageSize: 5,
         pageNumber: 0,
@@ -83,6 +91,7 @@ export default {
       that.loading = true;
       this.searchArticle({ searchText, page: that.innerPage.pageNumber })
         .then(res => {
+          this.ArticlNum = res.data.count;
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1;
@@ -92,7 +101,7 @@ export default {
           }
         })
         .catch(err => {
-          if (error !== "error") {
+          if (err !== "error") {
             that.$message({
               type: "error",
               message: "文章加载失败!",
@@ -104,9 +113,31 @@ export default {
           that.loading = false;
         });
     },
-    handleSizeChange(val) {
-    },
+    handleSizeChange(val) {},
     handleCurrentChange(val) {
+      const { searchText } = this.$route.params;
+      this.searchArticle({ searchText, page: val - 1 })
+        .then(res => {
+          let newArticles = res.data.searchList;
+          if (newArticles && newArticles.length > 0) {
+            this.innerPage.pageNumber += 1;
+            this.articles = newArticles;
+          } else {
+            this.noData = true;
+          }
+        })
+        .catch(err => {
+          if (err !== "error") {
+            this.$message({
+              type: "error",
+              message: "文章加载失败!",
+              showClose: true
+            });
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     getArticleByAuthor(Author) {
       that.loading = true;

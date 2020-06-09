@@ -111,7 +111,6 @@ export default {
       this.currentMessageType = name;
     },
     handleView(msg_id) {
-      console.log(msg_id);
       // this.contentLoading = true;
       let content = "你好呀";
       this.messageContent = content;

@@ -55,11 +55,13 @@ export default {
     };
   },
   created() {
+    console.log();
     axios
       .request({
         url: this.savePath
       })
       .then(res => {
+        console.log(res.data);
         this.answerContent = res.data;
       });
   },

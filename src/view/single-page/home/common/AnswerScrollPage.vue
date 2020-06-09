@@ -87,11 +87,13 @@ export default {
       let that = this;
       that.loading = true;
       this.countOfAllAnswers().then(res =>{
+        console.log(res.data);
         this.answerNum = res.data
       })
 
       this.getNetAnswer({pageIndex})
         .then(res => {
+          console.log(res.data);
           let newAnswers = res.data;
           if (newAnswers && newAnswers.length > 0) {
             that.innerPage.pageNumber += 1;

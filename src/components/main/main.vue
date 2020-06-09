@@ -204,7 +204,6 @@ export default {
   },
   created() {
     // 获取未读消息条数
-    console.log("mesg");
     this.getUnreadMessageCount();
   }
 };

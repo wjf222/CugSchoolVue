@@ -238,9 +238,7 @@ export default {
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
     getUnreadMessageCount({ state, commit }) {
-      console.log("count");
       getUnreadCount({receiver:state.userName}).then(res => {
-        console.log(res);
         const { data } = res
         commit('setMessageCount', data)
       })
@@ -249,7 +247,6 @@ export default {
     getMessageList({ state, commit }) {
       return new Promise((resolve, reject) => {
         getMessage({pageIndex:0,receiver:state.userName}).then(res => {
-          console.log(res);
           const unread = res.data
           commit('setMessageUnreadList', unread)
           resolve()
@@ -277,12 +274,12 @@ export default {
     getAllTags(){
       return getAllTags();
     },
-    getAnswerById({state},{id}){
-      return getAnswerByQuestionId(id)
+    getAnswerById({state},{id,page}){
+      return getAnswerByQuestionId({id,pageIndex:page})
     },
     
-    publishMyAnswer({},{content,questionId}){
-        return publishMyAnswer(content,questionId,"王纪锋")
+    publishMyAnswer({state},{content,questionId}){
+        return publishMyAnswer(content,questionId,state.userName)
     },
 
 

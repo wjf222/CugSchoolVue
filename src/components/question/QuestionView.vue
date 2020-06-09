@@ -13,7 +13,7 @@
               <div class="me-view-meta">
                 <span>{{question.createDate}}</span>
                 <span>阅读 {{question.viewCounts}}</span>
-                <span>评论 {{question.answerNum}}</span>
+                <span>回答 {{question.answerNum}}</span>
               </div>
             </div>
             <!-- v-if="this.question.author.id == this.$store.state.id" -->
@@ -56,7 +56,7 @@
                     />
                   </div>
                   <div>
-                    <span style="padding-top:4px;14px Base">王纪锋</span>
+                    <span style="padding-top:4px;14px Base">{{this.$store.state.user.userName}}</span>
                   </div>
                 </el-row>
                 <el-divider></el-divider>
@@ -100,11 +100,19 @@
           <div class="me-view-comment">
             <el-card class="box-card">
               <div slot="header" class="clearfix">
-                <span>{{question.answerNum}} 条评论</span>
+                <span>{{question.answerNum}} 条回答</span>
                 <el-button style="float: right; padding: 3px 0" type="text">按时间顺序</el-button>
               </div>
               <el-divider></el-divider>
               <answer-item v-for="answer in answers" :key="answer.id" v-bind="answer"></answer-item>
+              <Page
+                :total="question.answerNum"
+                @on-change="handleCurrentChange"
+                class="page-jump"
+                :page-size="5"
+                show-total
+                show-elevator
+              ></Page>
             </el-card>
           </div>
         </div>
@@ -205,6 +213,9 @@ export default {
     editquestion() {
       this.$router.push({ path: `/write/${this.question.id}` });
     },
+    handleCurrentChange(val) {
+      this.getAnswerByQuestion({ page: val - 1 });
+    },
     getquestion() {
       this.getNetAskById({ id: this.$route.params.id })
         .then(res => {
@@ -223,7 +234,7 @@ export default {
             .then(res => {
               this.htmlMD = res.data;
             });
-          this.getAnswerByQuestion();
+          this.getAnswerByQuestion({ page: 0 });
         })
         .catch(error => {
           if (error !== "error") {
@@ -234,7 +245,6 @@ export default {
             });
           }
         });
-      // this.getAnswerByQuestion();
     },
     publishAnswer() {
       if (!this.form.editor.ref.d_render) {
@@ -256,6 +266,7 @@ export default {
         content: questionContent
       })
         .then(res => {
+
           this.answers.unshift(res.data);
           this.answerNumIncrement();
           this.getquestion();
@@ -276,8 +287,8 @@ export default {
           }
         });
     },
-    getAnswerByQuestion() {
-      this.getAnswerById({ id: this.$route.params.id })
+    getAnswerByQuestion({ page }) {
+      this.getAnswerById({ id: this.$route.params.id, page })
         .then(res => {
           this.answers = res.data;
         })
@@ -313,6 +324,9 @@ export default {
 </script>
 
 <style>
+.page-jump {
+  text-align: center;
+}
 .me-view-body {
   margin: 20px 20px;
 }

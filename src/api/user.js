@@ -277,11 +277,12 @@ export const imgUpload = (formData) => {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
 }
-export const getAnswerByQuestionId = (id) => {
+export const getAnswerByQuestionId = ({id,pageIndex}) => {
   return axios.request({
     url: 'answer/getAnswers',
     params: {
-      questionId: id
+      questionId: id,
+      pageIndex
     },
     method: 'get'
   })

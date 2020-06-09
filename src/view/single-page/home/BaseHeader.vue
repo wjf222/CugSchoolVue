@@ -183,7 +183,6 @@ export default {
           });
         })
         .catch(err => {
-          console.log(err);
           loading.close();
           this.$message({
             message: "发表失败了",
