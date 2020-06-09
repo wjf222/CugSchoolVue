@@ -305,16 +305,23 @@ export const logout = (token) => {
   })
 }
 
-export const getUnreadCount = () => {
+export const getUnreadCount = ({receiver}) => {
   return axios.request({
-    url: 'message/count',
+    url: 'message/countOfMsg',
+    params:{
+      receiver
+    },
     method: 'get'
   })
 }
 
-export const getMessage = () => {
+export const getMessage = ({pageIndex,receiver}) => {
   return axios.request({
-    url: 'message/init',
+    url: 'message/receiveMsg',
+    params:{
+      pageIndex,
+      receiver
+    },
     method: 'get'
   })
 }
