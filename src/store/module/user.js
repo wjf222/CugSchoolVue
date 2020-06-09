@@ -28,7 +28,9 @@ import {
   essaynumOfAuthor,
   countOfAllQuestions,
   countOfAuthorQuestions,
-  countOfAllAnswers
+  countOfAllAnswers,
+  countOfAllofEssay,
+  allOfEssay
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -117,10 +119,11 @@ export default {
     //注册
     handleSign({  }, {email, userName, password,verifyCode}) {
       userName = userName.trim()
+      console.log(password);
       return sign({
         email,
         userName,
-        password,
+        userPassword:password,
         verifyCode
       })
     },
@@ -192,6 +195,14 @@ export default {
       return getEssaies({page,author:state.userName})
     },
 
+    allOfEssay({ state}, { page }){
+      console.log(page);
+      return allOfEssay({page})
+    },
+    //获取所有文章的数量
+    countOfAllofEssay(){
+      return countOfAllofEssay()
+    },
     countOfAllAnswers(){
       return countOfAllAnswers()
     },

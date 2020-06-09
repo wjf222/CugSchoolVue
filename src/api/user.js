@@ -15,6 +15,10 @@ export const login = ({ userName, password, Captcha, uuid }) => {
 }
 
 export const sign = ({ email, userName, userPassword, verifyCode }) => {
+  console.log(email);
+  console.log(userName);
+  console.log(userPassword);
+  console.log(verifyCode);
   return axios.request({
     url: 'register',
     params: {
@@ -71,6 +75,25 @@ export const getEssaies = ({ page, author }) => {
     params: {
       author,
       pageIndex: page
+    },
+    method: 'get'
+  })
+}
+
+export const allOfEssay = ({ page }) => {
+  console.log(page);
+  return axios.request({
+    url: 'allOfEssay',
+    params: {
+      pageIndex: page
+    },
+    method: 'get'
+  })
+}
+export const countOfAllofEssay = () => {
+  return axios.request({
+    url: 'countOfAllofEssay',
+    params: {
     },
     method: 'get'
   })
@@ -189,13 +212,14 @@ export const searchArticle = (searchText, page) => {
 }
 
 export const publishArticle = ({ content, title, essayAbstract, author }) => {
+
   return axios.request({
-    url: "file/md",
+    url: "md",
     params: {
       content,
       title,
       essayAbstract,
-      author: author
+      author
     },
     method: "get"
   })

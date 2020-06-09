@@ -101,6 +101,7 @@ export default {
       });
     },
     handleSignSubmit({ userName, password }) {
+      console.log(password);
       if (password.indexOf(" ") != -1) {
         this.$message({
           type: "error",
@@ -120,15 +121,16 @@ export default {
       this.handleSign({
         email: this.userEmail,
         userName,
-        userPassword: password,
+        password: password,
         verifyCode: this.verifyCode
       }).then(res => {
+        console.log(res);
         if (res.data == true) {
           this.isLogin = !this.isLogin;
         } else {
           this.$message({
-            type: "success",
-            message: "注册成功!",
+            type: "error",
+            message: "注册失败!",
             showClose: true
           });
         }

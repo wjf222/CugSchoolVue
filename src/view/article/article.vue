@@ -30,7 +30,7 @@
       </el-container>
 
       <el-dialog
-        title="摘要 分类 标签"
+        title="摘要 分类"
         :visible.sync="publishVisible"
         :close-on-click-modal="false"
         custom-class="me-dialog"
@@ -180,11 +180,9 @@ export default {
       });
     },
     handleInputConfirm() {
-      console.log(this.inputValue);
       let inputValue = this.inputValue;
       if (inputValue) {
-        this.tags.push({tagId:1,
-        tagName:inputValue});
+        this.tags.push({tagName:inputValue});
       }
       this.inputVisible = false;
       this.inputValue = "";
@@ -244,29 +242,25 @@ export default {
     publish(articleForm) {
       this.$refs[articleForm].validate(valid => {
         if (valid) {
-          // let tags = this.articleForm.tags.map(function(item) {
-          //   return { id: item };
-          // });
-
           let article = {
             id: this.articleForm.id,
             title: this.articleForm.title,
             summary: this.articleForm.summary,
             category: this.articleForm.category,
-            tags: tags,
+            tags: this.tags,
             body: {
               content: this.articleForm.editor.value,
               contentHtml: this.articleForm.editor.ref.d_render
             }
           };
           this.publishVisible = false;
-
           let loading = this.$loading({
             lock: true,
             text: "发布中，请稍后..."
           });
           this.publishArticle({ article })
-            .then(data => {
+            .then(res => {
+              console.log(res);
               loading.close();
               this.$message({
                 message: "发布成功啦",
@@ -313,21 +307,6 @@ export default {
       //       });
       //     }
       //   });
-
-      this.getAllTags()
-        .then(res => {
-          console.log(res);
-          this.tags = res.data;
-        })
-        .catch(error => {
-          if (error !== "error") {
-            this.$message({
-              type: "error",
-              message: "标签加载失败",
-              showClose: true
-            });
-          }
-        });
     },
     editorToolBarToFixed() {
       let toolbar = document.querySelector(".v-note-op");

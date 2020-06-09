@@ -74,7 +74,7 @@ export default {
     this.getArticles({ pageIndex: this.innerPage.pageNumber });
   },
   methods: {
-    ...mapActions(["getEssaies", "essaynumOfAuthor"]),
+    ...mapActions(["allOfEssay", "countOfAllofEssay"]),
     load() {},
 
     view(id) {
@@ -87,13 +87,12 @@ export default {
     },
     getArticles({pageIndex}) {
       this.loading = true;
-      console.log("article");
-      this.essaynumOfAuthor().then(res => {
-        console.log(res);
+      this.countOfAllofEssay().then(res => {
         this.articleNum = res.data;
       });
-      this.getEssaies({ page: pageIndex })
+      this.allOfEssay({ page: pageIndex })
         .then(res => {
+          console.log(res);
           let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {
             this.articles = newArticles;

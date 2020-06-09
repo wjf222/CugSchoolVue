@@ -147,7 +147,7 @@ export default {
           if (data.userSex == 0) this.user.sex = "女";
           this.user.email = data.userEmail;
           this.user.tel = data.userTelephone;
-          this.user.password = data.password;
+          this.user.password = data.userPassword;
         });
       });
     }
