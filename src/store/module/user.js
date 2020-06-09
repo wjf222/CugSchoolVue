@@ -30,7 +30,8 @@ import {
   countOfAuthorQuestions,
   countOfAllAnswers,
   countOfAllofEssay,
-  allOfEssay
+  allOfEssay,
+  deleteEssay
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -287,6 +288,13 @@ export default {
     publishMyAnswer({},{content,questionId}){
         return publishMyAnswer(content,questionId,"王纪锋")
     },
+
+
+    //删除文章
+    deleteEssay({},{essayId}){
+      return deleteEssay({essayId})
+    },
+    
     // 根据当前点击的消息的id获取内容
     getContentByMsgId({ state, commit }, { msg_id }) {
       return new Promise((resolve, reject) => {

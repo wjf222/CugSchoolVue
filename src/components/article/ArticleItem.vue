@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "ArticleItem",
   props: {
@@ -54,6 +55,14 @@ export default {
     return {};
   },
   methods: {
+    ...mapActions(["deleteEssay"]),
+    delete(){
+      this.deleteEssay({essayId:this.essayId}).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
     view(id) {
       this.$router.push({ path: `/center/view/${id}` });
     }

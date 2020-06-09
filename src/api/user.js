@@ -202,6 +202,15 @@ export const searchArticle = (searchText, page) => {
   })
 }
 
+export const deleteEssay = ({essayId}) =>{
+  return axios.request({
+    url: 'deleteEssay',
+    params: {
+      essayId
+    },
+    method: 'get'
+  })
+}
 export const publishArticle = ({ content, title, essayAbstract, author, tags }) => {
   return axios.request({
     url: "md",

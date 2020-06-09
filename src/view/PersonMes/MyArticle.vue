@@ -89,12 +89,11 @@ export default {
     this.getArticles({ pageIndex: this.innerPage.pageNumber });
   },
   methods: {
-    ...mapActions(["getEssaies", "essaynumOfAuthor","deleteEssay"]),
+    ...mapActions(["getEssaies", "essaynumOfAuthor"]),
     load() {},
 
     handleCommand(command){
-        console.log(this.$refs.ArticleItem[command]);
-        this.$message(command)
+        this.$refs.ArticleItem[command].delete();
     },
     view(id) {
       this.$router.push({ path: `/view/${id}` });
