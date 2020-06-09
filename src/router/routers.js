@@ -78,7 +78,18 @@ export default [
               icon: 'md-home'
             },
             component: () => import('@/view/single-page/home/questionList.vue'),
-          },],
+          },
+          {
+            path: '/answer',
+            name: '精彩回答',
+            meta: {
+              hideInMenu: true,
+              title: '精彩回答',
+              notCache: true,
+              icon: 'md-home'
+            },
+            component: () => import('@/view/single-page/home/answerList.vue'),
+          }],
       }
     ]
   },
@@ -216,6 +227,15 @@ export default [
         meta: {
           icon: 'ios-book',
           title: '我的问题'
+        },
+        component: () => import('@/view/PersonMes/MyQuestion.vue')
+      },
+      {
+        path: 'MyAnswer',
+        name: '我的回答',
+        meta: {
+          icon: 'ios-book',
+          title: '我的回答'
         },
         component: () => import('@/view/PersonMes/MyQuestion.vue')
       },

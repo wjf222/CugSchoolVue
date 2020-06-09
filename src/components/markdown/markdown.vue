@@ -33,8 +33,8 @@
         formData.append('file', $file);
         this.imgUpload({formData}).then(res => {
           // 第二步.将返回的url替换到文本原位置![...](./0) -> ![...](url)
-          console.log(res);
-          this.$refs.md.$img2Url(pos, res.data);
+          const url = "http://39.99.203.80:8080"+res.data
+          this.$refs.md.$img2Url(pos, url);
         }).catch(err => {
           this.$message({message: err, type: 'error', showClose: true});
         })

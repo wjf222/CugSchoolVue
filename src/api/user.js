@@ -14,7 +14,7 @@ export const login = ({ userName, password, Captcha, uuid }) => {
   })
 }
 
-export const sign = ({ email,userName, userPassword,verifyCode}) => {
+export const sign = ({ email, userName, userPassword, verifyCode }) => {
   return axios.request({
     url: 'register',
     params: {
@@ -40,7 +40,7 @@ export const sendEmail = ({ reciver, verifyCode }) => {
   })
 }
 
-export const setPersonInfo = (token, {password, userName, userSex, userTelephone, userEmail }) => {
+export const setPersonInfo = (token, { password, userName, userSex, userTelephone, userEmail }) => {
   return axios.request({
     url: 'user/update',
     params: {
@@ -65,18 +65,26 @@ export const viewArticle = (id) => {
     method: 'get'
   })
 }
-export const getEssaies = ({page,author}) => {
+export const getEssaies = ({ page, author }) => {
   return axios.request({
     url: 'getEssaies',
     params: {
       author,
-      pageIndex:page
+      pageIndex: page
     },
     method: 'get'
   })
 }
 
-export const countOfAllQuestions = () =>{
+export const countOfAllAnswers = () => {
+  return axios.request({
+    url: 'answer/countOfAllAnswer',
+    params: {
+    },
+    method: 'get'
+  })
+}
+export const countOfAllQuestions = () => {
   return axios.request({
     url: 'question/countOfAllQuestions',
     params: {
@@ -86,7 +94,7 @@ export const countOfAllQuestions = () =>{
   })
 }
 
-export const countOfAuthorQuestions = ({asker}) =>{
+export const countOfAuthorQuestions = ({ asker }) => {
   console.log(asker);
   return axios.request({
     url: 'question/countOfSbQuestion',
@@ -96,7 +104,7 @@ export const countOfAuthorQuestions = ({asker}) =>{
     method: 'get'
   })
 }
-export const essaynumOfAuthor = (author) =>{
+export const essaynumOfAuthor = (author) => {
   console.log(author);
   return axios.request({
     url: 'countOfEssay',
@@ -137,6 +145,17 @@ export const publishMyAnswer = (content, questionId, answerer) => {
     method: 'get'
   })
 }
+
+export const getNetAnswer = (pageIndex) => {
+  return axios.request({
+    url: 'answer/allAnswers',
+    params: {
+      pageIndex
+    },
+    method: 'get'
+  })
+}
+
 export const getNetAsk = (pageIndex) => {
   return axios.request({
     url: 'question/allQuestions',
@@ -147,7 +166,7 @@ export const getNetAsk = (pageIndex) => {
   })
 }
 
-export const getNetAskByAuthor = ({asker,pageIndex}) => {
+export const getNetAskByAuthor = ({ asker, pageIndex }) => {
   console.log(asker);
   return axios.request({
     url: 'question/getQuestions',
@@ -217,7 +236,7 @@ export const getNetAskById = (id) => {
 export const imgUpload = (formData) => {
   return axios.request({
     url: 'file/upload',
-    data:formData,
+    data: formData,
     method: 'post',
     headers: { 'Content-Type': 'multipart/form-data' },
   })

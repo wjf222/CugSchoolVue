@@ -19,6 +19,7 @@ import {
   getNetAsk,
   getNetAskByAuthor,
   getNetAskById,
+  getNetAnswer,
   getAnswerByQuestionId,
   publishMyAnswer,
   getAllTags,
@@ -26,7 +27,8 @@ import {
   imgUpload,
   essaynumOfAuthor,
   countOfAllQuestions,
-  countOfAuthorQuestions
+  countOfAuthorQuestions,
+  countOfAllAnswers
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -190,6 +192,9 @@ export default {
       return getEssaies({page,author:state.userName})
     },
 
+    countOfAllAnswers(){
+      return countOfAllAnswers()
+    },
     //获取所有问题的数目
     countOfAllQuestions(){
       return countOfAllQuestions()
@@ -249,6 +254,9 @@ export default {
     
     publishNetAsk({},{questionTitle,questionContent}){
       return publishNetAsk(questionTitle,questionContent)
+    },
+    getNetAnswer({},{pageIndex}){
+      return getNetAnswer(pageIndex)
     },
     getNetAsk({},{pageIndex}){
       return getNetAsk(pageIndex)

@@ -1,23 +1,22 @@
 <template>
-  <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load">
-    <question-item v-for="a in articles" :key="a.id" v-bind="a"></question-item>
-        <Page
-      :total="questionNum"
+  <div>
+    <answer-item v-for="a in Answers" :key="a.id" v-bind="a"></answer-item>
+    <Page
+      :total="answerNum"
       @on-change="handleCurrentChange"
       class="page-jump"
       :page-size="5"
       show-total
       show-elevator
     ></Page>
-  </scroll-page>
+  </div>
 </template>
 
 <script>
-import QuestionItem from "@/components/question/QuestionItem";
-import ScrollPage from "./ScrollPage.vue";
+import AnswerItem from "@/components/answer/AnswerItem";
 import { mapActions } from "vuex";
 export default {
-  name: "ArticleScrollPage",
+  name: "AnswerScrollPage",
   props: {
     offset: {
       type: Number,
@@ -40,24 +39,24 @@ export default {
     query: {
       handler() {
         this.noData = false;
-        this.articles = [];
+        this.Answers = [];
         this.innerPage.pageNumber = 0;
-        this.getArticles();
+        this.getAnswers();
       },
       deep: true
     },
     page: {
       handler() {
         this.noData = false;
-        this.articles = [];
+        this.Answers = [];
         this.innerPage = this.page;
-        this.getArticles();
+        this.getAnswers();
       },
       deep: true
     }
   },
   created() {
-    this.getQuestions({pageIndex:this.innerPage.pageNumber});
+    this.getAnswers({ pageIndex: this.innerPage.pageNumber });
   },
   data() {
     return {
@@ -69,33 +68,33 @@ export default {
         name: "a.createDate",
         sort: "desc"
       },
-      articles: [],
-      questionNum:0
+      Answers: [],
+      answerNum: 0
     };
   },
   methods: {
-    ...mapActions(["getNetAsk","countOfAllQuestions"]),
-    load() {
-    },
+    ...mapActions(["getNetAnswer", "countOfAllAnswers"]),
+    load() {},
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },
     handleCurrentChange(val) {
-      this.getQuestions({pageIndex:val - 1});
+      this.getAnswers({ pageIndex: val - 1 });
     },
-    getQuestions({pageIndex}) {
+    getAnswers({ pageIndex }) {
       let that = this;
       that.loading = true;
-      this.countOfAllQuestions().then(res =>{
-        this.questionNum = res.data
-      })
+      this.countOfAllAnswers().then(res => {
+        this.answerNum = res.data;
+      });
       console.log(pageIndex);
-      this.getNetAsk({pageIndex})
+      this.getNetAnswer({ pageIndex })
         .then(res => {
-          let newArticles = res.data;
-          if (newArticles && newArticles.length > 0) {
+          console.log(res);
+          let newAnswers = res.data;
+          if (newAnswers && newAnswers.length > 0) {
             that.innerPage.pageNumber += 1;
-            that.articles = newArticles;
+            that.Answers = newAnswers;
           } else {
             that.noData = true;
           }
@@ -115,8 +114,7 @@ export default {
     }
   },
   components: {
-    "scroll-page": ScrollPage,
-    QuestionItem
+    AnswerItem
   }
 };
 </script>

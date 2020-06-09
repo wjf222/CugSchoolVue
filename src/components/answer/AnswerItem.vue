@@ -34,7 +34,7 @@
 
 <script>
 import HttpRequest from "@/libs/axios";
-const axios = new HttpRequest("http://39.99.203.80:8080/images");
+const axios = new HttpRequest("http://39.99.203.80:8080");
 export default {
   name: "AnswerItem",
   props: {
