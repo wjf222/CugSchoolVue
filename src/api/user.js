@@ -211,17 +211,19 @@ export const searchArticle = (searchText, page) => {
   })
 }
 
-export const publishArticle = ({ content, title, essayAbstract, author }) => {
-
+export const publishArticle = ({ content, title, essayAbstract, author,tags }) => {
+  console.log(tags);
   return axios.request({
     url: "md",
-    params: {
+    params:{
+      author,
       content,
-      title,
       essayAbstract,
-      author
+      tags:tags[0],
+      title
     },
-    method: "get"
+    // headers: { 'Content-Type': 'multipart/form-data' },
+    method: "post"
   })
 }
 

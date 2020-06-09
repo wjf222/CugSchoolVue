@@ -230,9 +230,11 @@ export default {
 
     //发表文章
     publishArticle({ state }, { article }) {
+      let formData = new FormData();
       return publishArticle({
         content: article.body.contentHtml, title: article.title,
-        essayAbstract: article.summary, author: state.userName
+        essayAbstract: article.summary, author: state.userName,
+        tags:article.tags
       })
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表

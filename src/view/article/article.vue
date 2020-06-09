@@ -47,12 +47,12 @@
 
           <el-form-item label="文章标签" >
             <el-tag
-              :key="tag.tagName"
+              :key="tag"
               v-for="tag in tags"
               closable
               :disable-transitions="false"
               @close="handleClose(tag)"
-            >{{tag.tagName}}</el-tag>
+            >{{tag}}</el-tag>
             <el-input
               class="input-new-tag"
               v-if="inputVisible"
@@ -182,7 +182,8 @@ export default {
     handleInputConfirm() {
       let inputValue = this.inputValue;
       if (inputValue) {
-        this.tags.push({tagName:inputValue});
+        this.tags=[]
+        this.tags.push(inputValue);
       }
       this.inputVisible = false;
       this.inputValue = "";
