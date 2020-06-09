@@ -36,7 +36,13 @@
 
           <div class="me-view-tag">
             标签：
-            <el-tag v-for="t in article.tags" :key="t.id" class="me-view-tag-item" size="mini" type="success">{{t.tagname}}</el-tag>
+            <el-tag
+              v-for="t in article.tags"
+              :key="t.id"
+              class="me-view-tag-item"
+              size="mini"
+              type="success"
+            >{{t.tagname}}</el-tag>
             <el-button
               @click="tagOrCategory('tag', t.id)"
               size="mini"
@@ -71,6 +77,7 @@
                 <el-col :span="22">
                   <el-input
                     type="textarea"
+                    :current=1
                     :autosize="{ minRows: 2}"
                     placeholder="你的评论..."
                     class="me-view-comment-text"
@@ -100,6 +107,14 @@
               @commentCountsIncrement="commentCountsIncrement"
               :key="c.commentId"
             ></commment-item>
+            <Page
+              :total="article.commentCounts"
+              @on-change="handleCurrentChange"
+              class="page-jump"
+              :page-size="5"
+              show-total
+              show-elevator
+            ></Page>
           </div>
         </div>
       </el-main>
@@ -109,11 +124,11 @@
 
 <script>
 import MarkdownEditor from "../markdown/markdown";
-import CommmentItem from '@/components/comment/CommentItem.vue'
+import CommmentItem from "@/components/comment/CommentItem.vue";
 import { mapActions } from "vuex";
 import VueMarkdown from "vue-markdown";
 import HttpRequest from "@/libs/axios";
-const axios = new HttpRequest("http://39.99.203.80:8080/");
+const axios = new HttpRequest("http://39.99.203.80:8080");
 export default {
   name: "ArticleView",
   created() {
@@ -126,6 +141,7 @@ export default {
   data() {
     return {
       comments: [],
+      commentNum: Number,
       comment: {
         article: {},
         content: ""
@@ -163,9 +179,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["viewArticle","getCommentsArticle","publishMyComment"]),
+    ...mapActions(["viewArticle", "getCommentsArticle", "publishMyComment"]),
     tagOrCategory(type, id) {
       this.$router.push({ path: `/${type}/${id}` });
+    },
+    handleCurrentChange(val) {
+      this.getCommentsByArticle(val - 1);
     },
     editArticle() {
       this.$router.push({ path: `/write/${this.article.id}` });
@@ -173,16 +192,15 @@ export default {
     getArticle() {
       this.viewArticle({ id: this.$route.params.id })
         .then(res => {
-          console.log(res);
           const data = res.data;
           this.article.id = data.essayId;
           this.article.title = data.essayTitle;
           this.article.summary = data.essayAbstract;
           this.article.name = data.essayAuthor;
           this.article.createDate = data.essayPublishTime;
-          this.article.commentCounts = data.commentNum
+          this.article.commentCounts = data.commentNum;
           this.article.savePath = data.savePath;
-          const path = "images/" + this.article.savePath;
+          const path = this.article.savePath;
           axios
             .request({
               url: path
@@ -190,7 +208,7 @@ export default {
             .then(res => {
               this.htmlMD = res.data;
             });
-          this.getCommentsByArticle();
+          this.getCommentsByArticle(0);
           // that.getCommentsByArticle();
         })
         .catch(error => {
@@ -209,14 +227,16 @@ export default {
         return;
       }
       that.comment.article.id = that.article.id;
-      this.publishMyComment({id:that.article.id,content:that.comment.content})
-        .then(data => {
+      this.publishMyComment({
+        id: that.article.id,
+        content: that.comment.content
+      })
+        .then(res => {
           that.$message({
             type: "success",
             message: "评论成功",
             showClose: true
           });
-          that.comments.unshift(data.data);
           that.commentCountsIncrement();
           that.comment.content = "";
           this.getArticle();
@@ -231,11 +251,10 @@ export default {
           }
         });
     },
-    getCommentsByArticle() {
+    getCommentsByArticle(pageIndex) {
       let that = this;
-      this.getCommentsArticle({id:that.article.id})
+      this.getCommentsArticle({ essayId: that.article.id, pageIndex })
         .then(res => {
-          console.log(res);
           that.comments = res.data;
         })
         .catch(error => {
@@ -271,6 +290,9 @@ export default {
 </script>
 
 <style>
+.page-jump {
+  text-align: center;
+}
 .me-view-body {
   margin: 200px auto 280px;
 }

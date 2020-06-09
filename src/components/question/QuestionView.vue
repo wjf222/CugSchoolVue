@@ -227,7 +227,6 @@ export default {
         })
         .catch(error => {
           if (error !== "error") {
-            console.log(error);
             this.$message({
               type: "error",
               message: "文章加载失败",
@@ -257,7 +256,6 @@ export default {
         content: questionContent
       })
         .then(res => {
-          console.log(res);
           this.answers.unshift(res.data);
           this.answerNumIncrement();
           this.getquestion();
@@ -270,7 +268,6 @@ export default {
         })
         .catch(error => {
           if (error !== "error") {
-            console.log(error);
             this.$message({
               type: "error",
               message: "回答失败",
@@ -282,7 +279,6 @@ export default {
     getAnswerByQuestion() {
       this.getAnswerById({ id: this.$route.params.id })
         .then(res => {
-          console.log(res);
           this.answers = res.data;
         })
         .catch(error => {

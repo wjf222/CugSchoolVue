@@ -261,7 +261,6 @@ export default {
           });
           this.publishArticle({ article })
             .then(res => {
-              console.log(res);
               loading.close();
               this.$message({
                 message: "发布成功啦",

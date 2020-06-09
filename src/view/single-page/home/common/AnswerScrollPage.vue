@@ -89,10 +89,9 @@ export default {
       this.countOfAllAnswers().then(res =>{
         this.answerNum = res.data
       })
-      console.log(pageIndex);
+
       this.getNetAnswer({pageIndex})
         .then(res => {
-          console.log(res);
           let newAnswers = res.data;
           if (newAnswers && newAnswers.length > 0) {
             that.innerPage.pageNumber += 1;

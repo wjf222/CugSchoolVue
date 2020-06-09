@@ -87,7 +87,6 @@ export default {
       that.loading = true;
       this.countOfAuthorQuestions().then(res =>{
         this.questionNum = res.data
-        console.log(this.questionNum);
       })
       this.getNetAskByAuthor({pageIndex})
         .then(res => {

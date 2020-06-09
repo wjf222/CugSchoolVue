@@ -101,7 +101,6 @@ export default {
       });
     },
     handleSignSubmit({ userName, password }) {
-      console.log(password);
       if (password.indexOf(" ") != -1) {
         this.$message({
           type: "error",
@@ -124,7 +123,6 @@ export default {
         password: password,
         verifyCode: this.verifyCode
       }).then(res => {
-        console.log(res);
         if (res.data == true) {
           this.isLogin = !this.isLogin;
         } else {
@@ -154,7 +152,6 @@ export default {
 
       const code = Math.floor(Math.random() * 10000 + 1000);
       this.verifyCode = code;
-      console.log(this.verifyCode);
       this.sendEmail({ reciver: this.userEmail, verifyCode: code })
         .then(res => {
           this.$message({

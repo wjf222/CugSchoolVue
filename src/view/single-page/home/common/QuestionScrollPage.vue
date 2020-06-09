@@ -89,7 +89,6 @@ export default {
       this.countOfAllQuestions().then(res =>{
         this.questionNum = res.data
       })
-      console.log(pageIndex);
       this.getNetAsk({pageIndex})
         .then(res => {
           let newArticles = res.data;

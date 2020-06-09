@@ -1,7 +1,17 @@
 <template>
   <!-- <scroll-page :loading="loading" :offset="offset" :no-data="noData" v-on:load="load"> -->
-    <div>
-    <article-item v-for="a in articles" :key="a.id" v-bind="a"></article-item>
+  <div>
+    <article-item v-for="(a,index) in articles" :key="a.essayId" v-bind="a" ref ="ArticleItem" >
+      <el-dropdown slot="MoreAction" @command="handleCommand">
+        <span class="el-dropdown-link">
+          更多操作
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item :command="index">{{index}}</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </article-item>
     <Page
       :total="articleNum"
       @on-change="handleCurrentChange"
@@ -10,7 +20,7 @@
       show-total
       show-elevator
     ></Page>
-    </div>
+  </div>
   <!-- </scroll-page> -->
 </template>
 
@@ -79,28 +89,28 @@ export default {
     this.getArticles({ pageIndex: this.innerPage.pageNumber });
   },
   methods: {
-    ...mapActions(["getEssaies", "essaynumOfAuthor"]),
+    ...mapActions(["getEssaies", "essaynumOfAuthor","deleteEssay"]),
     load() {},
 
+    handleCommand(command){
+        console.log(this.$refs.ArticleItem[command]);
+        this.$message(command)
+    },
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.getArticles({pageIndex:val - 1});
+      this.getArticles({ pageIndex: val - 1 });
     },
-    getArticles({pageIndex}) {
+    getArticles({ pageIndex }) {
       this.loading = true;
       this.essaynumOfAuthor().then(res => {
         this.articleNum = res.data;
       });
-      console.log(pageIndex);
       this.getEssaies({ page: pageIndex })
         .then(res => {
-          console.log(res);
           let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {
             this.articles = newArticles;
@@ -123,7 +133,7 @@ export default {
     }
   },
   components: {
-    "article-item": ArticleItem,
+    "article-item": ArticleItem
     // "scroll-page": ScrollPage
   }
 };
@@ -141,4 +151,11 @@ export default {
 .el-card:not(:first-child) {
   margin-top: 10px;
 }
+ .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
 </style>

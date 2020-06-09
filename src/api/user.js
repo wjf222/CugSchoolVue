@@ -15,10 +15,6 @@ export const login = ({ userName, password, Captcha, uuid }) => {
 }
 
 export const sign = ({ email, userName, userPassword, verifyCode }) => {
-  console.log(email);
-  console.log(userName);
-  console.log(userPassword);
-  console.log(verifyCode);
   return axios.request({
     url: 'register',
     params: {
@@ -33,7 +29,6 @@ export const sign = ({ email, userName, userPassword, verifyCode }) => {
 
 //发送邮箱验证码
 export const sendEmail = ({ reciver, verifyCode }) => {
-  console.log();
   return axios.request({
     url: 'sendemail',
     params: {
@@ -81,7 +76,6 @@ export const getEssaies = ({ page, author }) => {
 }
 
 export const allOfEssay = ({ page }) => {
-  console.log(page);
   return axios.request({
     url: 'allOfEssay',
     params: {
@@ -118,7 +112,6 @@ export const countOfAllQuestions = () => {
 }
 
 export const countOfAuthorQuestions = ({ asker }) => {
-  console.log(asker);
   return axios.request({
     url: 'question/countOfSbQuestion',
     params: {
@@ -128,7 +121,6 @@ export const countOfAuthorQuestions = ({ asker }) => {
   })
 }
 export const essaynumOfAuthor = (author) => {
-  console.log(author);
   return axios.request({
     url: 'countOfEssay',
     params: {
@@ -145,11 +137,11 @@ export const getAllTags = () => {
     method: 'get'
   })
 }
-export const publishNetAsk = (questionTitle, questionContent) => {
+export const publishNetAsk = ({asker,questionTitle, questionContent}) => {
   return axios.request({
     url: 'question/askQuestion',
     params: {
-      asker: "zhouning",
+      asker,
       questionTitle,
       questionContent
     },
@@ -190,7 +182,6 @@ export const getNetAsk = (pageIndex) => {
 }
 
 export const getNetAskByAuthor = ({ asker, pageIndex }) => {
-  console.log(asker);
   return axios.request({
     url: 'question/getQuestions',
     params: {
@@ -211,15 +202,14 @@ export const searchArticle = (searchText, page) => {
   })
 }
 
-export const publishArticle = ({ content, title, essayAbstract, author,tags }) => {
-  console.log(tags);
+export const publishArticle = ({ content, title, essayAbstract, author, tags }) => {
   return axios.request({
     url: "md",
-    params:{
+    params: {
       author,
       content,
       essayAbstract,
-      tags:tags[0],
+      tags: tags[0],
       title
     },
     // headers: { 'Content-Type': 'multipart/form-data' },
@@ -276,11 +266,11 @@ export const getAnswerByQuestionId = (id) => {
     method: 'get'
   })
 }
-export const getCommentsArticle = (id) => {
+export const getCommentsArticle = ({ essayId, pageIndex }) => {
   return axios.request({
     url: 'comment/getComments',
     params: {
-      essayId: id
+      essayId, pageIndex
     },
     method: 'get'
   })

@@ -174,18 +174,19 @@ export default {
       let questionContent = this.form.editor.ref.d_render
       this.publishNetAsk({questionTitle,questionContent})
         .then(res => {
-          askVisible = false
+          this.askVisible = false
           loading.close();
-          that.$message({
+          this.$message({
             message: "发布成功啦",
             type: "success",
             showClose: true
           });
         })
         .catch(err => {
+          console.log(err);
           loading.close();
-          that.$message({
-            message: error,
+          this.$message({
+            message: "发表失败了",
             type: "error",
             showClose: true
           });

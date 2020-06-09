@@ -83,7 +83,6 @@ export default {
       that.loading = true;
       this.searchArticle({ searchText, page: that.innerPage.pageNumber })
         .then(res => {
-          console.log(res);
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1;
@@ -106,10 +105,8 @@ export default {
         });
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
     },
     getArticleByAuthor(Author) {
       that.loading = true;

@@ -110,7 +110,6 @@ export default {
   created: function() {
     this.getPersonInfo().then(res => {
       const data = res.data;
-      console.log(data);
       this.user.name = data.userName;
       if (data.userSex == 1) this.user.sex = "男";
       if (data.userSex == 0) this.user.sex = "女";

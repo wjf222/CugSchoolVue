@@ -119,7 +119,6 @@ export default {
     //注册
     handleSign({  }, {email, userName, password,verifyCode}) {
       userName = userName.trim()
-      console.log(password);
       return sign({
         email,
         userName,
@@ -187,7 +186,6 @@ export default {
 
     //获取某个作者的文章的数量
     essaynumOfAuthor({state}){
-      console.log(state.userName);
       return essaynumOfAuthor(state.userName);
     },
     //获取文章
@@ -196,7 +194,6 @@ export default {
     },
 
     allOfEssay({ state}, { page }){
-      console.log(page);
       return allOfEssay({page})
     },
     //获取所有文章的数量
@@ -215,13 +212,13 @@ export default {
       return countOfAuthorQuestions({asker:state.userName})
     },
     //获取评论
-    getCommentsArticle({ state }, { id }) {
-      return getCommentsArticle(id);
+    getCommentsArticle({ state }, { essayId,pageIndex }) {
+      return getCommentsArticle({essayId,pageIndex});
     },
 
     //发表评论
     publishMyComment({state},{id,content}){
-      return publishComment({essayId:id,commentatorName:"zhouning",commentContent:content});
+      return publishComment({essayId:id,commentatorName:state.userName,commentContent:content});
     },
     //搜索文章
     searchArticle({ }, { searchText, page }) {
@@ -265,8 +262,8 @@ export default {
       })
     },
     
-    publishNetAsk({},{questionTitle,questionContent}){
-      return publishNetAsk(questionTitle,questionContent)
+    publishNetAsk({state},{questionTitle,questionContent}){
+      return publishNetAsk({asker:state.userName,questionTitle,questionContent})
     },
     getNetAnswer({},{pageIndex}){
       return getNetAnswer(pageIndex)
