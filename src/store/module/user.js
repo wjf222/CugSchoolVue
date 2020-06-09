@@ -17,6 +17,7 @@ import {
   publishComment,
   publishNetAsk,
   getNetAsk,
+  getNetAskByAuthor,
   getNetAskById,
   getAnswerByQuestionId,
   publishMyAnswer,
@@ -24,7 +25,8 @@ import {
   sendEmail,
   imgUpload,
   essaynumOfAuthor,
-  countOfAllQuestions
+  countOfAllQuestions,
+  countOfAuthorQuestions
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -112,7 +114,6 @@ export default {
     },
     //注册
     handleSign({  }, {email, userName, password,verifyCode}) {
-      console.log(verifyCode);
       userName = userName.trim()
       return sign({
         email,
@@ -124,7 +125,6 @@ export default {
 
     //发送邮箱验证码
     sendEmail({},{reciver,verifyCode}){
-      console.log(reciver);
       return sendEmail({reciver,verifyCode})
     },
     // 退出登录
@@ -157,7 +157,6 @@ export default {
           getUserInfo(state.token)
             .then(res => {
               const data = res.data
-              console.log(data);
               commit('setAvatar', data.userAvatarPath)
               commit('setUserName', data.userName)
               commit('setUserId', data.userId)
@@ -183,6 +182,7 @@ export default {
 
     //获取某个作者的文章的数量
     essaynumOfAuthor({state}){
+      console.log(state.userName);
       return essaynumOfAuthor(state.userName);
     },
     //获取文章
@@ -193,6 +193,10 @@ export default {
     //获取所有问题的数目
     countOfAllQuestions(){
       return countOfAllQuestions()
+    },
+    //获取某个作者问题的数目
+    countOfAuthorQuestions({state}){
+      return countOfAuthorQuestions({asker:state.userName})
     },
     //获取评论
     getCommentsArticle({ state }, { id }) {
@@ -244,11 +248,13 @@ export default {
     },
     
     publishNetAsk({},{questionTitle,questionContent}){
-      console.log({questionTitle,questionContent});
       return publishNetAsk(questionTitle,questionContent)
     },
-    getNetAsk({state},{pageIndex}){
+    getNetAsk({},{pageIndex}){
       return getNetAsk(pageIndex)
+    },
+    getNetAskByAuthor({state},{pageIndex}){
+      return getNetAskByAuthor({asker:state.userName,pageIndex})
     },
     getNetAskById({},{id}){
         return getNetAskById(id)

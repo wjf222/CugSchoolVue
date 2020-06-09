@@ -211,6 +211,15 @@ export default [
         component: () => import('@/view/PersonMes/MyArticle.vue')
       },
       {
+        path: 'MyQuestion',
+        name: '我的问题',
+        meta: {
+          icon: 'ios-book',
+          title: '我的问题'
+        },
+        component: () => import('@/view/PersonMes/MyQuestion.vue')
+      },
+      {
         path: 'view/:id',
             name: '文章',
             meta: {

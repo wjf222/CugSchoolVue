@@ -85,7 +85,19 @@ export const countOfAllQuestions = () =>{
     method: 'get'
   })
 }
+
+export const countOfAuthorQuestions = ({asker}) =>{
+  console.log(asker);
+  return axios.request({
+    url: 'question/countOfSbQuestion',
+    params: {
+      asker
+    },
+    method: 'get'
+  })
+}
 export const essaynumOfAuthor = (author) =>{
+  console.log(author);
   return axios.request({
     url: 'countOfEssay',
     params: {
@@ -129,6 +141,18 @@ export const getNetAsk = (pageIndex) => {
   return axios.request({
     url: 'question/allQuestions',
     params: {
+      pageIndex
+    },
+    method: 'get'
+  })
+}
+
+export const getNetAskByAuthor = ({asker,pageIndex}) => {
+  console.log(asker);
+  return axios.request({
+    url: 'question/getQuestions',
+    params: {
+      asker,
       pageIndex
     },
     method: 'get'
