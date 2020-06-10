@@ -10,6 +10,7 @@ import {
   getUnreadCount,
   setPersonInfo,
   searchArticle,
+  searchQuestion,
   getEssaies,
   viewArticle,
   publishArticle,
@@ -230,12 +231,17 @@ export default {
     publishMyComment({state},{id,content}){
       return publishComment({essayId:id,commentatorName:state.userName,commentContent:content});
     },
+    //搜索问题
+    searchQuestion({ }, { searchText, page }) {
+      console.log(searchText);
+      return searchQuestion(searchText, page)
+    },
+
     //搜索文章
     searchArticle({ }, { searchText, page }) {
       console.log(searchText);
       return searchArticle(searchText, page)
     },
-
     //发表文章
     publishArticle({ state }, { article }) {
       let formData = new FormData();

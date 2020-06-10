@@ -26,12 +26,10 @@ export default {
   },
   methods: {
     doSearch() {
-      if (this.select === "Article") {
-        Util.searchAPI(this.$router, {
-          searchText: this.searchText,
-          select: this.select
-        });
-      }
+      Util.searchAPI(this.$router, {
+        searchText: this.searchText,
+        select: this.select
+      });
     }
   }
 };

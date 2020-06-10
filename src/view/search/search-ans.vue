@@ -4,7 +4,8 @@
     <div>
       <el-container>
         <el-main class="me-articles">
-          <article-scroll-page ref="articlePage" v-bind="searchParams"></article-scroll-page>
+          <article-scroll-page v-if="showArticle" ref="articlePage" v-bind="searchParams"></article-scroll-page>
+          <question-scroll-page v-if="!showArticle" ref="questionPage" v-bind="searchParams"></question-scroll-page>
         </el-main>
       </el-container>
     </div>
@@ -15,12 +16,14 @@
 import SearchResultToolBar from "./components/SearchResultToolBar.vue";
 import SearchResultItem from "./components/SearchResultItem.vue";
 import ArticleScrollPage from "@/components/article/ArticleScrollPage";
+import QuestionScrollPage from "@/components/question/QuestionScrollPage";
 import { mapActions } from "vuex";
 export default {
   components: {
     SearchResultToolBar,
     SearchResultItem,
-    ArticleScrollPage
+    ArticleScrollPage,
+    QuestionScrollPage
   },
   data() {
     return {
@@ -28,7 +31,8 @@ export default {
       searchParams: {
         searchText: "",
         select: ""
-      }
+      },
+      showArticle: true
     };
   },
   computed: {
@@ -48,13 +52,21 @@ export default {
   methods: {
     ...mapActions(["searchArticle"]),
     doSearchResult() {
-      console.log(this);
       this.searchParams.searchText = this.$route.query.searchText;
       this.searchParams.select = this.$route.query.select;
-      console.log(this.searchParams.searchText);
-      
-      this.$refs.articlePage.rePageNumber();
-      this.$refs.articlePage.getArticles(this.searchParams.searchText);
+      console.log(this.searchParams.select);
+      if (this.searchParams.select === "Question") {
+        this.showArticle = false;
+        console.log(this.searchParams.searchText);
+        this.$refs.questionPage.rePageNumber();
+        this.$refs.questionPage.getArticles(this.searchParams.searchText);
+      }
+      if (this.searchParams.select === "Article") {
+        showArticle = true;
+        console.log(this.searchParams.searchText);
+        this.$refs.articlePage.rePageNumber();
+        this.$refs.articlePage.getArticles(this.searchParams.searchText);
+      }
     }
   }
 };

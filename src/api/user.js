@@ -223,6 +223,16 @@ export const searchArticle = (searchText, page) => {
   })
 }
 
+export const searchQuestion = (searchText, page) => {
+  return axios.request({
+    url: 'search/question',
+    params: {
+      keyword: searchText,
+      currentPage: page
+    },
+    method: 'get'
+  })
+}
 export const deleteEssay = ({essayId}) =>{
   return axios.request({
     url: 'deleteEssay',
