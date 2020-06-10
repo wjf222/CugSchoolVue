@@ -3,11 +3,13 @@ import {
   sign,
   getUserInfo,
   getMessage,
+  getReadedMessage,
   getContentByMsgId,
   hasRead,
   removeReaded,
   restoreTrash,
   getUnreadCount,
+  getReadedCount,
   setPersonInfo,
   searchArticle,
   searchQuestion,
@@ -123,19 +125,19 @@ export default {
       })
     },
     //注册
-    handleSign({  }, {email, userName, password,verifyCode}) {
+    handleSign({ }, { email, userName, password, verifyCode }) {
       userName = userName.trim()
       return sign({
         email,
         userName,
-        userPassword:password,
+        userPassword: password,
         verifyCode
       })
     },
 
     //发送邮箱验证码
-    sendEmail({},{reciver,verifyCode}){
-      return sendEmail({reciver,verifyCode})
+    sendEmail({ }, { reciver, verifyCode }) {
+      return sendEmail({ reciver, verifyCode })
     },
     // 退出登录
     handleLogOut({ state, commit }) {
@@ -156,9 +158,9 @@ export default {
     getPersonInfo({ state, commit }) {
       return getUserInfo(state.token)
     },
-    setPersonInfo({ state }, { password,userName, userSex, userTelephone, userEmail }) {
+    setPersonInfo({ state }, { password, userName, userSex, userTelephone, userEmail }) {
       const token = state.token;
-      return setPersonInfo(token, {password, userName, userSex, userTelephone, userEmail })
+      return setPersonInfo(token, { password, userName, userSex, userTelephone, userEmail })
     },
     // 获取用户相关信息
     getUserInfo({ state, commit }) {
@@ -182,7 +184,7 @@ export default {
       })
     },
 
-    imgUpload({},{formData}){
+    imgUpload({ }, { formData }) {
       return imgUpload(formData)
     },
     //返回文章
@@ -191,45 +193,45 @@ export default {
     },
 
     //获取某个作者的文章的数量
-    essaynumOfAuthor({state}){
+    essaynumOfAuthor({ state }) {
       return essaynumOfAuthor(state.userName);
     },
     //获取文章
-    getEssaies({ state}, { page }) {
-      return getEssaies({page,author:state.userName})
+    getEssaies({ state }, { page }) {
+      return getEssaies({ page, author: state.userName })
     },
 
-    allOfEssay({ state}, { page }){
-      return allOfEssay({page})
+    allOfEssay({ state }, { page }) {
+      return allOfEssay({ page })
     },
     //获取所有文章的数量
-    countOfAllofEssay(){
+    countOfAllofEssay() {
       return countOfAllofEssay()
     },
-    countOfAllAnswers(){
+    countOfAllAnswers() {
       return countOfAllAnswers()
     },
 
     //获取当前用户的回答数量
-    CountofSbAnswer({state}){
-      return CountofSbAnswer({answerName:state.userName})
+    CountofSbAnswer({ state }) {
+      return CountofSbAnswer({ answerName: state.userName })
     },
     //获取所有问题的数目
-    countOfAllQuestions(){
+    countOfAllQuestions() {
       return countOfAllQuestions()
     },
     //获取某个作者问题的数目
-    countOfAuthorQuestions({state}){
-      return countOfAuthorQuestions({asker:state.userName})
+    countOfAuthorQuestions({ state }) {
+      return countOfAuthorQuestions({ asker: state.userName })
     },
     //获取评论
-    getCommentsArticle({ state }, { essayId,pageIndex }) {
-      return getCommentsArticle({essayId,pageIndex});
+    getCommentsArticle({ state }, { essayId, pageIndex }) {
+      return getCommentsArticle({ essayId, pageIndex });
     },
 
     //发表评论
-    publishMyComment({state},{id,content}){
-      return publishComment({essayId:id,commentatorName:state.userName,commentContent:content});
+    publishMyComment({ state }, { id, content }) {
+      return publishComment({ essayId: id, commentatorName: state.userName, commentContent: content });
     },
     //搜索问题
     searchQuestion({ }, { searchText, page }) {
@@ -248,20 +250,36 @@ export default {
       return publishArticle({
         content: article.body.contentHtml, title: article.title,
         essayAbstract: article.summary, author: state.userName,
-        tags:article.tags
+        tags: article.tags
       })
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
     getUnreadMessageCount({ state, commit }) {
-      getUnreadCount({receiver:state.userName}).then(res => {
+      getUnreadCount({ receiver: state.userName }).then(res => {
         const { data } = res
         commit('setMessageCount', data)
       })
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
     getMessageList({ state, commit }) {
+      let readedCount = 0
+      getReadedCount({ receiver: state.userName }).then(res => {
+        console.log(res);
+        readedCount = res.data
+        console.log(readedCount);
+        let unreadedPage = readedCount / 5 + 1
+        console.log(unreadedPage);
+  
+        for (let i = 0; i < unreadedPage; i++) {
+          getReadedMessage({ pageIndex: i, receiver: state.userName }).then(res => {
+            const readed = res.data.concat(state.messageReadedList)
+            console.log(readed);
+            commit('setMessageReadedList', readed)
+          })
+        }
+      })
       return new Promise((resolve, reject) => {
-        getMessage({pageIndex:0,receiver:state.userName}).then(res => {
+        getMessage({ pageIndex: 0, receiver: state.userName }).then(res => {
           const unread = res.data
           commit('setMessageUnreadList', unread)
           resolve()
@@ -270,48 +288,48 @@ export default {
         })
       })
     },
-    
-    publishNetAsk({state},{questionTitle,questionContent}){
-      return publishNetAsk({asker:state.userName,questionTitle,questionContent})
+
+    publishNetAsk({ state }, { questionTitle, questionContent }) {
+      return publishNetAsk({ asker: state.userName, questionTitle, questionContent })
     },
-    getNetAnswer({},{pageIndex}){
+    getNetAnswer({ }, { pageIndex }) {
       return getNetAnswer(pageIndex)
     },
     //获取当前用户的所有回答
-    getAnswerBySomeone({state},{pageIndex}){
-      return getAnswerBySomeone({pageIndex,answerName:state.userName})
+    getAnswerBySomeone({ state }, { pageIndex }) {
+      return getAnswerBySomeone({ pageIndex, answerName: state.userName })
     },
-    getNetAsk({},{pageIndex}){
+    getNetAsk({ }, { pageIndex }) {
       return getNetAsk(pageIndex)
     },
-    getNetAskByAuthor({state},{pageIndex}){
-      return getNetAskByAuthor({asker:state.userName,pageIndex})
+    getNetAskByAuthor({ state }, { pageIndex }) {
+      return getNetAskByAuthor({ asker: state.userName, pageIndex })
     },
-    getNetAskById({},{id}){
-        return getNetAskById(id)
+    getNetAskById({ }, { id }) {
+      return getNetAskById(id)
     },
-    getAllTags(){
+    getAllTags() {
       return getAllTags();
     },
-    getAnswerById({state},{id,page}){
-      return getAnswerByQuestionId({id,pageIndex:page})
+    getAnswerById({ state }, { id, page }) {
+      return getAnswerByQuestionId({ id, pageIndex: page })
     },
-    
-    publishMyAnswer({state},{content,questionId}){
-        return publishMyAnswer(content,questionId,state.userName)
+
+    publishMyAnswer({ state }, { content, questionId }) {
+      return publishMyAnswer(content, questionId, state.userName)
     },
 
 
     //删除文章
-    deleteEssay({},{essayId}){
-      return deleteEssay({essayId})
+    deleteEssay({ }, { essayId }) {
+      return deleteEssay({ essayId })
     },
-    
-    deleteQuestion({},{questionId}){
-      return deleteQuestion({questionId})
+
+    deleteQuestion({ }, { questionId }) {
+      return deleteQuestion({ questionId })
     },
-    deleteAnswer({},{answerId}){
-      return deleteAnswer({answerId})
+    deleteAnswer({ }, { answerId }) {
+      return deleteAnswer({ answerId })
     },
     // 根据当前点击的消息的id获取内容
     getContentByMsgId({ state, commit }, { msg_id }) {

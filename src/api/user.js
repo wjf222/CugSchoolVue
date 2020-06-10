@@ -349,7 +349,7 @@ export const logout = (token) => {
 
 export const getUnreadCount = ({receiver}) => {
   return axios.request({
-    url: 'message/countOfMsg',
+    url: 'message/countOfUnReadMsg',
     params:{
       receiver
     },
@@ -357,9 +357,29 @@ export const getUnreadCount = ({receiver}) => {
   })
 }
 
+export const getReadedCount = ({receiver}) => {
+  return axios.request({
+    url: 'message/countOfReadMsg',
+    params:{
+      receiver
+    },
+    method: 'get'
+  })
+}
 export const getMessage = ({pageIndex,receiver}) => {
   return axios.request({
-    url: 'message/receiveMsg',
+    url: 'message/receiveUnReadMsg',
+    params:{
+      pageIndex,
+      receiver
+    },
+    method: 'get'
+  })
+}
+
+export const getReadedMessage = ({pageIndex,receiver}) => {
+  return axios.request({
+    url: 'message/receiveReadMsg',
     params:{
       pageIndex,
       receiver
