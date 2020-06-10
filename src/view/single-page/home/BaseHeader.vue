@@ -19,14 +19,15 @@
           <el-menu-item index="/question">等你来答</el-menu-item>
           <el-menu-item index="/answer">回答</el-menu-item>
 
-          <el-menu-item>
-            <i-input icon="ios-search" placeholder="输入问题"></i-input>
-            <i-button type="primary" @click="askShow()">提问</i-button>
+          <el-menu-item index="/index">
+                        <i-button class="question-button" type="primary" @click="askShow()">提问</i-button>
           </el-menu-item>
-          <el-col :span="2" :offset="4">
+          <el-col :span="6" :offset="4">
             <el-menu-item index="/article/article_page">
               <i class="el-icon-edit"></i>写文章
             </el-menu-item>
+            <!-- <i class="el-icon-edit" @click="askShow()"></i>提问 -->
+
           </el-col>
         </el-menu>
       </el-col>
@@ -196,6 +197,9 @@ export default {
 </script>
 
 <style>
+.question-button{
+  top: 50%;
+}
 .el-header {
   position: fixed;
   z-index: 1024;

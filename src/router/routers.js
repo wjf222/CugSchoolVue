@@ -175,25 +175,6 @@ export default [
     ]
   },
   {
-    path: '/comment',
-    name: 'comment',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'comment_page',
-        name: '评论',
-        meta: {
-          icon: 'ios-chatboxes',
-          title: '评论'
-        },
-        component: () => import('@/view/comment/comment.vue')
-      }
-    ]
-  },
-  {
     path: '/center',
     name: '个人中心',
     meta: {
