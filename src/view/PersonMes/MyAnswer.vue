@@ -1,6 +1,16 @@
 <template>
   <div>
-    <answer-item v-for="a in Answers" :key="a.id" v-bind="a.answer"></answer-item>
+    <answer-item v-for="(a,index) in Answers" :key="a.id" v-bind="a.answer" ref="AnswerItem">
+      <el-dropdown slot="MoreAction" @command="handleCommand">
+        <span class="el-dropdown-link">
+          更多操作
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item :command="index">删除</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </answer-item>
     <Page
       :total="answerNum"
       @on-change="handleCurrentChange"
@@ -75,6 +85,14 @@ export default {
   methods: {
     ...mapActions(["getAnswerBySomeone", "CountofSbAnswer"]),
     load() {},
+    handleCommand(command) {
+      this.$refs.AnswerItem[command].delete();
+      this.$message({
+        type: "success",
+        message: "删除成功!",
+        showClose: true
+      });
+    },
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     },

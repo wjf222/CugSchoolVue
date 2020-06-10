@@ -34,7 +34,8 @@ import {
   countOfAllofEssay,
   allOfEssay,
   deleteEssay,
-  deleteQuestion
+  deleteQuestion,
+  deleteAnswer,
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -301,6 +302,9 @@ export default {
     
     deleteQuestion({},{questionId}){
       return deleteQuestion({questionId})
+    },
+    deleteAnswer({},{answerId}){
+      return deleteAnswer({answerId})
     },
     // 根据当前点击的消息的id获取内容
     getContentByMsgId({ state, commit }, { msg_id }) {

@@ -1,7 +1,7 @@
 <template>
   <el-card class="me-area" :body-style="{ padding: '16px' }">
     <div class="me-article-header">
-      <a  class="me-article-title"></a>
+      <a class="me-article-title"></a>
       <el-button v-if="false > 0" class="me-article-icon" type="text">置顶</el-button>
       <span class="me-pull-right me-article-count">
         <i class="me-icon-comment"></i>
@@ -11,10 +11,11 @@
         <i class="el-icon-view"></i>
         &nbsp;{{commentNum}}
       </span>
+      <slot class="me-pull-right me-article-count" name="MoreAction"></slot>
     </div>
 
     <div class="me-artile-description">
-      <a  class="me-article-title" v-html="answerContent"></a>
+      <a class="me-article-title" v-html="answerContent"></a>
     </div>
     <div class="me-article-footer">
       <span class="me-article-author">
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import HttpRequest from "@/libs/axios";
 const axios = new HttpRequest("http://39.99.203.80:8080");
 export default {
@@ -55,21 +57,30 @@ export default {
     };
   },
   created() {
-    console.log(this.savePath);
     axios
       .request({
         url: this.savePath
       })
       .then(res => {
-        console.log(res.data);
         this.answerContent = res.data;
       });
   },
   methods: {
+    ...mapActions(["deleteAnswer"]),
+    delete() {
+      console.log("delete");
+      this.deleteAnswer({ answerId: this.answerId })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     view(id) {
       this.$router.push({ path: `/view/${id}` });
     }
-  },
+  }
 };
 </script>
 

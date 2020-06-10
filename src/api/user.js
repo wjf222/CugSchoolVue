@@ -243,6 +243,16 @@ export const deleteQuestion = ({questionId}) =>{
   })
 }
 
+export const deleteAnswer = ({answerId}) =>{
+  console.log(answerId);
+  return axios.request({
+    url: 'answer/deleteAnswer',
+    params: {
+      answerId
+    },
+    method: 'get'
+  })
+}
 export const publishArticle = ({ content, title, essayAbstract, author, tags }) => {
   return axios.request({
     url: "md",
