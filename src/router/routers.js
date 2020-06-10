@@ -116,17 +116,18 @@ export default [
         path: '/search_page',
         name: '搜索',
         meta: {
+          hideInBread: true,
+          hideInMenu: true, 
           icon: 'ios-search',
           title: '搜索'
         },
         component: () => import('@/view/search/search.vue')
       },
       {
-        path: '/search_ans/:searchText',
+        path: '/search_ans',
         name: '搜索结果',
         meta: {
-          hideInBread: true,
-          hideInMenu: true,
+
           icon: 'ios-bug',
           title: '搜索结果'
         },

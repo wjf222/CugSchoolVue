@@ -93,8 +93,10 @@ export default {
 
     handleCommand(command) {
       const type = command.slice(0, 6);
+      const index = command.slice(6);
+      console.log(index);
       if (type === "delete") {
-        this.$refs.ArticleItem[command].delete();
+        this.$refs.ArticleItem[index].delete();
         this.$message({
           type: "success",
           message: "删除成功!",

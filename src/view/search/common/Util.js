@@ -1,7 +1,7 @@
 const Util = {
-    searchAPI(router,searchText){
-        if(searchText!==""){
-            router.push(`/search_ans/${searchText}`)
+    searchAPI(router, params) {
+        if (params.searchText !== "") {
+            router.push({ path: `/search_ans`,query: params})
         }
     }
 }

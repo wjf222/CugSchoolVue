@@ -35,7 +35,9 @@ export default {
       default() {
         return {};
       }
-    }
+    },
+    searchText: "",
+    select: ""
   },
   watch: {
     query: {
@@ -43,7 +45,7 @@ export default {
         this.noData = false;
         this.articles = [];
         this.innerPage.pageNumber = 1;
-        this.getArticles();
+        this.getArticles(this.searchText);
       },
       deep: true
     },
@@ -52,7 +54,7 @@ export default {
         this.noData = false;
         this.articles = [];
         this.innerPage = this.page;
-        this.getArticles();
+        this.getArticles(this.searchText);
       },
       deep: true
     }
@@ -74,10 +76,14 @@ export default {
       questions: []
     };
   },
+  created() {
+    console.log();
+    this.getArticles(this.searchText);
+  },
   methods: {
     ...mapActions(["searchArticle", "getEssaies"]),
     load() {
-      this.getArticles();
+      this.getArticles(this.searchText);
     },
     view(id) {
       this.$router.push({ path: `/view/${id}` });
@@ -85,21 +91,21 @@ export default {
     rePageNumber() {
       this.innerPage.pageNumber = 0;
     },
-    getArticles() {
+    getArticles(searchText) {
       let that = this;
-      const { searchText } = this.$route.params;
+      console.log(searchText);
       that.loading = true;
       this.searchArticle({ searchText, page: that.innerPage.pageNumber })
         .then(res => {
           this.ArticlNum = res.data.count;
 
           let newArticles = res.data.searchList;
-          if (newArticles && newArticles.length > 0) {
+          // if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1;
             that.articles = newArticles;
-          } else {
-            that.noData = true;
-          }
+          // } else {
+          //   that.noData = true;
+          // }
         })
         .catch(err => {
           if (err !== "error") {
@@ -116,7 +122,7 @@ export default {
     },
     handleSizeChange(val) {},
     handleCurrentChange(val) {
-      const { searchText } = this.$route.params;
+      const { searchText } = this.$route.query.searchText;
       this.searchArticle({ searchText, page: val - 1 })
         .then(res => {
           let newArticles = res.data.searchList;

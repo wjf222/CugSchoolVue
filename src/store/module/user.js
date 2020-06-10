@@ -232,6 +232,7 @@ export default {
     },
     //搜索文章
     searchArticle({ }, { searchText, page }) {
+      console.log(searchText);
       return searchArticle(searchText, page)
     },
 
