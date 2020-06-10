@@ -20,6 +20,7 @@ import {
   getNetAskByAuthor,
   getNetAskById,
   getNetAnswer,
+  getAnswerBySomeone,
   getAnswerByQuestionId,
   publishMyAnswer,
   getAllTags,
@@ -29,6 +30,7 @@ import {
   countOfAllQuestions,
   countOfAuthorQuestions,
   countOfAllAnswers,
+  CountofSbAnswer,
   countOfAllofEssay,
   allOfEssay,
   deleteEssay,
@@ -205,6 +207,11 @@ export default {
     countOfAllAnswers(){
       return countOfAllAnswers()
     },
+
+    //获取当前用户的回答数量
+    CountofSbAnswer({state}){
+      return CountofSbAnswer({answerName:state.userName})
+    },
     //获取所有问题的数目
     countOfAllQuestions(){
       return countOfAllQuestions()
@@ -261,6 +268,10 @@ export default {
     },
     getNetAnswer({},{pageIndex}){
       return getNetAnswer(pageIndex)
+    },
+    //获取当前用户的所有回答
+    getAnswerBySomeone({state},{pageIndex}){
+      return getAnswerBySomeone({pageIndex,answerName:state.userName})
     },
     getNetAsk({},{pageIndex}){
       return getNetAsk(pageIndex)

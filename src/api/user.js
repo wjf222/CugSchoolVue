@@ -101,6 +101,16 @@ export const countOfAllAnswers = () => {
     method: 'get'
   })
 }
+
+export const CountofSbAnswer = ({answerName}) => {
+  return axios.request({
+    url: 'answer/CountofSbAnswer',
+    params: {
+      answerName
+    },
+    method: 'get'
+  })
+}
 export const countOfAllQuestions = () => {
   return axios.request({
     url: 'question/countOfAllQuestions',
@@ -166,6 +176,17 @@ export const getNetAnswer = (pageIndex) => {
     url: 'answer/allAnswers',
     params: {
       pageIndex
+    },
+    method: 'get'
+  })
+}
+
+export const getAnswerBySomeone = ({pageIndex,answerName}) => {
+  return axios.request({
+    url: 'answer/getAnswerBySomeone',
+    params: {
+      pageIndex,
+      answerName
     },
     method: 'get'
   })

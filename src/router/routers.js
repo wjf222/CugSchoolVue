@@ -237,7 +237,7 @@ export default [
           icon: 'ios-book',
           title: '我的回答'
         },
-        component: () => import('@/view/PersonMes/MyQuestion.vue')
+        component: () => import('@/view/PersonMes/MyAnswer.vue')
       },
       {
         path: 'view/:id',
@@ -251,7 +251,7 @@ export default [
             component: () => import('@/components/article/ArticleView.vue')
       },
       {
-        path: 'viewQuestion/:id',
+        path: 'viewQuestion/:id', 
             name: '问题',
             meta: {
               hideInBread: true,

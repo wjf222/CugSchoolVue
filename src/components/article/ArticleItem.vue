@@ -5,12 +5,11 @@
       </a>
       <el-button v-if="false > 0" class="me-article-icon" type="text">置顶</el-button>
       <span class="me-pull-left me-article-count">
-        <!-- <i class="me-icon-comment"></i>&nbsp;{{commentCounts}} -->
-        <i class="me-icon-comment"></i>&nbsp;10
+        <i class="me-icon-comment"></i>&nbsp;{{commentNum}}
       </span>
       <span class="me-pull-left me-article-count">
-        <!-- <i class="el-icon-view"></i>&nbsp;{{viewCounts}} -->
-        <i class="el-icon-view"></i>&nbsp;10
+        <i class="el-icon-view"></i>&nbsp;{{commentNum}}
+        <!-- <i class="el-icon-view"></i>&nbsp;10 -->
       </span>
       <slot class="me-pull-right me-article-count" name="MoreAction">
       </slot> 
@@ -44,7 +43,7 @@ export default {
     essayId: Number,
     // weight: Number,
     essayTitle: String,
-    // commentCounts: Number,
+    commentNum: Number,
     // viewCounts: Number,
     essayAbstract: String,
     essayAuthor: String,

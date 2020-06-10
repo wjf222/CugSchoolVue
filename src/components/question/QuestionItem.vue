@@ -59,7 +59,7 @@ export default {
         });
     },
     view(id) {
-      this.$router.push(`center/viewQuestion/${id}`);
+      this.$router.push(`/center/viewQuestion/${id}`);
     }
   },
   created() {}

@@ -8,7 +8,8 @@
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="index">删除</el-dropdown-item>
+          <el-dropdown-item :command="'delete'+index">删除</el-dropdown-item>
+          <el-dropdown-item :command="'change'+index">编辑</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </article-item>
@@ -21,12 +22,10 @@
       show-elevator
     ></Page>
   </div>
-  <!-- </scroll-page> -->
 </template>
 
 <script>
 import ArticleItem from "@/components/article/ArticleItem";
-// import ScrollPage from "./ScrollPage.vue";
 import { mapActions } from "vuex";
 export default {
   name: "ArticleScrollPage",
@@ -93,13 +92,20 @@ export default {
     load() {},
 
     handleCommand(command) {
-      this.$refs.ArticleItem[command].delete();
-      this.$message({
-        type: "success",
-        message: "删除成功!",
-        showClose: true
-      });
-      this.getArticles({ pageIndex: this.innerPage.pageNumber });
+      const type = command.slice(0, 6);
+      if (type === "delete") {
+        this.$refs.ArticleItem[command].delete();
+        this.$message({
+          type: "success",
+          message: "删除成功!",
+          showClose: true
+        });
+      }
+
+      if (type === "change"){
+        this.$router.push({path: `/write/${this.article.id}`})
+      }
+        this.getArticles({ pageIndex: this.innerPage.pageNumber });
     },
     view(id) {
       this.$router.push({ path: `/view/${id}` });

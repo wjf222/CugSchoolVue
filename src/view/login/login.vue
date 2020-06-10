@@ -124,6 +124,11 @@ export default {
         verifyCode: this.verifyCode
       }).then(res => {
         if (res.data == true) {
+          this.$message({
+            type: "success",
+            message: "注册成功!",
+            showClose: true
+          });
           this.isLogin = !this.isLogin;
         } else {
           this.$message({

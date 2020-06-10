@@ -92,6 +92,7 @@ export default {
       this.searchArticle({ searchText, page: that.innerPage.pageNumber })
         .then(res => {
           this.ArticlNum = res.data.count;
+
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             that.innerPage.pageNumber += 1;

@@ -1,7 +1,7 @@
 <template>
   <el-card class="me-area" :body-style="{ padding: '16px' }">
     <div class="me-article-header">
-      <a @click="view(essayId)" class="me-article-title"></a>
+      <a  class="me-article-title"></a>
       <el-button v-if="false > 0" class="me-article-icon" type="text">置顶</el-button>
       <span class="me-pull-right me-article-count">
         <i class="me-icon-comment"></i>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="me-artile-description">
-      <a @click="view(essayId)" class="me-article-title" v-html="answerContent"></a>
+      <a  class="me-article-title" v-html="answerContent"></a>
     </div>
     <div class="me-article-footer">
       <span class="me-article-author">
@@ -55,7 +55,7 @@ export default {
     };
   },
   created() {
-    console.log();
+    console.log(this.savePath);
     axios
       .request({
         url: this.savePath

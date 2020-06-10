@@ -1,6 +1,6 @@
 <template>
   <div>
-    <answer-item v-for="a in Answers" :key="a.id" v-bind="a"></answer-item>
+    <answer-item v-for="a in Answers" :key="a.id" v-bind="a.answer"></answer-item>
     <Page
       :total="answerNum"
       @on-change="handleCurrentChange"
@@ -73,7 +73,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getNetAnswer", "countOfAllAnswers"]),
+    ...mapActions(["getAnswerBySomeone", "CountofSbAnswer"]),
     load() {},
     view(id) {
       this.$router.push({ path: `/view/${id}` });
@@ -84,11 +84,12 @@ export default {
     getAnswers({ pageIndex }) {
       let that = this;
       that.loading = true;
-      this.countOfAllAnswers().then(res => {
+      this.CountofSbAnswer().then(res => {
         this.answerNum = res.data;
       });
-      this.getNetAnswer({ pageIndex })
+      this.getAnswerBySomeone({ pageIndex })
         .then(res => {
+          console.log(res);
           let newAnswers = res.data;
           if (newAnswers && newAnswers.length > 0) {
             that.innerPage.pageNumber += 1;

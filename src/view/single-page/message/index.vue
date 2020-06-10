@@ -49,7 +49,7 @@
           <h2 class="message-view-title">{{ showingMsgItem.content }}</h2>
           <time class="message-view-time">{{ showingMsgItem.sendTime}}</time>
         </div>
-        <div>{{messageContent}}</div>/
+        <div>{{messageContent}}</div>
       </div>
     </div>
   </Card>
