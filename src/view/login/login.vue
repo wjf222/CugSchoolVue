@@ -100,7 +100,8 @@ export default {
         });
       });
     },
-    handleSignSubmit({ userName, password }) {
+    handleSignSubmit({ userName, password,Captcha}) {
+      console.log(Captcha);
       if (password.indexOf(" ") != -1) {
         this.$message({
           type: "error",
@@ -121,8 +122,9 @@ export default {
         email: this.userEmail,
         userName,
         password: password,
-        verifyCode: this.verifyCode
+        verifyCode: Captcha
       }).then(res => {
+        console.log(res);
         if (res.data == true) {
           this.$message({
             type: "success",
