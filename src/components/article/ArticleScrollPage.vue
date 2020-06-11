@@ -94,6 +94,7 @@ export default {
     getArticles(searchText) {
       let that = this;
       console.log(searchText);
+      this.searchText = searchText
       that.loading = true;
       this.searchArticle({ searchText, page: that.innerPage.pageNumber })
         .then(res => {
@@ -122,9 +123,10 @@ export default {
     },
     handleSizeChange(val) {},
     handleCurrentChange(val) {
-      const { searchText } = this.$route.query.searchText;
-      this.searchArticle({ searchText, page: val - 1 })
+      console.log(this.searchText);
+      this.searchArticle({ searchText:this.searchText, page: val - 1 })
         .then(res => {
+          console.log(res);
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             this.innerPage.pageNumber += 1;

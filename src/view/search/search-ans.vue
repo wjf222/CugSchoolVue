@@ -62,7 +62,7 @@ export default {
         this.$refs.questionPage.getArticles(this.searchParams.searchText);
       }
       if (this.searchParams.select === "Article") {
-        showArticle = true;
+        this.showArticle = true;
         console.log(this.searchParams.searchText);
         this.$refs.articlePage.rePageNumber();
         this.$refs.articlePage.getArticles(this.searchParams.searchText);

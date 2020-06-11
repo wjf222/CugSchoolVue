@@ -120,9 +120,10 @@ export default {
     },
     handleSizeChange(val) {},
     handleCurrentChange(val) {
-      const { searchText } = this.$route.query.searchText;
-      this.searchQuestion({ searchText, page: val - 1 })
+      console.log(this.searchText);
+      this.searchQuestion({ searchText:this.searchText, page: val - 1 })
         .then(res => {
+          console.log(res);
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             this.innerPage.pageNumber += 1;
