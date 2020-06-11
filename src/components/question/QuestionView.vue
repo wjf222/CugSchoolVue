@@ -266,16 +266,15 @@ export default {
         content: questionContent
       })
         .then(res => {
-
           this.answers.unshift(res.data);
           this.answerNumIncrement();
-          this.getquestion();
           this.$message({
             type: "success",
             message: "回答成功",
             showClose: true
           });
           loading.close();
+          location.reload()
         })
         .catch(error => {
           if (error !== "error") {

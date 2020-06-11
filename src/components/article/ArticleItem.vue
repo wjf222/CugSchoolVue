@@ -57,6 +57,7 @@ export default {
     ...mapActions(["deleteEssay"]),
     delete(){
       this.deleteEssay({essayId:this.essayId}).then(res => {
+        location.reload();
       }).catch(err => {
       })
     },

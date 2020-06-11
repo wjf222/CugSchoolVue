@@ -17,8 +17,8 @@
     <div class="me-artile-description">{{questionContent}}</div>
     <div class="me-article-footer">
       <span class="me-article-author">
-        <i class="me-icon-author"></i>
-        &nbsp;{{questionerName}}
+        <i class="me-icon-author" v-html="questionerName"></i>
+        &nbsp;
       </span>
 
       <!-- <el-tag v-for="t in tags" :key="t.tagname" size="mini" type="success">{{t.tagname}}</el-tag> -->
@@ -54,6 +54,7 @@ export default {
     delete() {
       this.deleteQuestion({ questionId: this.questionId })
         .then(res => {
+          location.reload();
         })
         .catch(err => {
         });

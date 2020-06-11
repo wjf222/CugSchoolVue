@@ -74,7 +74,6 @@ export default {
     };
   },
   created() {
-    console.log();
     this.getArticles(this.searchText);
   },
   methods: {
@@ -90,20 +89,14 @@ export default {
     },
     getArticles(searchText) {
       let that = this;
-      console.log(searchText);
       that.loading = true;
       this.searchQuestion({ searchText, page: that.innerPage.pageNumber })
         .then(res => {
-            console.log(res);
           this.ArticlNum = res.data.count;
 
           let newArticles = res.data.searchList;
-          // if (newArticles && newArticles.length > 0) {
           that.innerPage.pageNumber += 1;
           that.questions = newArticles;
-          // } else {
-          //   that.noData = true;
-          // }
         })
         .catch(err => {
           if (err !== "error") {
@@ -120,10 +113,8 @@ export default {
     },
     handleSizeChange(val) {},
     handleCurrentChange(val) {
-      console.log(this.searchText);
       this.searchQuestion({ searchText:this.searchText, page: val - 1 })
         .then(res => {
-          console.log(res);
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             this.innerPage.pageNumber += 1;

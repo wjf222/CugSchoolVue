@@ -76,7 +76,6 @@ export default {
     };
   },
   created() {
-    console.log();
     this.getArticles(this.searchText);
   },
   methods: {
@@ -92,7 +91,6 @@ export default {
     },
     getArticles(searchText) {
       let that = this;
-      console.log(searchText);
       that.loading = true;
       this.searchArticle({ searchText, page: that.innerPage.pageNumber })
         .then(res => {

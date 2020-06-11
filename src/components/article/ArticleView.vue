@@ -239,7 +239,8 @@ export default {
           });
           that.commentCountsIncrement();
           that.comment.content = "";
-          this.getArticle();
+          // this.getArticle();
+          location.reload();
         })
         .catch(error => {
           if (error !== "error") {

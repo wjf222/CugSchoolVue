@@ -87,7 +87,6 @@ export default {
     ...mapActions(["getNetAskByAuthor", "countOfAuthorQuestions"]),
     load() {},
     view(id) {
-      console.log(id);
       this.$router.push({ path: `/viewQuestion/${id}` });
     },
     

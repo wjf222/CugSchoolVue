@@ -107,7 +107,6 @@ export default {
       });
       this.getAnswerBySomeone({ pageIndex })
         .then(res => {
-          console.log(res);
           let newAnswers = res.data;
           if (newAnswers && newAnswers.length > 0) {
             that.innerPage.pageNumber += 1;

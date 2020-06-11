@@ -54,16 +54,13 @@ export default {
     doSearchResult() {
       this.searchParams.searchText = this.$route.query.searchText;
       this.searchParams.select = this.$route.query.select;
-      console.log(this.searchParams.select);
       if (this.searchParams.select === "Question") {
         this.showArticle = false;
-        console.log(this.searchParams.searchText);
         this.$refs.questionPage.rePageNumber();
         this.$refs.questionPage.getArticles(this.searchParams.searchText);
       }
       if (this.searchParams.select === "Article") {
         this.showArticle = true;
-        console.log(this.searchParams.searchText);
         this.$refs.articlePage.rePageNumber();
         this.$refs.articlePage.getArticles(this.searchParams.searchText);
       }

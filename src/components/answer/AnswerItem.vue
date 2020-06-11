@@ -68,13 +68,11 @@ export default {
   methods: {
     ...mapActions(["deleteAnswer"]),
     delete() {
-      console.log("delete");
       this.deleteAnswer({ answerId: this.answerId })
         .then(res => {
-          console.log(res);
+          location.reload();
         })
         .catch(err => {
-          console.log(err);
         });
     },
     view(id) {

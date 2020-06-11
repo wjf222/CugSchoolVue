@@ -92,7 +92,6 @@ export default {
       });
       this.allOfEssay({ page: pageIndex })
         .then(res => {
-          console.log(res);
           let newArticles = res.data;
           if (newArticles && newArticles.length > 0) {
             this.articles = newArticles;

@@ -235,13 +235,11 @@ export default {
     },
     //搜索问题
     searchQuestion({ }, { searchText, page }) {
-      console.log(searchText);
       return searchQuestion(searchText, page)
     },
 
     //搜索文章
     searchArticle({ }, { searchText, page }) {
-      console.log(searchText);
       return searchArticle(searchText, page)
     },
     //发表文章
@@ -264,16 +262,12 @@ export default {
     getMessageList({ state, commit }) {
       let readedCount = 0
       getReadedCount({ receiver: state.userName }).then(res => {
-        console.log(res);
         readedCount = res.data
-        console.log(readedCount);
         let unreadedPage = readedCount / 5 + 1
-        console.log(unreadedPage);
   
         for (let i = 0; i < unreadedPage; i++) {
           getReadedMessage({ pageIndex: i, receiver: state.userName }).then(res => {
             const readed = res.data.concat(state.messageReadedList)
-            console.log(readed);
             commit('setMessageReadedList', readed)
           })
         }

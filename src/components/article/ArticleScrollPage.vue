@@ -77,7 +77,6 @@ export default {
     };
   },
   created() {
-    console.log();
     this.getArticles(this.searchText);
   },
   methods: {
@@ -93,7 +92,6 @@ export default {
     },
     getArticles(searchText) {
       let that = this;
-      console.log(searchText);
       this.searchText = searchText
       that.loading = true;
       this.searchArticle({ searchText, page: that.innerPage.pageNumber })
@@ -123,10 +121,8 @@ export default {
     },
     handleSizeChange(val) {},
     handleCurrentChange(val) {
-      console.log(this.searchText);
       this.searchArticle({ searchText:this.searchText, page: val - 1 })
         .then(res => {
-          console.log(res);
           let newArticles = res.data.searchList;
           if (newArticles && newArticles.length > 0) {
             this.innerPage.pageNumber += 1;

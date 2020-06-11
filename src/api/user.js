@@ -254,7 +254,6 @@ export const deleteQuestion = ({questionId}) =>{
 }
 
 export const deleteAnswer = ({answerId}) =>{
-  console.log(answerId);
   return axios.request({
     url: 'answer/deleteAnswer',
     params: {
