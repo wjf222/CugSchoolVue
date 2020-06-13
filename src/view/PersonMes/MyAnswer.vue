@@ -66,7 +66,7 @@ export default {
     }
   },
   created() {
-    this.getAnswers({ pageIndex: this.innerPage.pageNumber });
+    this.getAnswers({ pageIndex: 0 });
   },
   data() {
     return {
@@ -100,24 +100,26 @@ export default {
       this.getAnswers({ pageIndex: val - 1 });
     },
     getAnswers({ pageIndex }) {
-      let that = this;
-      that.loading = true;
+      console.log(pageIndex);
+      this.loading = true;
       this.CountofSbAnswer().then(res => {
         this.answerNum = res.data;
       });
       this.getAnswerBySomeone({ pageIndex })
         .then(res => {
           let newAnswers = res.data;
+          console.log(newAnswers);
           if (newAnswers && newAnswers.length > 0) {
-            that.innerPage.pageNumber += 1;
-            that.Answers = newAnswers;
+            this.innerPage.pageNumber += 1;
+            this.Answers = newAnswers;
+            console.log(this.Answers);
           } else {
-            that.noData = true;
+            this.noData = true;
           }
         })
         .catch(err => {
           if (error !== "error") {
-            that.$message({
+            this.$message({
               type: "error",
               message: "文章加载失败!",
               showClose: true
@@ -125,9 +127,10 @@ export default {
           }
         })
         .finally(() => {
-          that.loading = false;
+          this.loading = false;
         });
-    }
+
+ }
   },
   components: {
     AnswerItem
