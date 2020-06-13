@@ -55,10 +55,13 @@
       <input type="text" name="password" v-model="password" placeholder="密码" />
     </div>
     <div class="input-control">
-      <input type="text" name="sex" v-model="sex" placeholder="性别" />
+      <el-radio-group v-model="radio">
+        <el-radio :label=1>男</el-radio>
+        <el-radio :label=0>女</el-radio>
+      </el-radio-group>
     </div>
     <div class="input-control">
-      <input type="text" name="tel" v-model="tel" placeholder="电话" />
+      <input type="Number" name="tel" v-model="tel" placeholder="电话" />
     </div>
     <div class="input-control">
       <input type="text" name="email" v-model="email" placeholder="邮箱" />
@@ -75,12 +78,13 @@ export default {
   name: "usercenter",
   data() {
     return {
+      radio: 1,
       user: {
         name: "",
         sex: "",
         tel: "",
         email: "",
-        password:""
+        password: ""
       },
       url: "http://localhost:3000/usercenter",
       flag: 1,
@@ -88,7 +92,7 @@ export default {
       sex: "",
       tel: "",
       email: "",
-      password:""
+      password: ""
     };
   },
   mounted: function() {
@@ -117,8 +121,14 @@ export default {
       this.user.tel = data.userTelephone;
       this.user.password = data.userPassword;
       this.name = this.user.name;
-      if (data.userSex == 1) this.sex = "男";
-      if (data.userSex == 0) this.sex = "女";
+      if (data.userSex == 1) {
+        this.sex = "男";
+        this.radio = 1;
+      }
+      if (data.userSex == 0) {
+        this.sex = "女";
+        this.radio = 0;
+      }
       this.email = this.user.email;
       this.password = this.user.password;
       this.tel = this.user.tel;
@@ -127,15 +137,13 @@ export default {
   methods: {
     ...mapActions(["getPersonInfo", "setPersonInfo"]),
     submit: function() {
-      let sex = 1;
-      if (this.sex == "男") sex = 1;
-      if (this.sex == "女") sex = 0;
+      let sex = this.radio;
       this.setPersonInfo({
         userName: this.name,
         userSex: sex,
         userTelephone: this.tel,
         userEmail: this.email,
-        password:this.password
+        password: this.password
       }).then(res => {
         alert("修改成功");
         this.flag = 1;
