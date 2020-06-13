@@ -58,6 +58,7 @@ export default {
         this.showArticle = false;
         this.$refs.questionPage.rePageNumber();
         this.$refs.questionPage.getArticles(this.searchParams.searchText);
+        location.reload();
       }
       if (this.searchParams.select === "Article") {
         this.showArticle = true;
