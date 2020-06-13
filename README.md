@@ -12,49 +12,10 @@ CugView
 ## Introduction
 
 本项目是大三软件综合实习的前端代码.后端代码见:[xiaoba](https://github.com/zhou-ning/xiaoba) 
-![image](https://file.iviewui.com/admin-dist/admin-preview.png)
 
 ## Features
 
-- Login / Logout
-- Permission Authentication
-    - A list of filters
-    - Permission to switch
-- i18n
-- Components
-    - Rich Text Editor
-    - Markdown Editor
-    - City Cascader
-    - Photos preview and edit
-    - Draggable list
-    - File upload
-    - Digital gradient
-    - split-pane
-- Form
-    - The article published
-    - Workflow
-- Table
-    - Drag-and-drop sort
-    - Searchable form
-    - Table export data
-        - Export to Csv file
-        - Export to Xls file
-    - Table to picture
-- Error Page
-    - 403
-    - 404
-    - 500
-- Router
-    - Dynamic routing
-    - With reference page
-- Theme
-- Shrink the sidebar
-- Tag navigation
-- Breadcrumb navigation
-- Full screen / exit full screen
-- Lock screen
-- The message center
-- Personal center
+
 
 ## Getting started
 ```bush
